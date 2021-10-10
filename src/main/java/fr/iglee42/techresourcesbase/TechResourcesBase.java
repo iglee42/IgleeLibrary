@@ -53,5 +53,6 @@ public class TechResourcesBase {
         RenderTypeLookup.setRenderLayer(ModBlock.MODIUM_GENERATOR.get(), RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlock.DERIUM_GENERATOR.get(), RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlock.BLAZUM_GENERATOR.get(), RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(ModBlock.MANUAL_GENERATOR.get(), RenderType.cutoutMipped());
     }
 }
