@@ -17,6 +17,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -54,8 +55,14 @@ public class ManualGenerator extends GeneratorBase {
                         te.setGessence(null);
                         return ActionResultType.SUCCESS;
                     } else {
-                        InventoryHelper.dropItemStack(worldIn,pos.getX(),pos.above().getY(),pos.getZ(),new ItemStack(te.getGessence().getItem(),1));
-                        return ActionResultType.SUCCESS;
+                       if (te.getDelay() <= 0){
+                           te.setDelay(5);
+                           InventoryHelper.dropItemStack(worldIn,pos.getX(),pos.above().getY(),pos.getZ(),new ItemStack(te.getGessence().getItem(),1));
+                           return ActionResultType.SUCCESS;
+                       } else {
+                           player.displayClientMessage(new StringTextComponent("§cYou can't click (" + te.getDelay() + ")"), true);
+                            return ActionResultType.FAIL;
+                       }
                     }
                 }
 
