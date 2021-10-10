@@ -18,6 +18,7 @@ public class ModItem {
     public static final RegistryObject<Item> DERIUM_INGOT = ITEMS.register("derium_ingot",() -> new Item(new Item.Properties().tab(CustomGroup.BASE_GROUP)));
     public static final RegistryObject<Item> BLAZUM_INGOT = ITEMS.register("blazum_ingot",() -> new Item(new Item.Properties().tab(CustomGroup.BASE_GROUP)));
 
+    public static final RegistryObject<Item> MANUAL_GENERATOR = ITEMS.register("manual_generator",() -> new GeneratorItem(ModBlock.MANUAL_GENERATOR.get()));
     public static final RegistryObject<Item> MODIUM_GENERATOR = ITEMS.register("modium_generator",() -> new GeneratorItem(ModBlock.MODIUM_GENERATOR.get()));
     public static final RegistryObject<Item> DERIUM_GENERATOR = ITEMS.register("derium_generator",() -> new GeneratorItem(ModBlock.DERIUM_GENERATOR.get()));
     public static final RegistryObject<Item> BLAZUM_GENERATOR = ITEMS.register("blazum_generator",() -> new GeneratorItem(ModBlock.BLAZUM_GENERATOR.get()));
