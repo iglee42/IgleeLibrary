@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "techresourcesbase:block/modium_generator" }
+    }
+}
