@@ -60,7 +60,7 @@ public class ManualGenerator extends GeneratorBase {
                            InventoryHelper.dropItemStack(worldIn,pos.getX(),pos.above().getY(),pos.getZ(),new ItemStack(te.getGessence().getItem(),1));
                            return ActionResultType.SUCCESS;
                        } else {
-                           player.displayClientMessage(new StringTextComponent("§cYou can't click (" + te.getDelay() + ")"), true);
+                           player.displayClientMessage(new StringTextComponent("§cYou can't click (".substring(1) + te.getDelay() + ")"), true);
                             return ActionResultType.FAIL;
                        }
                     }

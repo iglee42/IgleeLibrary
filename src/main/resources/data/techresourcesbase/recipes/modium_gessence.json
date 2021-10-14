@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MOM",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "M": {
+      "item": "techresourcesbase:emerald_gessence"
+    },
+    "O": {
+      "item": "techresourcesbase:netherite_gessence"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:modium_gessence"
+  }
+}

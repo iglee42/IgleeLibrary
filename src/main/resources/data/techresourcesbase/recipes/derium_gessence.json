@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "NON",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "N": {
+      "item": "techresourcesbase:netherite_gessence"
+    },
+    "O": {
+      "item": "techresourcesbase:modium_gessence"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:derium_gessence"
+  }
+}

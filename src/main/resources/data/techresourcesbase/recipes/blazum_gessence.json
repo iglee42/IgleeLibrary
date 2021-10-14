@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "ODO",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "D": {
+      "item": "techresourcesbase:derium_gessence"
+    },
+    "O": {
+      "item": "techresourcesbase:modium_gessence"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:blazum_gessence"
+  }
+}

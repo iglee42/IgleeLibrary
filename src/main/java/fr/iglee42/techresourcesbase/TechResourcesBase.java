@@ -28,13 +28,13 @@ public class TechResourcesBase {
 
 
     public TechResourcesBase() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlock.BLOCKS.register(bus);
         ModTileEntity.TILE_ENTITIES.register(bus);
         ModItem.ITEMS.register(bus);
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 
     }
 
