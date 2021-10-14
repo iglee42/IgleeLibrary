@@ -2,6 +2,7 @@ package fr.iglee42.techresourcesbase;
 
 import fr.iglee42.techresourcesbase.init.ModBlock;
 import fr.iglee42.techresourcesbase.init.ModItem;
+import fr.iglee42.techresourcesbase.init.ModSurfaceBuilder;
 import fr.iglee42.techresourcesbase.init.ModTileEntity;
 import fr.iglee42.techresourcesbase.utils.CustomGroup;
 import net.minecraft.client.renderer.RenderType;
@@ -32,6 +33,7 @@ public class TechResourcesBase {
         ModBlock.BLOCKS.register(bus);
         ModTileEntity.TILE_ENTITIES.register(bus);
         ModItem.ITEMS.register(bus);
+        ModSurfaceBuilder.SURFACE_BUILDERS.register(bus);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);

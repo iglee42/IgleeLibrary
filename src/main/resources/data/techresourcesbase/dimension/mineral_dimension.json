@@ -37,10 +37,10 @@
       },
       "biomes": [
         {
-          "biome": "techresourcesbase:mineral_base",
+          "biome": "techresourcesbase:lime_grass",
           "parameters": {
             "altitude": 0,
-            "temperature": 20,
+            "temperature": 2,
             "humidity": 0,
             "weirdness": 0,
             "offset": 0
