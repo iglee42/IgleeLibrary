@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcesbase:modium_gessence"
+  },
+  "addition": {
+    "item": "techresourcesbase:netherite_gessence"
+  },
+  "result": {
+    "item": "techresourcesbase:derium_gessence"
+  }
+}

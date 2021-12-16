@@ -10,7 +10,7 @@
       "item": "minecraft:cobblestone"
     },
     "W": {
-      "item": "minecraft:oak_log"
+      "item": "techresourcesbase:cobblestone_gessence"
     }
   },
   "result": {

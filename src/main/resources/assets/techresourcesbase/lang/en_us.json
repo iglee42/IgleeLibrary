@@ -5,10 +5,19 @@
   "block.techresourcesbase.derium_generator": "Derium Generator",
   "block.techresourcesbase.blazum_generator": "Blazum Generator",
   "block.techresourcesbase.manual_generator": "Manual Generator",
+  "block.techresourcesbase.lavium_generator": "Lavium Generator",
+  "block.techresourcesbase.pillar": "Pillar",
 
   "item.techresourcesbase.modium_ingot": "Modium Ingot",
   "item.techresourcesbase.derium_ingot": "Derium Ingot",
   "item.techresourcesbase.blazum_ingot": "Blazum Ingot",
+  "item.techresourcesbase.lavium_ingot": "Lavium Ingot",
+  "item.techresourcesbase.ultimerite_ingot": "Ultimerite Ingot",
+
+  "item.techresourcesbase.ultimerite_helmet": "Ultimerite Helmet",
+  "item.techresourcesbase.ultimerite_chestplate": "Ultimerite Chestplate",
+  "item.techresourcesbase.ultimerite_leggings": "Ultimerite Leggings",
+  "item.techresourcesbase.ultimerite_boots": "Ultimerite Boots",
 
   "item.techresourcesbase.wood_gessence": "Wood Gessence",
   "item.techresourcesbase.cobblestone_gessence": "Cobblestone Gessence",
@@ -23,7 +32,11 @@
   "item.techresourcesbase.modium_gessence": "Modium Gessence",
   "item.techresourcesbase.derium_gessence": "Derium Gessence",
   "item.techresourcesbase.blazum_gessence": "Blazum Gessence",
+  "item.techresourcesbase.lavium_gessence": "Lavium Gessence",
+  "item.techresourcesbase.ultimate_gessence": "Ultimate Gessence",
 
+  "itemGroup.techresourcesbase.base": "Techresources - Base",
+  "itemGroup.techresourcesbase.generator": "Techresources - Generator",
 
   "tooltip.generator.nogessence": "§cIf you break the block you won't get your gessence back"
 

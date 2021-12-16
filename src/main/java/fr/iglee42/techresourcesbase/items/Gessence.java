@@ -23,6 +23,7 @@ public class Gessence extends Item {
         if (stack.getItem() == ModItem.MODIUM_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.DERIUM_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.BLAZUM_GESSENCE.get()) return true;
+        if (stack.getItem() == ModItem.LAVIUM_GESSENCE.get()) return true;
         return false;
     }
 

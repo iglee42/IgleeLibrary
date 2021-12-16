@@ -5,6 +5,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.Objects;
+
 public enum GessenceType {
     WOOD(Items.OAK_LOG,"wood", ModItem.WOOD_GESSENCE),
     COBBLESTONE(Items.COBBLESTONE,"cobblestone", ModItem.COBBLESTONE_GESSENCE),
@@ -18,7 +20,8 @@ public enum GessenceType {
     NETHERITE(Items.NETHERITE_SCRAP,"netherite", ModItem.NETHERITE_GESSENCE),
     MODIUM(ModItem.MODIUM_INGOT.get(),"modium",ModItem.MODIUM_GESSENCE),
     DERIUM(ModItem.DERIUM_INGOT.get(), "derium",ModItem.DERIUM_GESSENCE),
-    BLAZUM(ModItem.BLAZUM_INGOT.get(), "blazum",ModItem.BLAZUM_GESSENCE)
+    BLAZUM(ModItem.BLAZUM_INGOT.get(), "blazum",ModItem.BLAZUM_GESSENCE),
+    LAVIUM(ModItem.LAVIUM_INGOT.get(), "lavium",ModItem.LAVIUM_GESSENCE)
     ;
 
     private Item item;
@@ -33,7 +36,7 @@ public enum GessenceType {
 
     public static GessenceType getByResourceName(String name){
         for (GessenceType type : values()){
-            if (type.getRessourceName() == name) return type;
+            if (Objects.equals(type.getRessourceName(), name)) return type;
         }
         return null;
     }

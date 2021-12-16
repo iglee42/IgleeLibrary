@@ -11,6 +11,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Features;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -43,8 +44,14 @@ public class TechResourcesBase {
     @SubscribeEvent
     public void biomeEvent(BiomeLoadingEvent event){
         event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).clear();
-        event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_DECORATION).clear();
-        event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).clear();
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.DISK_SAND);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.DISK_CLAY);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.DISK_GRAVEL);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.ORE_DIRT);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.ORE_GRAVEL);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.ORE_GRANITE);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.ORE_DIORITE);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Features.ORE_ANDESITE);
     }
 
     private void setup(FMLCommonSetupEvent e){
@@ -56,5 +63,6 @@ public class TechResourcesBase {
         RenderTypeLookup.setRenderLayer(ModBlock.DERIUM_GENERATOR.get(), RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlock.BLAZUM_GENERATOR.get(), RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlock.MANUAL_GENERATOR.get(), RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(ModBlock.PILLAR.get(), RenderType.cutoutMipped());
     }
 }
