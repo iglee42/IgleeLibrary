@@ -1,14 +1,15 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made with Blockbench and by iglee42",
 	"textures": {
-		"1": "block/stone",
-		"2": "block/oak_log_top"
+		"1": "minecraft:block/stone",
+		"2": "minecraft:block/oak_log_top",
+		"particle": "minecraft:block/stone"
 	},
 	"elements": [
 		{
 			"name": "milieu",
 			"from": [1, 1, 1],
-			"to": [15, 16, 15],
+			"to": [15, 15, 15],
 			"faces": {
 				"north": {"uv": [1, 1, 15, 15], "texture": "#1"},
 				"east": {"uv": [1, 1, 15, 15], "texture": "#1"},
@@ -31,8 +32,8 @@
 			}
 		},
 		{
-			"from": [0, 16, 0],
-			"to": [16, 17, 16],
+			"from": [0, 15, 0],
+			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 1], "texture": "#2"},
 				"east": {"uv": [0, 0, 16, 1], "texture": "#2"},
@@ -65,7 +66,8 @@
 			"scale": [0.5, 0.5, 0.5]
 		}
 	},
-	"groups": [0,
+	"groups": [
+		0,
 		{
 			"name": "bas",
 			"origin": [8, 8, 8],

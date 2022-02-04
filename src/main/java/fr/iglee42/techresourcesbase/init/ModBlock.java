@@ -27,9 +27,11 @@ public class ModBlock {
 
     public static final RegistryObject<Block> LIME_GRASS = createBlock("lime_grass",()-> new LimeGrassBlock(AbstractBlock.Properties.of(Material.GRASS)));
 
-    public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new Block(AbstractBlock.Properties.of(Material.METAL)));
+    public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new RandomOreBlock(AbstractBlock.Properties.of(Material.METAL)));
 
     public static final RegistryObject<Block> PILLAR = createBlock("pillar",()-> new PillarBlock(AbstractBlock.Properties.of(Material.METAL)));
+
+    public static final RegistryObject<Block> MINERAL_PORTAL= createBlock("mineral_portal",MineralPortalBlock::new);
 
     public static RegistryObject<Block> createBlock(String name, Supplier<? extends Block> supplier)
     {
