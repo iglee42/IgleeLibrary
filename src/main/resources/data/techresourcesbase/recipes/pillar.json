@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    " M ",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:polished_blackstone"
+    },
+    "M": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:pillar"
+  }
+}
