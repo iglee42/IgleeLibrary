@@ -1,0 +1,33 @@
+{
+  "variants": {
+    "facing=east,open=false": {
+      "model": "techresourcesbase:block/mineral_portal",
+      "y": 270
+    },
+    "facing=north,open=false": {
+      "model": "techresourcesbase:block/mineral_portal",
+      "y": 180
+    },
+    "facing=south,open=false": {
+      "model": "techresourcesbase:block/mineral_portal"
+    },
+    "facing=west,open=false": {
+      "model": "techresourcesbase:block/mineral_portal",
+      "y": 90
+    },"facing=east,open=true": {
+      "model": "techresourcesbase:block/mineral_portal_open",
+      "y": 270
+    },
+    "facing=north,open=true": {
+      "model": "techresourcesbase:block/mineral_portal_open",
+      "y": 180
+    },
+    "facing=south,open=true": {
+      "model": "techresourcesbase:block/mineral_portal_open"
+    },
+    "facing=west,open=true": {
+      "model": "techresourcesbase:block/mineral_portal_open",
+      "y": 90
+    }
+  }
+}
