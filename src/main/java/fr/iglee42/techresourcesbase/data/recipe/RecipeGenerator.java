@@ -22,22 +22,14 @@ public class RecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(ModItem.WOOD_GESSENCE.get())
-                .pattern("CCC")
-                .pattern("LPL")
-                .pattern("CCC")
-                .define('C',Items.COBBLESTONE)
-                .define('P',Items.STONE_PICKAXE)
-                .define('L', Items.OAK_LOG)
-                .unlockedBy("unlock",InventoryChangeTrigger.Instance.hasItems(Items.COBBLESTONE,Items.STONE_PICKAXE,Items.OAK_LOG))
-                .save(consumer);
-        ShapedRecipeBuilder.shaped(ModItem.COBBLESTONE_GESSENCE.get())
-                .pattern("CCC")
-                .pattern("CWC")
-                .pattern("CCC")
-                .define('C',Items.COBBLESTONE)
-                .define('W',ModItem.WOOD_GESSENCE.get())
-                .unlockedBy("unlock",InventoryChangeTrigger.Instance.hasItems(Items.COBBLESTONE,ModItem.WOOD_GESSENCE.get()))
+        ShapedRecipeBuilder.shaped(ModItem.QUARTZ_GESSENCE.get())
+                .pattern("SNS")
+                .pattern("NBN")
+                .pattern("SNS")
+                .define('S',Items.SOUL_SAND)
+                .define('N',Items.NETHERITE_INGOT)
+                .define('B', ModItem.BASE_GESSENCE.get())
+                .unlockedBy("unlock",InventoryChangeTrigger.Instance.hasItems(Items.SOUL_SAND,Items.NETHERITE_INGOT,ModItem.BASE_GESSENCE.get()))
                 .save(consumer);
     }
 }

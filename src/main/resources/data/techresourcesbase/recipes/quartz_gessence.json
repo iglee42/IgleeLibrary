@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SNS",
+    "NBN",
+    "SNS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "techresourcesbase:base_gessence"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:quartz_gessence"
+  }
+}

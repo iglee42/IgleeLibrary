@@ -20,6 +20,7 @@ public class Gessence extends Item {
         if (stack.getItem() == ModItem.DIAMOND_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.EMERALD_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.NETHERITE_GESSENCE.get()) return true;
+        if (stack.getItem() == ModItem.QUARTZ_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.MODIUM_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.DERIUM_GESSENCE.get()) return true;
         if (stack.getItem() == ModItem.BLAZUM_GESSENCE.get()) return true;

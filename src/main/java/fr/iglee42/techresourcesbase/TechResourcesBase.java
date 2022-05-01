@@ -1,18 +1,11 @@
 package fr.iglee42.techresourcesbase;
 
 import fr.iglee42.techresourcesbase.init.*;
-import fr.iglee42.techresourcesbase.utils.CustomGroup;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,15 +14,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Mod(TechResourcesBase.MODID)
 public class TechResourcesBase {
 
     public static final String MODID = "techresourcesbase";
-
-
 
     public TechResourcesBase() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

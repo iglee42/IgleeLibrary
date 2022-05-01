@@ -48,6 +48,7 @@ public class ModItem {
     public static final RegistryObject<Item> DIAMOND_GESSENCE = ITEMS.register("diamond_gessence", () -> new Gessence(GessenceType.DIAMOND));
     public static final RegistryObject<Item> EMERALD_GESSENCE = ITEMS.register("emerald_gessence", () -> new Gessence(GessenceType.EMERALD));
     public static final RegistryObject<Item> NETHERITE_GESSENCE = ITEMS.register("netherite_gessence", () -> new Gessence(GessenceType.NETHERITE));
+    public static final RegistryObject<Item> QUARTZ_GESSENCE = ITEMS.register("quartz_gessence", () -> new Gessence(GessenceType.QUARTZ));
     public static final RegistryObject<Item> MODIUM_GESSENCE = ITEMS.register("modium_gessence", () -> new Gessence(GessenceType.MODIUM));
     public static final RegistryObject<Item> DERIUM_GESSENCE = ITEMS.register("derium_gessence", () -> new Gessence(GessenceType.DERIUM));
     public static final RegistryObject<Item> BLAZUM_GESSENCE = ITEMS.register("blazum_gessence", () -> new Gessence(GessenceType.BLAZUM));

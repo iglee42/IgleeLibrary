@@ -18,6 +18,7 @@ public enum GessenceType {
     DIAMOND(Items.DIAMOND,"diamond", ModItem.DIAMOND_GESSENCE),
     EMERALD(Items.EMERALD,"emerald", ModItem.EMERALD_GESSENCE),
     NETHERITE(Items.NETHERITE_SCRAP,"netherite", ModItem.NETHERITE_GESSENCE),
+    QUARTZ(Items.QUARTZ,"quartz", ModItem.QUARTZ_GESSENCE),
     MODIUM(ModItem.MODIUM_INGOT.get(),"modium",ModItem.MODIUM_GESSENCE),
     DERIUM(ModItem.DERIUM_INGOT.get(), "derium",ModItem.DERIUM_GESSENCE),
     BLAZUM(ModItem.BLAZUM_INGOT.get(), "blazum",ModItem.BLAZUM_GESSENCE),
