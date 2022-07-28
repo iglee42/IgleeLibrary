@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "techresourcesbase:modium_block"
+    }
+  ],
+  "result": {
+    "item": "techresourcesbase:modium_ingot",
+    "count": 9
+  }
+}

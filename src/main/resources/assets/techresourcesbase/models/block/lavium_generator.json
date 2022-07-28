@@ -1,8 +1,0 @@
-{
-	"parent": "techresourcesbase:block/manual_generator",
-	"textures": {
-		"2": "techresourcesbase:block/generator_base",
-		"1": "techresourcesbase:block/lavium_generator_middle",
-		"particle": "techresourcesbase:block/lavium_generator_middle"
-	}
-}

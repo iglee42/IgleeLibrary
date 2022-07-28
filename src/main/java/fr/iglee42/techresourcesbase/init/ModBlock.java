@@ -1,17 +1,16 @@
 package fr.iglee42.techresourcesbase.init;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
-import fr.iglee42.techresourcesbase.blocks.*;
-import fr.iglee42.techresourcesbase.blocks.generator.manual.*;
 import fr.iglee42.techresourcesbase.utils.CustomGroup;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -19,19 +18,14 @@ public class ModBlock {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TechResourcesBase.MODID);
 
-    public static final RegistryObject<Block> MANUAL_GENERATOR = createBlockWithoutItem("manual_generator", ManualGenerator::new);
-    public static final RegistryObject<Block> MODIUM_GENERATOR = createBlockWithoutItem("modium_generator", ModiumGenerator::new);
-    public static final RegistryObject<Block> DERIUM_GENERATOR = createBlockWithoutItem("derium_generator", DeriumGenerator::new);
-    public static final RegistryObject<Block> BLAZUM_GENERATOR = createBlockWithoutItem("blazum_generator", BlazumGenerator::new);
-    public static final RegistryObject<Block> LAVIUM_GENERATOR = createBlockWithoutItem("lavium_generator", LaviumGenerator::new);
 
-    public static final RegistryObject<Block> LIME_GRASS = createBlock("lime_grass",()-> new LimeGrassBlock(AbstractBlock.Properties.of(Material.GRASS)));
+    public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new Block(BlockBehaviour.Properties.of(Material.METAL)));
 
-    public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new RandomOreBlock(AbstractBlock.Properties.of(Material.METAL)));
 
-    public static final RegistryObject<Block> PILLAR = createBlock("pillar",()-> new PillarBlock(AbstractBlock.Properties.of(Material.METAL)));
-
-    public static final RegistryObject<Block> MINERAL_PORTAL= createBlock("mineral_portal",MineralPortalBlock::new);
+    public static final RegistryObject<Block> MODIUM_BLOCK = createBlock("modium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> DERIUM_BLOCK = createBlock("derium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BLAZUM_BLOCK = createBlock("blazum_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> LAVIUM_BLOCK = createBlock("lavium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     public static RegistryObject<Block> createBlock(String name, Supplier<? extends Block> supplier)
     {

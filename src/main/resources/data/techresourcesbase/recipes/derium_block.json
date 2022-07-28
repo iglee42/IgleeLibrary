@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "techresourcesbase:derium_ingot"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:derium_block"
+  }
+}

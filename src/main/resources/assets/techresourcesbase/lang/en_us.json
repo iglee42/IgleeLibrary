@@ -7,6 +7,11 @@
   "block.techresourcesbase.manual_generator": "Manual Generator",
   "block.techresourcesbase.lavium_generator": "Lavium Generator",
   "block.techresourcesbase.pillar": "Pillar",
+  "block.techresourcesbase.modium_block": "Modium Block",
+  "block.techresourcesbase.derium_block": "Derium Block",
+  "block.techresourcesbase.blazum_block": "Blazum Block",
+  "block.techresourcesbase.lavium_block": "Lavium Block",
+  "block.techresourcesbase.random_ore": "Random Ore",
 
   "item.techresourcesbase.modium_ingot": "Modium Ingot",
   "item.techresourcesbase.derium_ingot": "Derium Ingot",
@@ -35,9 +40,6 @@
   "item.techresourcesbase.lavium_gessence": "Lavium Gessence",
   "item.techresourcesbase.ultimate_gessence": "Ultimate Gessence",
 
-  "itemGroup.techresourcesbase.base": "Techresources - Base",
-  "itemGroup.techresourcesbase.generator": "Techresources - Generator",
-
-  "tooltip.generator.nogessence": "§cIf you break the block you won't get your gessence back"
+  "itemGroup.techresourcesbase.base": "Techresources - Base"
 
 }
