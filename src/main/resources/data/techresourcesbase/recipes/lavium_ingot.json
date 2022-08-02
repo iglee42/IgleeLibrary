@@ -1,12 +1,12 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "techresourcesbase:lavium_block"
-    }
-  ],
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "addition": {
+    "item": "techresourcesbase:lava_shard"
+  },
   "result": {
-    "item": "techresourcesbase:lavium_ingot",
-    "count": 9
+    "item": "techresourcesbase:lavium_ingot"
   }
 }

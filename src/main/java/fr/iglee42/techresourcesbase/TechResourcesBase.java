@@ -1,9 +1,12 @@
 package fr.iglee42.techresourcesbase;
 
+import fr.iglee42.techresourcesbase.config.TechResourcesBaseCommonConfig;
 import fr.iglee42.techresourcesbase.init.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -16,6 +19,8 @@ public class TechResourcesBase {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlock.BLOCKS.register(bus);
         ModItem.ITEMS.register(bus);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TechResourcesBaseCommonConfig.SPEC,"techresourcesbase-common.toml");
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 

@@ -1,12 +1,12 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "techresourcesbase:modium_block"
-    }
-  ],
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
   "result": {
-    "item": "techresourcesbase:modium_ingot",
-    "count": 9
+    "item": "techresourcesbase:modium_ingot"
   }
 }

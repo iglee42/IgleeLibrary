@@ -1,6 +1,7 @@
 package fr.iglee42.techresourcesbase.init;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
+import fr.iglee42.techresourcesbase.blocks.RandomOre;
 import fr.iglee42.techresourcesbase.utils.CustomGroup;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -19,7 +20,7 @@ public class ModBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TechResourcesBase.MODID);
 
 
-    public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new Block(BlockBehaviour.Properties.of(Material.METAL)));
+    public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new RandomOre(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)));
 
 
     public static final RegistryObject<Block> MODIUM_BLOCK = createBlock("modium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

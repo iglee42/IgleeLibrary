@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "techresourcesbase:modium_block",
+    "techresourcesbase:derium_block",
+    "techresourcesbase:blazum_block",
+    "techresourcesbase:lavium_block",
+    "techresourcesbase:random_ore"
+  ]
+}

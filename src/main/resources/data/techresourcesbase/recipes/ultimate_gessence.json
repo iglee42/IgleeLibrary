@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MDM",
+    "BLB",
+    "MDM"
+  ],
+  "key": {
+    "M": {
+      "item": "techresourcesbase:modium_ingot"
+    },
+    "D": {
+      "item": "techresourcesbase:derium_ingot"
+    },
+    "B": {
+      "item": "techresourcesbase:blazum_ingot"
+    },
+    "L": {
+      "item": "techresourcesbase:lavium_ingot"
+    }
+  },
+  "result": {
+    "item": "techresourcesbase:ultimate_gessence"
+  }
+}
