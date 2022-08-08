@@ -6,6 +6,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -25,9 +26,13 @@ public class RandomOre extends Block {
 
     @Override
     public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
-        ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(TechResourcesBaseCommonConfig.MAX_RANDOM_ORE_DROPS_COUNT.get())+1);
         List<ItemStack> drop = new ArrayList<>();
-        drop.add(ore);
+        if (RANDOM.nextInt(2) == 0){
+            ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(TechResourcesBaseCommonConfig.MAX_RANDOM_ORE_DROPS_COUNT.get())+1);
+            drop.add(ore);
+        }else{
+            drop.add(new ItemStack(Items.COBBLESTONE,2));
+        }
         return drop;
     }
 
