@@ -41,6 +41,7 @@
   "item.techresourcesbase.lavium_gessence": "Lavium Gessence",
   "item.techresourcesbase.ultimate_gessence": "Ultimate Gessence",
 
-  "itemGroup.techresourcesbase.base": "Techresources - Base"
+  "itemGroup.techresourcesbase.base": "Techresources - Base",
+  "keybind.techresourcesbase.ultichestfly": "Enable/Disable Ultimerite chestplate fly"
 
 }

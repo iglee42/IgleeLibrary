@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "MDM",
-    "BLB",
-    "MDM"
+    "MBD",
+    "LSL",
+    "DBM"
   ],
   "key": {
     "M": {
@@ -17,6 +17,9 @@
     },
     "L": {
       "item": "techresourcesbase:lavium_ingot"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
     }
   },
   "result": {

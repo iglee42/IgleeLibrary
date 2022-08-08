@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public enum CustomArmorMaterial implements ArmorMaterial {
 
-    ULTIMERITE(TechResourcesBase.MODID + ":ultimerite",770,new int[] {20,28,26,18},11, SoundEvents.ARMOR_EQUIP_NETHERITE,20.0f,5.0f,()->{
+    ULTIMERITE(TechResourcesBase.MODID + ":ultimerite",770,new int[] {20,28,26,18},11, SoundEvents.ARMOR_EQUIP_NETHERITE,10.0f,5.0f,()->{
         return Ingredient.of(ModItem.ULTIMERITE_INGOT.get());
     });
 

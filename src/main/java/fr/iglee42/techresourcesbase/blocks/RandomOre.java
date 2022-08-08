@@ -25,7 +25,7 @@ public class RandomOre extends Block {
 
     @Override
     public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
-        ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(4)+1);
+        ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(TechResourcesBaseCommonConfig.MAX_RANDOM_ORE_DROPS_COUNT.get())+1);
         List<ItemStack> drop = new ArrayList<>();
         drop.add(ore);
         return drop;
