@@ -28,11 +28,12 @@ public class RandomOre extends Block {
     public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
         List<ItemStack> drop = new ArrayList<>();
         if (TechResourcesBaseCommonConfig.RANDOM_ORE_CAN_DROP_COBBLESTONE.get()){
-            if (RANDOM.nextInt(10) != 0){
+
+            if (RANDOM.nextInt(100) <= (TechResourcesBaseCommonConfig.PERCENT_DROP_COBBLE.get()-1)){
                 ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(TechResourcesBaseCommonConfig.MAX_RANDOM_ORE_DROPS_COUNT.get())+1);
                 drop.add(ore);
             }else{
-                drop.add(new ItemStack(Items.COBBLESTONE,2));
+                drop.add(new ItemStack(Items.COBBLESTONE,TechResourcesBaseCommonConfig.COUNT_DROP_COBBLE.get()));
             }
         } else {
             ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(TechResourcesBaseCommonConfig.MAX_RANDOM_ORE_DROPS_COUNT.get())+1);
@@ -60,8 +61,10 @@ public class RandomOre extends Block {
         if (TechResourcesBaseCommonConfig.RANDOM_ORE_CAN_DROP_MINERALS.get()){
             itemsCanDrop.addAll(ForgeRegistries.ITEMS.tags().getTag(Tags.Items.ORES).stream().toList());
         }
-        for (String canDrop : TechResourcesBaseCommonConfig.CUSTOM_RANDOM_ORE_DROPS.get()){
-            itemsCanDrop.add(ForgeRegistries.ITEMS.getValue(new ResourceLocation(canDrop)));
+        if (!TechResourcesBaseCommonConfig.CUSTOM_RANDOM_ORE_DROPS.get().isEmpty()){
+            for (String canDrop : TechResourcesBaseCommonConfig.CUSTOM_RANDOM_ORE_DROPS.get()){
+                itemsCanDrop.add(ForgeRegistries.ITEMS.getValue(new ResourceLocation(canDrop)));
+            }
         }
         Item random;
         random = itemsCanDrop.get(RANDOM.nextInt(itemsCanDrop.size()));

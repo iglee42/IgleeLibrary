@@ -24,7 +24,6 @@ import org.lwjgl.glfw.GLFW;
 public class TechResourcesBase {
 
     public static final String MODID = "techresourcesbase";
-    public static KeyMapping[] keyMappings;
 
     public TechResourcesBase() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -39,6 +38,8 @@ public class TechResourcesBase {
     }
 
     private void setup(FMLCommonSetupEvent e){
+
+        ModMessages.register();
     }
 
     public static void sendClientMessage(String message) {

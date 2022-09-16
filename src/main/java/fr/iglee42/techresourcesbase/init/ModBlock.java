@@ -2,13 +2,12 @@ package fr.iglee42.techresourcesbase.init;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
 import fr.iglee42.techresourcesbase.blocks.RandomOre;
-import fr.iglee42.techresourcesbase.utils.CustomGroup;
+import fr.iglee42.techresourcesbase.baseutils.CustomGroup;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -19,9 +18,7 @@ public class ModBlock {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TechResourcesBase.MODID);
 
-
     public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new RandomOre(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)));
-
 
     public static final RegistryObject<Block> MODIUM_BLOCK = createBlock("modium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> DERIUM_BLOCK = createBlock("derium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

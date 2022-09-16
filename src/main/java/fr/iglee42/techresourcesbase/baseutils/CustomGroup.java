@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.utils;
+package fr.iglee42.techresourcesbase.baseutils;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
 import fr.iglee42.techresourcesbase.init.ModItem;
