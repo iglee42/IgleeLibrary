@@ -4,10 +4,11 @@ public class ModsUtils {
 
     public static String[] split(String base,String separator){
         String[] st = base.split(separator);
-        String[] finale = new String[2];
+        String[] finale = new String[] {};
         for (String s : st){
-            if (s.endsWith(separator))s.substring(s.length()-1);
-            finale[finale.length] = s;
+            String fi = s;
+            if (s.endsWith(separator))fi = s.substring(s.length()-1);
+            finale[finale.length - 1] = fi;
         }
         return finale;
     }
