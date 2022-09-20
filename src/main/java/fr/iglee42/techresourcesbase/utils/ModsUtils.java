@@ -8,7 +8,7 @@ public class ModsUtils {
         for (String s : st){
             String fi = s;
             if (s.endsWith(separator))fi = s.substring(s.length()-1);
-            finale[finale.length - 1] = fi;
+            finale[finale.length] = fi;
         }
         return finale;
     }
