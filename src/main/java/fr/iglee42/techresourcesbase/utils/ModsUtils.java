@@ -15,4 +15,19 @@ public class ModsUtils {
         return finale;
     }
 
+    public static String getUpperName(String name,String wordSeparator) {
+        String[] nm = split(name,wordSeparator);
+        String end = "";
+        int i = 0;
+        for (String n : nm) {
+            i += 1;
+            char fc = n.charAt(0);
+            String fcs = String.valueOf(fc);
+            String fs = fcs.toUpperCase() + n.substring(1);
+            end = fs + (i == nm.length ? "" : " ");
+        }
+
+        return end;
+    }
+
 }
