@@ -20,9 +20,9 @@ public class CommonEvents {
     @SubscribeEvent
     public static void entityInteract(final PlayerInteractEvent.EntityInteractSpecific event){
         if (event.getTarget().getType() != EntityType.BLAZE) return;
-        if (event.getPlayer().getMainHandItem().getItem() == Items.AIR) return;
-        if (event.getPlayer().getMainHandItem().getItem() != Items.NETHERITE_SCRAP) return;
-        event.getPlayer().getMainHandItem().setCount(event.getPlayer().getMainHandItem().getCount()-1);
+        if (event.getEntity().getMainHandItem().getItem() == Items.AIR) return;
+        if (event.getEntity().getMainHandItem().getItem() != Items.NETHERITE_SCRAP) return;
+        event.getEntity().getMainHandItem().setCount(event.getEntity().getMainHandItem().getCount()-1);
         Block.popResource(event.getTarget().getLevel(),event.getTarget().getOnPos().offset(0,1,0), new ItemStack(ModItem.LAVA_SHARD.get()));
         event.getTarget().remove(Entity.RemovalReason.KILLED);
     }

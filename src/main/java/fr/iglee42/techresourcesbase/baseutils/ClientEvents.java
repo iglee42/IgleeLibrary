@@ -2,8 +2,6 @@ package fr.iglee42.techresourcesbase.baseutils;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -17,12 +15,7 @@ public class ClientEvents {
     }
     @Mod.EventBusSubscriber(modid = TechResourcesBase.MODID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
     public class Forge {
-        @SubscribeEvent
-        public static void onKeyInput(InputEvent.KeyInputEvent event) {
-            /*if (KeyBinding.NO_CLIP.isDown()) {
-                ModMessages.sendToServer(new NoClipC2SPacket());
-            }*/
-        }
+
     }
 
 }

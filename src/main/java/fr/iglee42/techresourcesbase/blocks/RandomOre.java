@@ -2,7 +2,6 @@ package fr.iglee42.techresourcesbase.blocks;
 
 import fr.iglee42.techresourcesbase.config.TechResourcesBaseCommonConfig;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,8 +17,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RandomOre extends Block {
+    Random RANDOM = new Random();
     public RandomOre(Properties prop) {
         super(prop);
     }
@@ -28,7 +29,6 @@ public class RandomOre extends Block {
     public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
         List<ItemStack> drop = new ArrayList<>();
         if (TechResourcesBaseCommonConfig.RANDOM_ORE_CAN_DROP_COBBLESTONE.get()){
-
             if (RANDOM.nextInt(100) <= (TechResourcesBaseCommonConfig.PERCENT_DROP_COBBLE.get()-1)){
                 ItemStack ore = new ItemStack(selectOre(),RANDOM.nextInt(TechResourcesBaseCommonConfig.MAX_RANDOM_ORE_DROPS_COUNT.get())+1);
                 drop.add(ore);
@@ -73,7 +73,7 @@ public class RandomOre extends Block {
 
     @Override
     public void appendHoverText(ItemStack p_49816_, @Nullable BlockGetter p_49817_, List<Component> p_49818_, TooltipFlag p_49819_) {
-        p_49818_.add(new TextComponent("§eDrop a random ore"));
+        p_49818_.add(Component.literal("§eDrop a random ore"));
         super.appendHoverText(p_49816_, p_49817_, p_49818_, p_49819_);
     }
 }
