@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class InventoryUtil {
     public static boolean hasPlayerStackInInventory(Player player, Item item) {
@@ -34,19 +35,19 @@ public class InventoryUtil {
 
     public static Item getItem(String name){
         String[] it = ModsUtils.split(name,":");
-        return Registry.ITEM.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
     public static Block getBlock(String name){
         String[] it = ModsUtils.split(name,":");
-        return Registry.BLOCK.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static Enchantment getEnchantment(String name){
         String[] it = ModsUtils.split(name,":");
-        return Registry.ENCHANTMENT.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static EntityType<?> getEntity(String name){
         String[] it = ModsUtils.split(name,":");
-        return Registry.ENTITY_TYPE.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(it[0],it[1]));
     }
 }

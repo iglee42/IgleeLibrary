@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class JsonHelper {
 
@@ -21,21 +22,21 @@ public class JsonHelper {
     }
     public static Item getItem(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
-        return Registry.ITEM.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
     public static Block getBlock(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json, name),":");
-        return Registry.BLOCK.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
     public static EntityType<?> getEntityType(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
-        return Registry.ENTITY_TYPE.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static Enchantment getEnchantment(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
-        return Registry.ENCHANTMENT.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static boolean getBooleanOrDefault(JsonObject json, String name,boolean def){
         if (!json.has(name)) return def;
@@ -53,24 +54,24 @@ public class JsonHelper {
     public static Item getItemOrDefault(JsonObject json, String name,Item def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
-        return Registry.ITEM.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
     public static Block getBlockOrDefault(JsonObject json, String name,Block def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json, name),":");
-        return Registry.BLOCK.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
     public static EntityType<?> getEntityTypeOrDefault(JsonObject json, String name,EntityType<?> def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
-        return Registry.ENTITY_TYPE.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static Enchantment getEnchantmentOrDefault(JsonObject json, String name,Enchantment def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
-        return Registry.ENCHANTMENT.get(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
 }
