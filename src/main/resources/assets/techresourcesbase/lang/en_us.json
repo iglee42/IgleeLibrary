@@ -1,11 +1,6 @@
 {
   "_comment": "TechResources - Base",
 
-  "block.techresourcesbase.modium_generator": "Modium Generator",
-  "block.techresourcesbase.derium_generator": "Derium Generator",
-  "block.techresourcesbase.blazum_generator": "Blazum Generator",
-  "block.techresourcesbase.manual_generator": "Manual Generator",
-  "block.techresourcesbase.lavium_generator": "Lavium Generator",
   "block.techresourcesbase.pillar": "Pillar",
   "block.techresourcesbase.modium_block": "Modium Block",
   "block.techresourcesbase.derium_block": "Derium Block",
@@ -25,20 +20,7 @@
   "item.techresourcesbase.ultimerite_leggings": "Ultimerite Leggings",
   "item.techresourcesbase.ultimerite_boots": "Ultimerite Boots",
 
-  "item.techresourcesbase.wood_gessence": "Wood Gessence",
-  "item.techresourcesbase.cobblestone_gessence": "Cobblestone Gessence",
-  "item.techresourcesbase.coal_gessence": "Coal Gessence",
-  "item.techresourcesbase.iron_gessence": "Iron Gessence",
-  "item.techresourcesbase.gold_gessence": "Gold Gessence",
-  "item.techresourcesbase.redstone_gessence": "Redstone Gessence",
-  "item.techresourcesbase.lapis_gessence": "Lapis Gessence",
-  "item.techresourcesbase.diamond_gessence": "Diamond Gessence",
-  "item.techresourcesbase.emerald_gessence": "Emerald Gessence",
-  "item.techresourcesbase.netherite_gessence": "Netherite Gessence",
-  "item.techresourcesbase.modium_gessence": "Modium Gessence",
-  "item.techresourcesbase.derium_gessence": "Derium Gessence",
-  "item.techresourcesbase.blazum_gessence": "Blazum Gessence",
-  "item.techresourcesbase.lavium_gessence": "Lavium Gessence",
+
   "item.techresourcesbase.ultimate_gessence": "Ultimate Gessence",
 
   "itemGroup.techresourcesbase.base": "Techresources - Base",
