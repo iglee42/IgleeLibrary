@@ -15,7 +15,7 @@ public abstract class SecondBlockEntity extends BlockEntity {
         super(p_155228_, p_155229_, p_155230_);
     }
 
-    public void tick(Level level, BlockPos pos, BlockState state,SecondBlockEntity entity){
+    public static void tick(Level level, BlockPos pos, BlockState state,SecondBlockEntity entity){
         entity.tick++;
         if (entity.tick == 20) {
             entity.tick = 0;
