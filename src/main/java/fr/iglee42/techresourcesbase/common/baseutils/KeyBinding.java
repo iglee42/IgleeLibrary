@@ -1,9 +1,4 @@
-package fr.iglee42.techresourcesbase.baseutils;
-
-import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.KeyMapping;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import org.lwjgl.glfw.GLFW;
+package fr.iglee42.techresourcesbase.common.baseutils;
 
 public class KeyBinding {
     public static final String KEY_CATEGORY = "key.category.techresourcesbase";

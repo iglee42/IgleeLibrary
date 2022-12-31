@@ -1,12 +1,11 @@
-package fr.iglee42.techresourcesbase.utils;
+package fr.iglee42.techresourcesbase.api.utils;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class JsonHelper {
@@ -32,7 +31,7 @@ public class JsonHelper {
 
     public static EntityType<?> getEntityType(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
-        return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static Enchantment getEnchantment(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
@@ -66,7 +65,7 @@ public class JsonHelper {
     public static EntityType<?> getEntityTypeOrDefault(JsonObject json, String name,EntityType<?> def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
-        return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(it[0],it[1]));
     }
     public static Enchantment getEnchantmentOrDefault(JsonObject json, String name,Enchantment def){
         if (!json.has(name)) return def;

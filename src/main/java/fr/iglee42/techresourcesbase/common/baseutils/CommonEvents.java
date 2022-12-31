@@ -1,15 +1,11 @@
 package fr.iglee42.techresourcesbase.baseutils;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
-import fr.iglee42.techresourcesbase.init.ModItem;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import fr.iglee42.techresourcesbase.common.init.ModItem;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,11 +16,11 @@ public class CommonEvents {
     @SubscribeEvent
     public static void entityInteract(final PlayerInteractEvent.EntityInteractSpecific event){
         if (event.getTarget().getType() != EntityType.BLAZE) return;
-        if (event.getEntity().getMainHandItem().getItem() == Items.AIR) return;
-        if (event.getEntity().getMainHandItem().getItem() != Items.NETHERITE_SCRAP) return;
-        event.getEntity().getMainHandItem().setCount(event.getEntity().getMainHandItem().getCount()-1);
-        Block.popResource(event.getTarget().getLevel(),event.getTarget().getOnPos().offset(0,1,0), new ItemStack(ModItem.LAVA_SHARD.get()));
-        event.getTarget().remove(Entity.RemovalReason.KILLED);
+        if (event.getEntityLiving().getMainHandItem().getItem() == Items.AIR) return;
+        if (event.getEntityLiving().getMainHandItem().getItem() != Items.NETHERITE_SCRAP) return;
+        event.getEntityLiving().getMainHandItem().setCount(event.getEntityLiving().getMainHandItem().getCount()-1);
+        Block.popResource(event.getTarget().level,event.getTarget().blockPosition().offset(0,1,0), new ItemStack(ModItem.LAVA_SHARD.get()));
+        event.getTarget().remove();
     }
 
    /* @SubscribeEvent

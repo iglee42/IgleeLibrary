@@ -1,12 +1,9 @@
 package fr.iglee42.techresourcesbase;
 
+import fr.iglee42.techresourcesbase.common.init.ModBlock;
+import fr.iglee42.techresourcesbase.common.init.ModItem;
+import fr.iglee42.techresourcesbase.common.init.ModMessages;
 import fr.iglee42.techresourcesbase.config.TechResourcesBaseCommonConfig;
-import fr.iglee42.techresourcesbase.init.ModBlock;
-import fr.iglee42.techresourcesbase.init.ModItem;
-import fr.iglee42.techresourcesbase.init.ModMessages;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -37,8 +34,4 @@ public class TechResourcesBase {
         ModMessages.register();
     }
 
-    public static void sendClientMessage(String message) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        player.sendSystemMessage(Component.literal(message));
-    }
 }

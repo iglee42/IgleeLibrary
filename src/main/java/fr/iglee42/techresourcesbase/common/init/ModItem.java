@@ -1,18 +1,19 @@
-package fr.iglee42.techresourcesbase.init;
+package fr.iglee42.techresourcesbase.common.init;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
-import fr.iglee42.techresourcesbase.baseutils.CustomGroup;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
+import fr.iglee42.techresourcesbase.common.baseutils.CustomGroup;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ModItem {
@@ -23,9 +24,9 @@ public class ModItem {
 
     public static final RegistryObject<Item> LAVA_SHARD = ITEMS.register("lava_shard",()-> new Item(new Item.Properties().tab(CustomGroup.BASE_GROUP)){
         @Override
-        public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
-            p_41423_.add(Component.literal("Obtain when right click on a blaze with netherite scrap").withStyle(ChatFormatting.GOLD));
-            super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);
+        public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
+            p_77624_3_.add(new StringTextComponent("Obtain when right click on a blaze with netherite scrap").withStyle(TextFormatting.GOLD));
+            super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
         }
     });
 

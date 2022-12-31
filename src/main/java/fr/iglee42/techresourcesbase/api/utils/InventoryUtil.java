@@ -1,19 +1,18 @@
-package fr.iglee42.techresourcesbase.utils;
+package fr.iglee42.techresourcesbase.api.utils;
 
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class InventoryUtil {
-    public static boolean hasPlayerStackInInventory(Player player, Item item) {
-        for(int i = 0; i < player.getInventory().getContainerSize(); i++) {
-            ItemStack currentStack = player.getInventory().getItem(i);
+    public static boolean hasPlayerStackInInventory(PlayerEntity player, Item item) {
+        for(int i = 0; i < player.inventory.getContainerSize(); i++) {
+            ItemStack currentStack = player.inventory.getItem(i);
             if (!currentStack.isEmpty() && currentStack.sameItem(new ItemStack(item))) {
                 return true;
             }
@@ -22,9 +21,9 @@ public class InventoryUtil {
         return false;
     }
 
-    public static int getFirstInventoryIndex(Player player, Item item) {
-        for(int i = 0; i < player.getInventory().getContainerSize(); i++) {
-            ItemStack currentStack = player.getInventory().getItem(i);
+    public static int getFirstInventoryIndex(PlayerEntity player, Item item) {
+        for(int i = 0; i < player.inventory.getContainerSize(); i++) {
+            ItemStack currentStack = player.inventory.getItem(i);
             if (!currentStack.isEmpty() && currentStack.sameItem(new ItemStack(item))) {
                 return i;
             }
@@ -48,6 +47,6 @@ public class InventoryUtil {
     }
     public static EntityType<?> getEntity(String name){
         String[] it = ModsUtils.split(name,":");
-        return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(it[0],it[1]));
+        return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(it[0],it[1]));
     }
 }
