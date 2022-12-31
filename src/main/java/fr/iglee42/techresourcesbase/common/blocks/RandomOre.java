@@ -1,6 +1,6 @@
-package fr.iglee42.techresourcesbase.blocks;
+package fr.iglee42.techresourcesbase.common.blocks;
 
-import fr.iglee42.techresourcesbase.config.TechResourcesBaseCommonConfig;
+import fr.iglee42.techresourcesbase.common.config.TechResourcesBaseCommonConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;

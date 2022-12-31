@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.utils;
+package fr.iglee42.techresourcesbase.api.utils;
 
 public class ModsUtils {
 

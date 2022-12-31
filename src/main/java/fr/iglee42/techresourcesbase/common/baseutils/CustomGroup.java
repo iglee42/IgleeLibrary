@@ -1,7 +1,7 @@
-package fr.iglee42.techresourcesbase.baseutils;
+package fr.iglee42.techresourcesbase.common.baseutils;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
-import fr.iglee42.techresourcesbase.init.ModItem;
+import fr.iglee42.techresourcesbase.common.init.ModItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 

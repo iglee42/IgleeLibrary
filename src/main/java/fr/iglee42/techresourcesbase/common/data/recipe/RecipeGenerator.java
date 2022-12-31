@@ -1,7 +1,7 @@
-package fr.iglee42.techresourcesbase.data.recipe;
+package fr.iglee42.techresourcesbase.common.data.recipe;
 
-import fr.iglee42.techresourcesbase.init.ModBlock;
-import fr.iglee42.techresourcesbase.init.ModItem;
+import fr.iglee42.techresourcesbase.common.init.ModBlock;
+import fr.iglee42.techresourcesbase.common.init.ModItem;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -23,7 +23,7 @@ public class RecipeGenerator extends RecipeProvider {
                 .pattern("III")
                 .pattern("III")
                 .pattern("III")
-                .define('I',ModItem.MODIUM_INGOT.get())
+                .define('I', ModItem.MODIUM_INGOT.get())
                 .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.MODIUM_INGOT.get()))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItem.MODIUM_INGOT.get(),9)

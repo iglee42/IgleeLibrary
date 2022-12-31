@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.config;
+package fr.iglee42.techresourcesbase.common.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

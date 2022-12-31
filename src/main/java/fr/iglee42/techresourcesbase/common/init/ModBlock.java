@@ -1,8 +1,8 @@
-package fr.iglee42.techresourcesbase.init;
+package fr.iglee42.techresourcesbase.common.init;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
-import fr.iglee42.techresourcesbase.blocks.RandomOre;
-import fr.iglee42.techresourcesbase.baseutils.CustomGroup;
+import fr.iglee42.techresourcesbase.common.blocks.RandomOre;
+import fr.iglee42.techresourcesbase.common.baseutils.CustomGroup;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

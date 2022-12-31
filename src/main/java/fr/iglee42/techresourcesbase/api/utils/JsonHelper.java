@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.utils;
+package fr.iglee42.techresourcesbase.api.utils;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;

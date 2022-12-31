@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.baseutils;
+package fr.iglee42.techresourcesbase.common.baseutils;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;

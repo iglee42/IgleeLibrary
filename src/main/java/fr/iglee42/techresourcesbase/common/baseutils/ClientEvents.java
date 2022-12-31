@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.baseutils;
+package fr.iglee42.techresourcesbase.common.baseutils;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
 import net.minecraftforge.api.distmarker.Dist;

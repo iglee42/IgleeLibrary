@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.utils;
+package fr.iglee42.techresourcesbase.api.utils;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

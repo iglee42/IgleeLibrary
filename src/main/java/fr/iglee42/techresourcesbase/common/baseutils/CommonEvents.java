@@ -1,15 +1,12 @@
-package fr.iglee42.techresourcesbase.baseutils;
+package fr.iglee42.techresourcesbase.common.baseutils;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
-import fr.iglee42.techresourcesbase.init.ModItem;
+import fr.iglee42.techresourcesbase.common.init.ModItem;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

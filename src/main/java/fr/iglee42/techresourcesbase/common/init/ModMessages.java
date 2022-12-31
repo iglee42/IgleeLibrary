@@ -1,4 +1,4 @@
-package fr.iglee42.techresourcesbase.init;
+package fr.iglee42.techresourcesbase.common.init;
 
 import fr.iglee42.techresourcesbase.TechResourcesBase;
 import net.minecraft.resources.ResourceLocation;
