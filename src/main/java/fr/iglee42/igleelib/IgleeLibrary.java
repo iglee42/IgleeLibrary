@@ -1,0 +1,42 @@
+package fr.iglee42.igleelib;
+
+import fr.iglee42.igleelib.common.config.IgleeLibCommonConfig;
+import fr.iglee42.igleelib.common.init.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+
+@Mod(IgleeLibrary.MODID)
+public class IgleeLibrary {
+
+    public static final String MODID = "igleelib";
+
+    public IgleeLibrary() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModBlock.BLOCKS.register(bus);
+        ModItem.ITEMS.register(bus);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IgleeLibCommonConfig.SPEC,"igleelib-common.toml");
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
+
+    }
+
+    private void setup(FMLCommonSetupEvent e){
+
+        ModMessages.register();
+    }
+
+    public static void sendClientMessage(String message) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        player.sendMessage(new TextComponent(message),player.getUUID());
+    }
+}

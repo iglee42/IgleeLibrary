@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "addition": {
+    "item": "minecraft:blaze_rod"
+  },
+  "result": {
+    "item": "igleelib:blazum_ingot"
+  }
+}

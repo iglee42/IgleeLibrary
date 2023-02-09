@@ -1,10 +1,9 @@
 {
   "replace": false,
   "values": [
-    "techresourcesbase:modium_block",
-    "techresourcesbase:derium_block",
-    "techresourcesbase:blazum_block",
-    "techresourcesbase:lavium_block",
-    "techresourcesbase:random_ore"
+    "igleelib:modium_block",
+    "igleelib:derium_block",
+    "igleelib:blazum_block",
+    "igleelib:lavium_block"
   ]
 }

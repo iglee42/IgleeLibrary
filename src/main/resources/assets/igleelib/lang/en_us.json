@@ -1,0 +1,47 @@
+{
+  "_comment": "Iglee's Library",
+
+  "block.igleelib.modium_generator": "Modium Generator",
+  "block.igleelib.derium_generator": "Derium Generator",
+  "block.igleelib.blazum_generator": "Blazum Generator",
+  "block.igleelib.manual_generator": "Manual Generator",
+  "block.igleelib.lavium_generator": "Lavium Generator",
+  "block.igleelib.pillar": "Pillar",
+  "block.igleelib.modium_block": "Modium Block",
+  "block.igleelib.derium_block": "Derium Block",
+  "block.igleelib.blazum_block": "Blazum Block",
+  "block.igleelib.lavium_block": "Lavium Block",
+  "block.igleelib.random_ore": "Random Ore",
+
+  "item.igleelib.modium_ingot": "Modium Ingot",
+  "item.igleelib.derium_ingot": "Derium Ingot",
+  "item.igleelib.blazum_ingot": "Blazum Ingot",
+  "item.igleelib.lavium_ingot": "Lavium Ingot",
+  "item.igleelib.ultimerite_ingot": "Ultimerite Ingot",
+  "item.igleelib.lava_shard": "Lava Shard",
+
+  "item.igleelib.ultimerite_helmet": "Ultimerite Helmet",
+  "item.igleelib.ultimerite_chestplate": "Ultimerite Chestplate",
+  "item.igleelib.ultimerite_leggings": "Ultimerite Leggings",
+  "item.igleelib.ultimerite_boots": "Ultimerite Boots",
+
+  "item.igleelib.wood_gessence": "Wood Gessence",
+  "item.igleelib.cobblestone_gessence": "Cobblestone Gessence",
+  "item.igleelib.coal_gessence": "Coal Gessence",
+  "item.igleelib.iron_gessence": "Iron Gessence",
+  "item.igleelib.gold_gessence": "Gold Gessence",
+  "item.igleelib.redstone_gessence": "Redstone Gessence",
+  "item.igleelib.lapis_gessence": "Lapis Gessence",
+  "item.igleelib.diamond_gessence": "Diamond Gessence",
+  "item.igleelib.emerald_gessence": "Emerald Gessence",
+  "item.igleelib.netherite_gessence": "Netherite Gessence",
+  "item.igleelib.modium_gessence": "Modium Gessence",
+  "item.igleelib.derium_gessence": "Derium Gessence",
+  "item.igleelib.blazum_gessence": "Blazum Gessence",
+  "item.igleelib.lavium_gessence": "Lavium Gessence",
+  "item.igleelib.ultimate_gessence": "Ultimate Gessence",
+
+  "itemGroup.igleelib.base": "Iglee's Library",
+  "keybind.igleelib.ultichestfly": "Enable/Disable Ultimerite chestplate fly"
+
+}

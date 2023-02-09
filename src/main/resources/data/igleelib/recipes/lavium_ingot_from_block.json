@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "igleelib:lavium_block"
+    }
+  ],
+  "result": {
+    "item": "igleelib:lavium_ingot",
+    "count": 9
+  }
+}
