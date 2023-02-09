@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "igleelib:block/derium_block" }
+    }
+}

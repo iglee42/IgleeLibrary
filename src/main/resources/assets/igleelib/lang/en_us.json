@@ -1,0 +1,29 @@
+{
+  "_comment": "Iglee's Library",
+
+  "block.igleelib.pillar": "Pillar",
+  "block.igleelib.modium_block": "Modium Block",
+  "block.igleelib.derium_block": "Derium Block",
+  "block.igleelib.blazum_block": "Blazum Block",
+  "block.igleelib.lavium_block": "Lavium Block",
+  "block.igleelib.random_ore": "Random Ore",
+
+  "item.igleelib.modium_ingot": "Modium Ingot",
+  "item.igleelib.derium_ingot": "Derium Ingot",
+  "item.igleelib.blazum_ingot": "Blazum Ingot",
+  "item.igleelib.lavium_ingot": "Lavium Ingot",
+  "item.igleelib.ultimerite_ingot": "Ultimerite Ingot",
+  "item.igleelib.lava_shard": "Lava Shard",
+
+  "item.igleelib.ultimerite_helmet": "Ultimerite Helmet",
+  "item.igleelib.ultimerite_chestplate": "Ultimerite Chestplate",
+  "item.igleelib.ultimerite_leggings": "Ultimerite Leggings",
+  "item.igleelib.ultimerite_boots": "Ultimerite Boots",
+
+
+  "item.igleelib.ultimate_gessence": "Ultimate Gessence",
+
+  "itemGroup.igleelib.base": "Iglee's Library",
+  "keybind.igleelib.ultichestfly": "Enable/Disable Ultimerite chestplate fly"
+
+}

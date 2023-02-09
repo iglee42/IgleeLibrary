@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "igleelib:blazum_ingot"
+    }
+  },
+  "result": {
+    "item": "igleelib:blazum_block"
+  }
+}
