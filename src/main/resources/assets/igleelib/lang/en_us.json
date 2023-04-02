@@ -24,6 +24,9 @@
   "item.igleelib.ultimate_gessence": "Ultimate Gessence",
 
   "itemGroup.igleelib.base": "Iglee's Library",
-  "keybind.igleelib.ultichestfly": "Enable/Disable Ultimerite chestplate fly"
+  "keybind.igleelib.ultichestfly": "Enable/Disable Ultimerite chestplate fly",
+
+  "tooltip.igleelib.liquid_amount.with_capacity": "%s / %s mB",
+  "tooltip.igleelib.liquid_amount": "%s mB"
 
 }
