@@ -2,6 +2,7 @@ package fr.iglee42.igleelib.common.init;
 
 import fr.iglee42.igleelib.IgleeLibrary;
 import fr.iglee42.igleelib.common.baseutils.CustomGroup;
+import fr.iglee42.igleelib.common.blocks.GhostBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -23,6 +24,10 @@ public class ModBlock {
     public static final RegistryObject<Block> DERIUM_BLOCK = createBlock("derium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> BLAZUM_BLOCK = createBlock("blazum_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> LAVIUM_BLOCK = createBlock("lavium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+
+
+    public static final RegistryObject<Block> GHOST_BLOCK = createBlockWithoutItem("ghost_block", GhostBlock::new);
+
 
     public static RegistryObject<Block> createBlock(String name, Supplier<? extends Block> supplier)
     {

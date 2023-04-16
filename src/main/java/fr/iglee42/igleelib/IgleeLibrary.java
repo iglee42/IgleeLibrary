@@ -21,6 +21,7 @@ public class IgleeLibrary {
     public IgleeLibrary() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlock.BLOCKS.register(bus);
+        ModBlockEntities.BLOCK_ENTITIES.register(bus);
         ModItem.ITEMS.register(bus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IgleeLibCommonConfig.SPEC,"igleelib-common.toml");
