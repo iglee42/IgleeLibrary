@@ -1,6 +1,6 @@
 package fr.iglee42.igleelib.common.baseutils;
 
-import fr.iglee42.igleelib.IgleeLib;
+import fr.iglee42.igleelib.IgleeLibrary;
 import fr.iglee42.igleelib.common.init.ModItem;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = IgleeLib.MODID)
+@Mod.EventBusSubscriber(modid = IgleeLibrary.MODID)
 public class CommonEvents {
 
     @SubscribeEvent

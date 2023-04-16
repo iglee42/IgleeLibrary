@@ -1,6 +1,6 @@
 package fr.iglee42.igleelib.common.init;
 
-import fr.iglee42.igleelib.IgleeLib;
+import fr.iglee42.igleelib.IgleeLibrary;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkRegistry;
@@ -17,7 +17,7 @@ public class ModMessages {
 
     public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(IgleeLib.MODID, "messages"))
+                .named(new ResourceLocation(IgleeLibrary.MODID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)

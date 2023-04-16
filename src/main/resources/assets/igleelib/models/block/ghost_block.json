@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "igleelib:block/ghost_block_overlay"
+  }
+}
