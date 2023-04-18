@@ -1,6 +1,6 @@
 package fr.iglee42.igleelib.common.init;
 
-import fr.iglee42.igleelib.IgleeLib;
+import fr.iglee42.igleelib.IgleeLibrary;
 import fr.iglee42.igleelib.common.baseutils.CustomGroup;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ModItem {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IgleeLib.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IgleeLibrary.MODID);
 
     public static final RegistryObject<Item> ULTIMERITE_INGOT = ITEMS.register("ultimerite_ingot",() -> new Item(new Item.Properties().tab(CustomGroup.BASE_GROUP)));
     public static final RegistryObject<Item> ULTIMATE_GESSENCE = ITEMS.register("ultimate_gessence",() -> new Item(new Item.Properties().tab(CustomGroup.BASE_GROUP)));
