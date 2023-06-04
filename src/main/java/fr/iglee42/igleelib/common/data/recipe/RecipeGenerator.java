@@ -24,44 +24,44 @@ public class RecipeGenerator extends RecipeProvider {
                 .pattern("III")
                 .pattern("III")
                 .define('I', ModItem.MODIUM_INGOT.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.MODIUM_INGOT.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.MODIUM_INGOT.get()))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItem.MODIUM_INGOT.get(),9)
                 .requires(ModBlock.MODIUM_BLOCK.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.MODIUM_BLOCK.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.MODIUM_BLOCK.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ModBlock.DERIUM_BLOCK.get())
                 .pattern("III")
                 .pattern("III")
                 .pattern("III")
                 .define('I',ModItem.DERIUM_INGOT.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.DERIUM_INGOT.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.DERIUM_INGOT.get()))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItem.DERIUM_INGOT.get(),9)
                 .requires(ModBlock.DERIUM_BLOCK.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.DERIUM_BLOCK.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.DERIUM_BLOCK.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ModBlock.BLAZUM_BLOCK.get())
                 .pattern("III")
                 .pattern("III")
                 .pattern("III")
                 .define('I',ModItem.BLAZUM_INGOT.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.BLAZUM_INGOT.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.BLAZUM_INGOT.get()))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItem.BLAZUM_INGOT.get(),9)
                 .requires(ModBlock.BLAZUM_BLOCK.get())
-                .m_142284_("unlock", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.BLAZUM_BLOCK.get()))
+                .unlockedBy("unlock", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.BLAZUM_BLOCK.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ModBlock.LAVIUM_BLOCK.get())
                 .pattern("III")
                 .pattern("III")
                 .pattern("III")
                 .define('I',ModItem.LAVIUM_INGOT.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.LAVIUM_INGOT.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModItem.LAVIUM_INGOT.get()))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItem.LAVIUM_INGOT.get(),9)
                 .requires(ModBlock.LAVIUM_BLOCK.get())
-                .m_142284_("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.LAVIUM_BLOCK.get()))
+                .unlockedBy("unlock",InventoryChangeTrigger.TriggerInstance.hasItems(ModBlock.LAVIUM_BLOCK.get()))
                 .save(consumer);
     }
 }
