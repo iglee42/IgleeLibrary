@@ -26,17 +26,17 @@ public class ModsUtils {
 
     public static String getUpperName(String name,String wordSeparator) {
         String[] nm = split(name,wordSeparator);
-        String end = "";
+        StringBuilder end = new StringBuilder();
         int i = 0;
         for (String n : nm) {
             i += 1;
             char fc = n.charAt(0);
             String fcs = String.valueOf(fc);
             String fs = fcs.toUpperCase() + n.substring(1);
-            end = fs + (i == nm.length ? "" : " ");
+            end.append(fs).append(i == nm.length ? "" : " ");
         }
 
-        return end;
+        return end.toString();
     }
     public static void placeGhostBlock(ServerLevel level, BlockPos pos, BlockState blockState, int dispearTime){
         level.setBlockAndUpdate(pos, ModBlock.GHOST_BLOCK.get().defaultBlockState());
