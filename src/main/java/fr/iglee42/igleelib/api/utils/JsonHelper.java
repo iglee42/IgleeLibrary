@@ -8,6 +8,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.RecordComponent;
+import java.util.ArrayList;
+import java.util.List;
+
 public class JsonHelper {
 
     public static boolean getBoolean(JsonObject json, String name){
@@ -71,6 +76,39 @@ public class JsonHelper {
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
         return ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(it[0],it[1]));
+    }
+
+    public static <O extends Record> O createRecordFromJson(Class<O> recordClass ,JsonObject json){
+        try {
+            List<Object> args = new ArrayList<>();
+            for (RecordComponent components : recordClass.getRecordComponents()) {
+                if (Integer.class.equals(components.getType())) {
+                    args.add(getInt(json, components.getName()));
+                } else if (String.class.equals(components.getType())) {
+                    args.add(getString(json, components.getName()));
+                } else if (Boolean.class.equals(components.getType())) {
+                    args.add(getBoolean(json, components.getName()));
+                } else if (Item.class.equals(components.getType())) {
+                    args.add(getItem(json, components.getName()));
+                } else if (Block.class.equals(components.getType())) {
+                    args.add(getBlock(json, components.getName()));
+                } else if (EntityType.class.equals(components.getType())) {
+                    args.add(getEntityType(json, components.getName()));
+                } else if (Enchantment.class.equals(components.getType())) {
+                    args.add(getEnchantment(json, components.getName()));
+                } else if (ResourceLocation.class.equals(components.getType())) {
+                    args.add(ResourceLocation.tryParse(getString(json, components.getName())));
+                } else {
+                    throw new IllegalArgumentException("The parameter type is not supported !");
+                }
+            }
+            List<Class<?>> classes = new ArrayList<>();
+            args.forEach(o -> classes.add(o.getClass()));
+            return recordClass.getConstructor(classes.toArray(new Class[]{})).newInstance(args.toArray(new Object[]{}));
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
