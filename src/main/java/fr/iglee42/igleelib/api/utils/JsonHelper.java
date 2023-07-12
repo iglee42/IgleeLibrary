@@ -11,6 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.RecordComponent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JsonHelper {
@@ -78,10 +79,14 @@ public class JsonHelper {
         return ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(it[0],it[1]));
     }
 
-    public static <O extends Record> O createRecordFromJson(Class<O> recordClass ,JsonObject json){
+    public static <O extends Record> O createRecordFromJson(Class<O> recordClass ,JsonObject json,CustomParameter... defaultParameters){
         try {
             List<Object> args = new ArrayList<>();
             for (RecordComponent components : recordClass.getRecordComponents()) {
+                if (Arrays.stream(defaultParameters).anyMatch(p->p.name().equals(components.getName()))){
+                    args.add(Arrays.stream(defaultParameters).filter(p->p.name().equals(components.getName())).findAny().get().value());
+                    continue;
+                }
                 if (Integer.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
