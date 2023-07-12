@@ -135,9 +135,9 @@ public class JsonHelper {
                 } else if (EntityType.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
-                            args.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(components.getAnnotation(DefaultParameter.class).entityTypeValue())));
+                            args.add(ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(components.getAnnotation(DefaultParameter.class).entityTypeValue())));
                         } else {
-                            args.add(getEntityTypeOrDefault(json, components.getName(),ForgeRegistries.ENTITIES.getValue(new ResourceLocation(components.getAnnotation(DefaultParameter.class).entityTypeValue()))));
+                            args.add(getEntityTypeOrDefault(json, components.getName(),ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(components.getAnnotation(DefaultParameter.class).entityTypeValue()))));
                         }
                     } else {
                         args.add(getEntityType(json,components.getName()));
