@@ -88,7 +88,7 @@ public class JsonHelper {
                     args.add(Arrays.stream(defaultParameters).filter(p->p.name().equals(components.getName())).findAny().get().value());
                     continue;
                 }
-                if (Integer.class.equals(components.getType())) {
+                if (Integer.class.equals(components.getType()) || int.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
                             args.add(components.getAnnotation(DefaultParameter.class).intValue());
@@ -108,7 +108,7 @@ public class JsonHelper {
                     } else {
                         args.add(getString(json,components.getName()));
                     }
-                } else if (Boolean.class.equals(components.getType())) {
+                } else if (Boolean.class.equals(components.getType()) ||boolean.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
                             args.add(components.getAnnotation(DefaultParameter.class).booleanValue());
