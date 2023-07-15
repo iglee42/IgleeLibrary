@@ -83,9 +83,11 @@ public class JsonHelper {
     public static <O extends Record> O createRecordFromJson(Class<O> recordClass ,JsonObject json,CustomParameter... defaultParameters){
         try {
             List<Object> args = new ArrayList<>();
+            List<Class<?>> classes = new ArrayList<>();
             for (RecordComponent components : recordClass.getRecordComponents()) {
                 if (Arrays.stream(defaultParameters).anyMatch(p->p.name().equals(components.getName()))){
                     args.add(Arrays.stream(defaultParameters).filter(p->p.name().equals(components.getName())).findAny().get().value());
+                    classes.add(components.getType());
                     continue;
                 }
                 if (Integer.class.equals(components.getType()) || int.class.equals(components.getType())) {
@@ -98,6 +100,7 @@ public class JsonHelper {
                     } else {
                         args.add(getInt(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (String.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -108,6 +111,7 @@ public class JsonHelper {
                     } else {
                         args.add(getString(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (Boolean.class.equals(components.getType()) ||boolean.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -118,6 +122,7 @@ public class JsonHelper {
                     } else {
                         args.add(getBoolean(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (Item.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -128,6 +133,7 @@ public class JsonHelper {
                     } else {
                         args.add(getItem(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (Block.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -138,6 +144,7 @@ public class JsonHelper {
                     } else {
                         args.add(getBlock(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (EntityType.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -148,6 +155,7 @@ public class JsonHelper {
                     } else {
                         args.add(getEntityType(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (Enchantment.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -158,6 +166,7 @@ public class JsonHelper {
                     } else {
                         args.add(getEnchantment(json,components.getName()));
                     }
+                    classes.add(components.getType());
                 } else if (ResourceLocation.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
                         if (components.isAnnotationPresent(OptionalParameter.class) && !json.has(components.getName())){
@@ -168,12 +177,11 @@ public class JsonHelper {
                     } else {
                         args.add(ResourceLocation.tryParse(getString(json,components.getName())));
                     }
+                    classes.add(components.getType());
                 } else {
                     throw new IllegalArgumentException("The parameter type is not supported !");
                 }
             }
-            List<Class<?>> classes = new ArrayList<>();
-            args.forEach(o -> classes.add(o.getClass()));
             return recordClass.getConstructor(classes.toArray(new Class[]{})).newInstance(args.toArray(new Object[]{}));
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
             e.printStackTrace();
