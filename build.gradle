@@ -189,11 +189,12 @@ publishing {
     }
     repositories {
         maven {
-            name = 'bytesafe'
-            url = 'https://techresources.bytesafe.dev/maven/library/'
+            name = 'igleeRepo'
+            url = 'http://iglee.site:8080/releases'
+            allowInsecureProtocol = true
             credentials {
-                username = 'bytesafe'
-                password = '01G8RH9M66BVQWG4R40S7CTTT3'
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASS")
             }
         }
     }
