@@ -3,6 +3,7 @@ package fr.iglee42.igleelib.common.blocks.entity;
 import fr.iglee42.igleelib.common.blocks.GhostBlock;
 import fr.iglee42.igleelib.common.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
@@ -34,7 +35,7 @@ public class GhostBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.stockedBlock = NbtUtils.readBlockState(tag.getCompound("stockedBlock"));
+        this.stockedBlock = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK),tag.getCompound("stockedBlock"));
         this.dispearTime = tag.getInt("dispearTime");
     }
     @Override
@@ -56,7 +57,7 @@ public class GhostBlockEntity extends BlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-       this.stockedBlock = NbtUtils.readBlockState(pkt.getTag().getCompound("stockedBlock"));
+       this.stockedBlock = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK),pkt.getTag().getCompound("stockedBlock"));
        this.dispearTime = pkt.getTag().getInt("dispearTime");
     }
     @NotNull

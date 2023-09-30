@@ -1,7 +1,6 @@
 package fr.iglee42.igleelib.common.init;
 
 import fr.iglee42.igleelib.IgleeLibrary;
-import fr.iglee42.igleelib.common.baseutils.CustomGroup;
 import fr.iglee42.igleelib.common.blocks.GhostBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -29,7 +28,7 @@ public class ModBlock {
     public static RegistryObject<Block> createBlock(String name, Supplier<? extends Block> supplier)
     {
         RegistryObject<Block> block = BLOCKS.register(name, supplier);
-        ModItem.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(CustomGroup.BASE_GROUP)));
+        ModItem.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
         return block;
     }
     public static RegistryObject<Block> createBlockWithoutItem(String name, Supplier<? extends Block> supplier)

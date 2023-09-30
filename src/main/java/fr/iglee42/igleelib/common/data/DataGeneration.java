@@ -15,7 +15,7 @@ public class DataGeneration {
         DataGenerator generator = e.getGenerator();
 
         if (e.includeServer()){
-            generator.addProvider(true,new RecipeGenerator(generator));
+            generator.addProvider(true,new RecipeGenerator(generator.getPackOutput()));
         }
     }
 }

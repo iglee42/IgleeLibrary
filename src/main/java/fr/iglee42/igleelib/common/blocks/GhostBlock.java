@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -34,7 +33,7 @@ public class GhostBlock extends BaseEntityBlock {
     public static final ModelProperty<BlockState> PS_BLOCKSTATE = new ModelProperty<>();
     public static final ModelProperty<FluidState> PS_FLUIDSTATE = new ModelProperty<>();
     public GhostBlock() {
-        super(Properties.of(Material.GLASS).strength(-1,36000).noOcclusion().noCollission());
+        super(Properties.copy(Blocks.GLASS).strength(-1,36000).noOcclusion().noCollission());
     }
 
     public boolean propagatesSkylightDown(BlockState p_49100_, BlockGetter p_49101_, BlockPos p_49102_) {

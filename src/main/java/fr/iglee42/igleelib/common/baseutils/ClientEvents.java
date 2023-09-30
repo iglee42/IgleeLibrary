@@ -35,12 +35,12 @@ public class ClientEvents {
     public static void clientStuff(final FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModBlock.GHOST_BLOCK.get(), RenderType.translucent());
     }
-    @SubscribeEvent
-    public static void onTextureStitch(TextureStitchEvent.Pre event) {
+    /*@SubscribeEvent
+    public static void onTextureStitch(TextureStitchEvent event) {
         if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-            event.addSprite(GHOST_OVERLAY_LOCATION);
+            event.(GHOST_OVERLAY_LOCATION);
         }
-    }
+    }*/
     @SubscribeEvent
     public static void onTextureStitched(TextureStitchEvent.Post event) {
         if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
@@ -55,7 +55,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onModelBaked(ModelEvent.BakingCompleted event) {
         Map<ResourceLocation, BakedModel> registry = event.getModels();
-        put(registry, GhostBlockModel::new,ModBlock.GHOST_BLOCK.get());
+        //put(registry, GhostBlockModel::new,ModBlock.GHOST_BLOCK.get());
     }
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {

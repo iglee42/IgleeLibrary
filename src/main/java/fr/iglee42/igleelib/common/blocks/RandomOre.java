@@ -11,6 +11,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -25,8 +26,9 @@ public class RandomOre extends Block {
         super(prop);
     }
 
+
     @Override
-    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
+    public List<ItemStack> getDrops(BlockState p_60537_, LootParams.Builder p_60538_) {
         List<ItemStack> drop = new ArrayList<>();
         if (IgleeLibCommonConfig.RANDOM_ORE_CAN_DROP_COBBLESTONE.get()){
             if (RANDOM.nextInt(100) <= (IgleeLibCommonConfig.PERCENT_DROP_COBBLE.get()-1)){
