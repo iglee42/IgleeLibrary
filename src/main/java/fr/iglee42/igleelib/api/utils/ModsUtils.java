@@ -38,13 +38,13 @@ public class ModsUtils {
 
         return end.toString();
     }
-    public static void placeGhostBlock(ServerLevel level, BlockPos pos, BlockState blockState, int dispearTime){
+    /*public static void placeGhostBlock(ServerLevel level, BlockPos pos, BlockState blockState, int dispearTime){
         level.setBlockAndUpdate(pos, ModBlock.GHOST_BLOCK.get().defaultBlockState());
         level.getBlockEntity(pos, ModBlockEntities.GHOST_BLOCK.get()).ifPresent(g -> {
             g.setStockedBlock(blockState);
             g.setDispearTime(dispearTime);
         });
-    }
+    }*/
 
     public static void saveStringToBuffer(FriendlyByteBuf buf , String s){
         buf.writeInt(s.length());

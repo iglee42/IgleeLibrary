@@ -1,15 +1,5 @@
 package fr.iglee42.igleelib.common.client.ghostblock;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import fr.iglee42.igleelib.common.blocks.entity.GhostBlockEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-
 /*public class GhostBlockRenderer implements BlockEntityRenderer<GhostBlockEntity> {
     public GhostBlockRenderer(BlockEntityRendererProvider.Context context) {
     }

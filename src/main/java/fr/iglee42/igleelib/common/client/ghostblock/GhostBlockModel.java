@@ -1,31 +1,5 @@
 package fr.iglee42.igleelib.common.client.ghostblock;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import fr.iglee42.igleelib.api.utils.ModelDataUtils;
-import fr.iglee42.igleelib.common.baseutils.ClientEvents;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.client.model.data.ModelData;
-import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.Nonnull;
-import java.util.*;
-import java.util.function.Supplier;
-
-import static fr.iglee42.igleelib.common.blocks.GhostBlock.PS_BLOCKSTATE;
-import static fr.iglee42.igleelib.common.blocks.GhostBlock.PS_FLUIDSTATE;
-import static java.lang.Float.floatToRawIntBits;
-import static java.lang.Float.intBitsToFloat;
-
 /*public class GhostBlockModel implements BakedModel {
     private static final Supplier<BlockRenderDispatcher> DISPATCHER = () -> Minecraft.getInstance().getBlockRenderer();
 
