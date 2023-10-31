@@ -48,8 +48,4 @@ public class IgleeLibrary {
         }
     }
 
-    public static void sendClientMessage(String message) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        player.sendSystemMessage(Component.literal(message));
-    }
 }

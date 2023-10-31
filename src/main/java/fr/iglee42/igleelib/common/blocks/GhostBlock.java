@@ -28,7 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
 
-public class GhostBlock extends BaseEntityBlock {
+/*public class GhostBlock extends BaseEntityBlock {
 
     public static final ModelProperty<BlockState> PS_BLOCKSTATE = new ModelProperty<>();
     public static final ModelProperty<FluidState> PS_FLUIDSTATE = new ModelProperty<>();
@@ -95,3 +95,4 @@ public class GhostBlock extends BaseEntityBlock {
 
 
 }
+*/

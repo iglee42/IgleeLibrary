@@ -26,7 +26,7 @@ import static fr.iglee42.igleelib.common.blocks.GhostBlock.PS_FLUIDSTATE;
 import static java.lang.Float.floatToRawIntBits;
 import static java.lang.Float.intBitsToFloat;
 
-public class GhostBlockModel implements BakedModel {
+/*public class GhostBlockModel implements BakedModel {
     private static final Supplier<BlockRenderDispatcher> DISPATCHER = () -> Minecraft.getInstance().getBlockRenderer();
 
     private final BakedModel model;
@@ -139,8 +139,8 @@ public class GhostBlockModel implements BakedModel {
                 }
             }
 
-            data[j+4] = floatToRawIntBits(ClientEvents.ghostOverlaySprite.getU(ui*16F));
-            data[j+5] = floatToRawIntBits(ClientEvents.ghostOverlaySprite.getV(vi*16F));
+            //data[j+4] = floatToRawIntBits(ClientEvents.ghostOverlaySprite.getU(ui*16F));
+            //data[j+5] = floatToRawIntBits(ClientEvents.ghostOverlaySprite.getV(vi*16F));
 
             //data[j+6] = (240 << 16) | 240;
         }
@@ -154,4 +154,4 @@ public class GhostBlockModel implements BakedModel {
     }
 
 
-}
+}*/

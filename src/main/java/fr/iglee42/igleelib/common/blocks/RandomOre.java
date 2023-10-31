@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomOre extends Block {
+/*public class RandomOre extends Block {
     Random RANDOM = new Random();
     public RandomOre(Properties prop) {
         super(prop);
@@ -78,4 +78,4 @@ public class RandomOre extends Block {
         p_49818_.add(Component.literal("§eDrop a random ore"));
         super.appendHoverText(p_49816_, p_49817_, p_49818_, p_49819_);
     }
-}
+}*/

@@ -1,22 +1,6 @@
 package fr.iglee42.igleelib.common.blocks.entity;
 
-import fr.iglee42.igleelib.common.blocks.GhostBlock;
-import fr.iglee42.igleelib.common.init.ModBlockEntities;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-public class GhostBlockEntity extends BlockEntity {
+/*public class GhostBlockEntity extends BlockEntity {
     private BlockState stockedBlock = Blocks.BEDROCK.defaultBlockState();
     private int dispearTime = -1;
 
@@ -91,4 +75,4 @@ public class GhostBlockEntity extends BlockEntity {
     public void setDispearTime(int time) {
         dispearTime = time;
     }
-}
+}*/

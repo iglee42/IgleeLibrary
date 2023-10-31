@@ -17,8 +17,8 @@ import java.util.List;
 public class ModItem {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IgleeLibrary.MODID);
 
-    public static final RegistryObject<Item> ULTIMERITE_INGOT = ITEMS.register("ultimerite_ingot",() -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> ULTIMATE_GESSENCE = ITEMS.register("ultimate_gessence",() -> new Item(new Item.Properties()));
+    //public static final RegistryObject<Item> ULTIMERITE_INGOT = ITEMS.register("ultimerite_ingot",() -> new Item(new Item.Properties()));
+    //public static final RegistryObject<Item> ULTIMATE_GESSENCE = ITEMS.register("ultimate_gessence",() -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> LAVA_SHARD = ITEMS.register("lava_shard",()-> new Item(new Item.Properties()){
         @Override
