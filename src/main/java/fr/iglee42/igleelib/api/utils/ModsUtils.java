@@ -5,10 +5,20 @@ import fr.iglee42.igleelib.common.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ModsUtils {
 
@@ -39,8 +49,7 @@ public class ModsUtils {
 
         return end.toString();
     }
-
-    public static void placeGhostBlock(ServerLevel level, BlockPos pos, BlockState blockState,int dispearTime){
+    public static void placeGhostBlock(ServerLevel level, BlockPos pos, BlockState blockState, int dispearTime){
         level.setBlockAndUpdate(pos, ModBlock.GHOST_BLOCK.get().defaultBlockState());
         level.getBlockEntity(pos, ModBlockEntities.GHOST_BLOCK.get()).ifPresent(g -> {
             g.setStockedBlock(blockState);
@@ -77,6 +86,17 @@ public class ModsUtils {
         double velZ = goPos.z() - fromPos.z();
 
         level.sendParticles(particleType, x, y, z, count, velX, velY, velZ, 0.09D);
+    }
+
+    public static void debugSign(Level level, BlockPos pos, String... lines){
+        if (level.getBlockEntity(pos.west()) instanceof SignBlockEntity s){
+            Component[] texts = new Component[4];
+            for (int i = 0; i < lines.length; i++) {
+                if (i < 3) break;
+                texts[i] = Component.literal(lines[i]);
+            }
+            s.setText(new SignText(texts,new Component[]{CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY}, DyeColor.BLACK,false),true);
+        }
     }
 
 
