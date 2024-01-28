@@ -6,8 +6,10 @@ import fr.iglee42.igleelib.common.init.ModBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 
@@ -81,7 +83,16 @@ public class ModsUtils {
         level.sendParticles(particleType, x, y, z, count, velX, velY, velZ, 0.09D);
     }
 
-
+    public static void debugSign(World level, BlockPos pos, String... lines){
+        if (level.getBlockEntity(pos.west()) instanceof SignTileEntity s){
+            Component[] texts = new Component[4];
+            for (int i = 0; i < lines.length; i++) {
+                if (i < 3) break;
+                texts[i] = Component.literal(lines[i]);
+            }
+            s.setText(new SignText(texts,new Component[]{CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY}, DyeColor.BLACK,false),true);
+        }
+    }
 
 
 
