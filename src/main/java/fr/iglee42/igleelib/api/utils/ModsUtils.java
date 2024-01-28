@@ -12,7 +12,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-
 public class ModsUtils {
 
     public static String[] split(String base,String separator){
@@ -86,7 +85,7 @@ public class ModsUtils {
     public static void debugSign(World level, BlockPos pos, String... lines){
         if (level.getBlockEntity(pos.west()) instanceof SignTileEntity s){
             for (int i = 0; i < lines.length; i++) {
-                if (i < 3) break;
+                if (i > 3) break;
                 s.setMessage(i,new StringTextComponent(lines[i]));
             }
         }
