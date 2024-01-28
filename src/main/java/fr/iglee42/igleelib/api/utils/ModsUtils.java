@@ -2,13 +2,13 @@ package fr.iglee42.igleelib.api.utils;
 
 import fr.iglee42.igleelib.common.blocks.entity.GhostBlockEntity;
 import fr.iglee42.igleelib.common.init.ModBlock;
-import fr.iglee42.igleelib.common.init.ModBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -85,12 +85,10 @@ public class ModsUtils {
 
     public static void debugSign(World level, BlockPos pos, String... lines){
         if (level.getBlockEntity(pos.west()) instanceof SignTileEntity s){
-            Component[] texts = new Component[4];
             for (int i = 0; i < lines.length; i++) {
                 if (i < 3) break;
-                texts[i] = Component.literal(lines[i]);
+                s.setMessage(i,new StringTextComponent(lines[i]));
             }
-            s.setText(new SignText(texts,new Component[]{CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY}, DyeColor.BLACK,false),true);
         }
     }
 
