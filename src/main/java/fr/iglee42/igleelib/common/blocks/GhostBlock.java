@@ -1,6 +1,34 @@
 package fr.iglee42.igleelib.common.blocks;
 
-/*public class GhostBlock extends BaseEntityBlock {
+import fr.iglee42.igleelib.common.blocks.entity.GhostBlockEntity;
+import fr.iglee42.igleelib.common.init.ModBlockEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.client.model.data.ModelProperty;
+import org.jetbrains.annotations.Nullable;
+
+public class GhostBlock extends BaseEntityBlock {
 
     public static final ModelProperty<BlockState> PS_BLOCKSTATE = new ModelProperty<>();
     public static final ModelProperty<FluidState> PS_FLUIDSTATE = new ModelProperty<>();
@@ -67,4 +95,3 @@ package fr.iglee42.igleelib.common.blocks;
 
 
 }
-*/

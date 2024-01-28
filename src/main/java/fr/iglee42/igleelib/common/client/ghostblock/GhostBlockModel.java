@@ -1,9 +1,37 @@
 package fr.iglee42.igleelib.common.client.ghostblock;
 
-/*public class GhostBlockModel implements BakedModel {
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import fr.iglee42.igleelib.api.utils.ModelDataUtils;
+import fr.iglee42.igleelib.common.baseutils.ClientEvents;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.client.model.data.ModelData;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.Supplier;
+
+import static fr.iglee42.igleelib.common.blocks.GhostBlock.PS_BLOCKSTATE;
+import static fr.iglee42.igleelib.common.blocks.GhostBlock.PS_FLUIDSTATE;
+import static java.lang.Float.floatToRawIntBits;
+import static java.lang.Float.intBitsToFloat;
+
+public class GhostBlockModel implements BakedModel {
     private static final Supplier<BlockRenderDispatcher> DISPATCHER = () -> Minecraft.getInstance().getBlockRenderer();
 
     private final BakedModel model;
+    private Integer quadsNumber = null;
 
     public GhostBlockModel(BakedModel model) {
         this.model = model;
@@ -12,7 +40,7 @@ package fr.iglee42.igleelib.common.client.ghostblock;
 
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random,  ModelData extraData,RenderType renderType) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random, ModelData extraData, RenderType renderType) {
         Optional<BlockState> data = ModelDataUtils.getData(extraData, PS_BLOCKSTATE);
         if (!data.isPresent()) {
             return Collections.emptyList();
@@ -30,12 +58,15 @@ package fr.iglee42.igleelib.common.client.ghostblock;
 
     private List<BakedQuad> getOverlay(List<BakedQuad> allQuads){
         List<BakedQuad> quads = new ArrayList<>(allQuads);
-        for (BakedQuad quad : allQuads){
-            quads.add(generateOverlayQuad(quad));
+        quadsNumber = Math.toIntExact(allQuads.stream().filter(b -> !b.getSprite().equals(ClientEvents.ghostOverlaySprite)).count());
+        if (quads.size() < quadsNumber*2) {
+            for (BakedQuad quad : allQuads) {
+                quads.add(generateOverlayQuad(quad));
+            }
         }
         return quads;
     }
-    protected List<BakedQuad> render(FluidState fluidState,@Nonnull BlockState mirrorState, @Nonnull BlockState baseState, @Nonnull BakedModel model, @Nullable Direction side, @Nonnull RandomSource rand, @Nonnull ModelData extraData,RenderType renderType) {
+    protected List<BakedQuad> render(FluidState fluidState, @Nonnull BlockState mirrorState, @Nonnull BlockState baseState, @Nonnull BakedModel model, @Nullable Direction side, @Nonnull RandomSource rand, @Nonnull ModelData extraData, RenderType renderType) {
         List<BakedQuad> quads = new ArrayList<>(model.getQuads(mirrorState, side, rand, extraData,renderType));
         return quads;
     }
@@ -83,8 +114,43 @@ package fr.iglee42.igleelib.common.client.ghostblock;
     }
 
     public BakedQuad generateOverlayQuad(BakedQuad quad) {
+        TextureAtlasSprite overlaySprite = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ClientEvents.GHOST_OVERLAY_LOCATION);
         int[] data = Arrays.copyOf(quad.getVertices(), quad.getVertices().length);
         for (int i = 0; i < 4; i++) {
+            int j = DefaultVertexFormat.BLOCK.getIntegerSize() * i;
+
+            float x = intBitsToFloat(data[j]) + 0.001F*quad.getDirection().getStepX();
+            float y = intBitsToFloat(data[j+1]) + 0.001F*quad.getDirection().getStepY();
+            float z = intBitsToFloat(data[j+2]) + 0.001F*quad.getDirection().getStepZ();
+
+            data[j] = floatToRawIntBits(x);
+            data[j+1] = floatToRawIntBits(y);
+            data[j+2] = floatToRawIntBits(z);
+
+            float ui;
+            float vi;
+
+            switch (quad.getDirection().getAxis()) {
+                case X -> {
+                    ui = z;
+                    vi = 1 - y;
+                }
+                default -> {
+                    ui = x;
+                    vi = z;
+                }
+                case Z -> {
+                    ui = x;
+                    vi = 1 - y;
+                }
+            }
+
+            data[j+4] = floatToRawIntBits(overlaySprite.getU(ui*16F));
+            data[j+5] = floatToRawIntBits(overlaySprite.getV(vi*16F));
+
+            data[j+6] = (240 << 16) | 240;
+        }
+        /*for (int i = 0; i < 4; i++) {
             int j = DefaultVertexFormat.BLOCK.getIntegerSize() * i;
 
             float x = intBitsToFloat(data[j]) + 0.001F*quad.getDirection().getStepX();
@@ -117,9 +183,9 @@ package fr.iglee42.igleelib.common.client.ghostblock;
             //data[j+5] = floatToRawIntBits(ClientEvents.ghostOverlaySprite.getV(vi*16F));
 
             //data[j+6] = (240 << 16) | 240;
-        }
+        }*/
 
-        return new BakedQuad(data, -1, quad.getDirection(), ClientEvents.ghostOverlaySprite, quad.isShade());
+        return new BakedQuad(data, -1, quad.getDirection(), overlaySprite, quad.isShade());
 
     }
     protected List<BakedQuad> gatherAllQuads(Supplier<List<BakedQuad>> superQuads) {
@@ -128,4 +194,4 @@ package fr.iglee42.igleelib.common.client.ghostblock;
     }
 
 
-}*/
+}
