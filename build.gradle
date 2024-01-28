@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.19.2-1.2.3'
+version = '1.19.2-1.2.4'
 group = 'fr.iglee42.igleelib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'igleelib'
 
@@ -189,7 +189,7 @@ publishing {
     repositories {
         maven {
             name = 'igleeRepo'
-            url = 'http://iglee.site:8080/releases'
+            url = 'http://50.20.249.21:8080/releases'
             allowInsecureProtocol = true
             credentials {
                 username = System.getenv("MAVEN_USER")
