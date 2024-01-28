@@ -91,7 +91,7 @@ public class ModsUtils {
         if (level.getBlockEntity(pos.west()) instanceof SignBlockEntity s){
             Component[] texts = new Component[4];
             for (int i = 0; i < lines.length; i++) {
-                if (i < 3) break;
+                if (i > 3) break;
                 texts[i] = Component.literal(lines[i]);
             }
             s.setText(new SignText(texts,new Component[]{CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY}, DyeColor.BLACK,false),true);
