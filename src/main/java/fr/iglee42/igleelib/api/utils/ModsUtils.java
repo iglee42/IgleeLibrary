@@ -83,7 +83,7 @@ public class ModsUtils {
     public static void debugSign(Level level, BlockPos pos, String... lines){
         if (level.getBlockEntity(pos.west()) instanceof SignBlockEntity s){
             for (int i = 0; i < lines.length; i++) {
-                if (i < 3) break;
+                if (i > 3) break;
                 s.setMessage(i,Component.literal(lines[i]));
             }
         }
