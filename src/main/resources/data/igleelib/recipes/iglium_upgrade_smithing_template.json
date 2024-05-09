@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ITI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:end_stone"
+    },
+    "T": {
+      "item": "minecraft:netherite_upgrade_smithing_template"
+    }
+  },
+  "result": {
+    "id": "igleelib:iglium_upgrade_smithing_template"
+  }
+}
