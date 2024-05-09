@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "igleelib:ultimerite_ingot_upgrade"
+      "igleelib:iglium_upgrade_smithing_template"
     ]
   },
   "criteria": {
@@ -11,7 +11,10 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_ingot"
+            "item": "minecraft:netherite_upgrade_smithing_template"
+          },
+          {
+            "item": "minecraft:end_stone"
           }
         ]
       }
@@ -19,7 +22,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "igleelib:ultimerite_ingot_upgrade"
+        "recipe": "igleelib:iglium_upgrade_smithing_template"
       }
     }
   },

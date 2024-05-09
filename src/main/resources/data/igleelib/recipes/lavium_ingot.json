@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "minecraft:netherite_ingot"
   },
   "addition": {
-    "item": "igleelib:lava_shard"
+    "item": "igleelib:blaze_shard"
   },
   "result": {
-    "item": "igleelib:lavium_ingot"
+    "id": "igleelib:lavium_ingot"
+  },
+  "template": {
+    "item": "igleelib:iglium_upgrade_smithing_template"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "minecraft:netherite_ingot"
   },
@@ -7,6 +7,9 @@
     "item": "minecraft:diamond"
   },
   "result": {
-    "item": "igleelib:modium_ingot"
+    "id": "igleelib:modium_ingot"
+  },
+  "template": {
+    "item": "igleelib:iglium_upgrade_smithing_template"
   }
 }
