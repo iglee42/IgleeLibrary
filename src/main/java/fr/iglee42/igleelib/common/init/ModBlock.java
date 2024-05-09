@@ -7,33 +7,32 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
 public class ModBlock {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, IgleeLibrary.MODID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(IgleeLibrary.MODID);
 
     //public static final RegistryObject<Block> RANDOM_ORE = createBlock("random_ore",()-> new RandomOre(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)));
 
-    public static final RegistryObject<Block> MODIUM_BLOCK = createBlock("modium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> DERIUM_BLOCK = createBlock("derium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> BLAZUM_BLOCK = createBlock("blazum_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> LAVIUM_BLOCK = createBlock("lavium_block", ()-> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<Block> MODIUM_BLOCK = createBlock("modium_block", ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<Block> DERIUM_BLOCK = createBlock("derium_block", ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<Block> BLAZUM_BLOCK = createBlock("blazum_block", ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<Block> LAVIUM_BLOCK = createBlock("lavium_block", ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
-    public static final RegistryObject<Block> GHOST_BLOCK = createBlockWithoutItem("ghost_block", GhostBlock::new);
-    public static RegistryObject<Block> createBlock(String name, Supplier<? extends Block> supplier)
+    public static final DeferredBlock<Block> GHOST_BLOCK = createBlockWithoutItem("ghost_block", GhostBlock::new);
+    public static DeferredBlock<Block> createBlock(String name, Supplier<? extends Block> supplier)
     {
-        RegistryObject<Block> block = BLOCKS.register(name, supplier);
-        ModItem.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        DeferredBlock<Block> block = BLOCKS.register(name, supplier);
+        ModItem.ITEMS.registerSimpleBlockItem(block);
         return block;
     }
-    public static RegistryObject<Block> createBlockWithoutItem(String name, Supplier<? extends Block> supplier)
+    public static DeferredBlock<Block> createBlockWithoutItem(String name, Supplier<? extends Block> supplier)
     {
-        RegistryObject<Block> block = BLOCKS.register(name, supplier);
+        DeferredBlock<Block> block = BLOCKS.register(name, supplier);
         return block;
     }
 }

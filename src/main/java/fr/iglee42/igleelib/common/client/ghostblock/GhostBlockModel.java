@@ -15,7 +15,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.common.util.TriState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -83,9 +84,10 @@ public class GhostBlockModel implements BakedModel {
         return this.model.useAmbientOcclusion();
     }
 
+
     @Override
-    public boolean useAmbientOcclusion(BlockState state) {
-        return this.model.useAmbientOcclusion(state);
+    public TriState useAmbientOcclusion(BlockState state, ModelData data, RenderType renderType) {
+        return this.model.useAmbientOcclusion(state, data, renderType);
     }
 
     @Override

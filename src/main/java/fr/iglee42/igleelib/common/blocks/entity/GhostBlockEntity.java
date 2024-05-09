@@ -1,24 +1,19 @@
 package fr.iglee42.igleelib.common.blocks.entity;
 
-import fr.iglee42.igleelib.api.utils.ModsUtils;
 import fr.iglee42.igleelib.common.blocks.GhostBlock;
 import fr.iglee42.igleelib.common.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
 
 public class GhostBlockEntity extends BlockEntity {
     private BlockState stockedBlock = Blocks.BEDROCK.defaultBlockState();
@@ -30,43 +25,24 @@ public class GhostBlockEntity extends BlockEntity {
     }
 
 
+
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider p_323635_) {
+        super.saveAdditional(tag, p_323635_);
         tag.put("stockedBlock", NbtUtils.writeBlockState(stockedBlock));
         tag.putInt("dispearTime",dispearTime);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider p_338445_) {
+        super.loadAdditional(tag, p_338445_);
         if (level != null)
             this.stockedBlock = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK),tag.getCompound("stockedBlock"));
         this.dispearTime = tag.getInt("dispearTime");
     }
-    @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
-    }
 
 
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        this.load(tag);
-    }
 
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        if (level != null)
-            this.stockedBlock = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK),pkt.getTag().getCompound("stockedBlock"));
-       this.dispearTime = pkt.getTag().getInt("dispearTime");
-    }
     @NotNull
     @Override
     public ModelData getModelData() {
@@ -82,8 +58,7 @@ public class GhostBlockEntity extends BlockEntity {
     public void tick(Level level, BlockPos pos, BlockState state){
         if (!level.isClientSide) {
             if (previousStockedBlock != stockedBlock) {
-                level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                ModsUtils.placeGhostBlock((ServerLevel) level, pos, stockedBlock, dispearTime);
+                level.sendBlockUpdated(pos,state,state,Block.UPDATE_CLIENTS);
             }
         }
         if (dispearTime > 0){

@@ -16,19 +16,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 
 import java.util.Map;
 import java.util.function.Function;
 
-@Mod.EventBusSubscriber(modid = IgleeLibrary.MODID,bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
+@EventBusSubscriber(modid = IgleeLibrary.MODID,bus = EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class ClientEvents {
 
    public static final ResourceLocation GHOST_OVERLAY_LOCATION = new ResourceLocation(IgleeLibrary.MODID, "block/ghost_block_overlay");
@@ -38,14 +38,9 @@ public class ClientEvents {
     public static void clientStuff(final FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModBlock.GHOST_BLOCK.get(), RenderType.translucent());
     }
-    /*@SubscribeEvent
-    public static void onTextureStitch(TextureStitchEvent event) {
-        if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-            event.
-        }
-    }*/
+
     @SubscribeEvent
-    public static void onTextureStitched(TextureStitchEvent.Post event) {
+    public static void onTextureStitched(TextureAtlasStitchedEvent event) {
         if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
             ghostOverlaySprite = event.getAtlas().getSprite(GHOST_OVERLAY_LOCATION);
         }
@@ -71,10 +66,6 @@ public class ClientEvents {
             registry.put(BlockModelShaper.stateToModelLocation(state), creator.apply(registry.get(BlockModelShaper.stateToModelLocation(state))));
 
         }
-    }
-    @Mod.EventBusSubscriber(modid = IgleeLibrary.MODID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
-    public class Forge {
-
     }
 
 }

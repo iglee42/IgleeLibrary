@@ -11,8 +11,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -25,15 +27,15 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.model.data.ModelProperty;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
 
-public class GhostBlock extends BaseEntityBlock {
+public class GhostBlock extends Block implements EntityBlock {
 
     public static final ModelProperty<BlockState> PS_BLOCKSTATE = new ModelProperty<>();
     public static final ModelProperty<FluidState> PS_FLUIDSTATE = new ModelProperty<>();
     public GhostBlock() {
-        super(Properties.copy(Blocks.GLASS).strength(-1,36000).noOcclusion().noCollission());
+        super(Properties.ofFullCopy(Blocks.GLASS).strength(-1,36000).noOcclusion().noCollission());
     }
 
     public boolean propagatesSkylightDown(BlockState p_49100_, BlockGetter p_49101_, BlockPos p_49102_) {
@@ -45,7 +47,7 @@ public class GhostBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand p_60507_, BlockHitResult p_60508_) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide()) return InteractionResult.sidedSuccess(level.isClientSide());
         if (level.getBlockEntity(pos) instanceof GhostBlockEntity be){
             if (be.getStockedBlock().is(be.getStockedBlock().getFluidState().createLegacyBlock().getBlock()) && be.getStockedBlock().getFluidState().getType() != Fluids.EMPTY){
@@ -56,7 +58,7 @@ public class GhostBlock extends BaseEntityBlock {
             }
 
         }
-        return super.use(state, level, pos, player, p_60507_, p_60508_);
+        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
 
     @Nullable
@@ -81,8 +83,9 @@ public class GhostBlock extends BaseEntityBlock {
         return true;
     }
 
+
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         GhostBlockEntity be = ((GhostBlockEntity)level.getBlockEntity(pos));
         return !state.getShape(level,pos,CollisionContext.of(player)).isEmpty() ? be.getStockedBlock().getCloneItemStack(target,level,pos,player) : null;
     }

@@ -1,6 +1,6 @@
 package fr.iglee42.igleelib.api.blockentities;
 
-public abstract class EnergyStorage extends net.minecraftforge.energy.EnergyStorage {
+public abstract class EnergyStorage extends net.neoforged.neoforge.energy.EnergyStorage {
     public EnergyStorage(int capacity, int maxTransfer) {
         super(capacity, maxTransfer);
     }

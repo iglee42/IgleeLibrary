@@ -2,15 +2,15 @@ package fr.iglee42.igleelib.common.init;
 
 import fr.iglee42.igleelib.IgleeLibrary;
 import fr.iglee42.igleelib.common.blocks.entity.GhostBlockEntity;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModBlockEntities {
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, IgleeLibrary.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, IgleeLibrary.MODID);
 
-    public static final RegistryObject<BlockEntityType<GhostBlockEntity>> GHOST_BLOCK = BLOCK_ENTITIES.register("ghost_block_entity",()->BlockEntityType.Builder.of(GhostBlockEntity::new,ModBlock.GHOST_BLOCK.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<GhostBlockEntity>> GHOST_BLOCK = BLOCK_ENTITIES.register("ghost_block_entity",()->BlockEntityType.Builder.of(GhostBlockEntity::new,ModBlock.GHOST_BLOCK.get()).build(null));
 
 }

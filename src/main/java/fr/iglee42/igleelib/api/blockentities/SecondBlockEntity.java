@@ -1,6 +1,7 @@
 package fr.iglee42.igleelib.api.blockentities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,14 +27,16 @@ public abstract class SecondBlockEntity extends BlockEntity {
     protected abstract void second(Level level, BlockPos pos, BlockState state,SecondBlockEntity entity);
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider p_323635_) {
+        super.saveAdditional(tag, p_323635_);
         tag.putInt("tick",tick);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider p_338445_) {
+        super.loadAdditional(tag, p_338445_);
         tick = tag.getInt("tick");
     }
+
+
 }
