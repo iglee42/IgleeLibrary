@@ -7,7 +7,7 @@
     "item": "minecraft:crying_obsidian"
   },
   "result": {
-    "id": "igleelib:derium_ingot"
+    "item": "igleelib:derium_ingot"
   },
   "template": {
     "item": "igleelib:iglium_upgrade_smithing_template"

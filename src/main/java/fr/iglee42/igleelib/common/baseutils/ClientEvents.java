@@ -38,12 +38,7 @@ public class ClientEvents {
     public static void clientStuff(final FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModBlock.GHOST_BLOCK.get(), RenderType.translucent());
     }
-    /*@SubscribeEvent
-    public static void onTextureStitch(TextureStitchEvent event) {
-        if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-            event.
-        }
-    }*/
+
     @SubscribeEvent
     public static void onTextureStitched(TextureStitchEvent.Post event) {
         if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
@@ -71,10 +66,6 @@ public class ClientEvents {
             registry.put(BlockModelShaper.stateToModelLocation(state), creator.apply(registry.get(BlockModelShaper.stateToModelLocation(state))));
 
         }
-    }
-    @Mod.EventBusSubscriber(modid = IgleeLibrary.MODID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
-    public class Forge {
-
     }
 
 }

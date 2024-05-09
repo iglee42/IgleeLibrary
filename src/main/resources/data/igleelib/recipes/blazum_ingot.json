@@ -7,7 +7,7 @@
     "item": "minecraft:blaze_rod"
   },
   "result": {
-    "id": "igleelib:blazum_ingot"
+    "item": "igleelib:blazum_ingot"
   },
   "template": {
     "item": "igleelib:iglium_upgrade_smithing_template"

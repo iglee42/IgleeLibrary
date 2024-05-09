@@ -7,7 +7,7 @@
     "item": "minecraft:diamond"
   },
   "result": {
-    "id": "igleelib:modium_ingot"
+    "item": "igleelib:modium_ingot"
   },
   "template": {
     "item": "igleelib:iglium_upgrade_smithing_template"

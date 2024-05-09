@@ -1,6 +1,5 @@
 package fr.iglee42.igleelib;
 
-import fr.iglee42.igleelib.common.config.IgleeLibCommonConfig;
 import fr.iglee42.igleelib.common.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -27,8 +26,6 @@ public class IgleeLibrary {
         ModItem.ITEMS.register(bus);
         ModCreativeTab.TABS.register(bus);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IgleeLibCommonConfig.SPEC,"igleelib-common.toml");
-
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addCreative);
 
@@ -36,8 +33,6 @@ public class IgleeLibrary {
     }
 
     private void setup(FMLCommonSetupEvent e){
-
-        ModMessages.register();
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
