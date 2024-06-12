@@ -176,12 +176,13 @@ tasks.withType(JavaCompile).configureEach {
 
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
+        mavenJava(MavenPublication){
+            artifact jar
         }
     }
     repositories {
         maven {
+            name = 'igleeRepo'
             url = 'https://iglee.fr:8081/releases'
             allowInsecureProtocol = true
             credentials {
