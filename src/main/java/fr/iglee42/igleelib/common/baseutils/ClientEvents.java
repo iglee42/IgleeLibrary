@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +32,7 @@ import java.util.function.Function;
 @EventBusSubscriber(modid = IgleeLibrary.MODID,bus = EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class ClientEvents {
 
-   public static final ResourceLocation GHOST_OVERLAY_LOCATION = new ResourceLocation(IgleeLibrary.MODID, "block/ghost_block_overlay");
+   public static final ResourceLocation GHOST_OVERLAY_LOCATION = ResourceLocation.fromNamespaceAndPath(IgleeLibrary.MODID, "block/ghost_block_overlay");
     public static TextureAtlasSprite ghostOverlaySprite;
 
     @SubscribeEvent
@@ -52,7 +53,7 @@ public class ClientEvents {
     }
     @SubscribeEvent
     public static void onModelBaked(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> registry = event.getModels();
+        Map<ModelResourceLocation, BakedModel> registry = event.getModels();
         put(registry, GhostBlockModel::new,ModBlock.GHOST_BLOCK.get());
     }
     @SubscribeEvent
@@ -61,7 +62,7 @@ public class ClientEvents {
                 GhostBlockRenderer::new);
     }
 
-    private static void put(Map<ResourceLocation, BakedModel> registry, Function<BakedModel, BakedModel> creator, Block block) {
+    private static void put(Map<ModelResourceLocation, BakedModel> registry, Function<BakedModel, BakedModel> creator, Block block) {
         for (BlockState state : block.getStateDefinition().getPossibleStates()) {
             registry.put(BlockModelShaper.stateToModelLocation(state), creator.apply(registry.get(BlockModelShaper.stateToModelLocation(state))));
 

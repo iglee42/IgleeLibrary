@@ -27,21 +27,17 @@ public class JsonHelper {
     }
     public static Item getItem(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(it[0],it[1]));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
     public static Block getBlock(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json, name),":");
-        return BuiltInRegistries.BLOCK.get(new ResourceLocation(it[0],it[1]));
+        return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
     public static EntityType<?> getEntityType(JsonObject json, String name){
         String[] it = ModsUtils.split(getString(json,name),":");
-        return BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(it[0],it[1]));
-    }
-    public static Enchantment getEnchantment(JsonObject json, String name){
-        String[] it = ModsUtils.split(getString(json,name),":");
-        return BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(it[0],it[1]));
+        return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
     public static boolean getBooleanOrDefault(JsonObject json, String name,boolean def){
         if (!json.has(name)) return def;
@@ -59,24 +55,19 @@ public class JsonHelper {
     public static Item getItemOrDefault(JsonObject json, String name,Item def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(it[0],it[1]));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
     public static Block getBlockOrDefault(JsonObject json, String name,Block def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json, name),":");
-        return BuiltInRegistries.BLOCK.get(new ResourceLocation(it[0],it[1]));
+        return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
     public static EntityType<?> getEntityTypeOrDefault(JsonObject json, String name,EntityType<?> def){
         if (!json.has(name)) return def;
         String[] it = ModsUtils.split(getString(json,name),":");
-        return BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(it[0],it[1]));
-    }
-    public static Enchantment getEnchantmentOrDefault(JsonObject json, String name,Enchantment def){
-        if (!json.has(name)) return def;
-        String[] it = ModsUtils.split(getString(json,name),":");
-        return BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(it[0],it[1]));
+        return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
     public static <O extends Record> O createRecordFromJson(Class<O> recordClass ,JsonObject json){
@@ -107,30 +98,23 @@ public class JsonHelper {
                     classes.add(components.getType());
                 } else if (Item.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
-                            args.add(getItemOrDefault(json, components.getName(), BuiltInRegistries.ITEM.get(new ResourceLocation(components.getAnnotation(DefaultParameter.class).itemValue()))));
+                            args.add(getItemOrDefault(json, components.getName(), BuiltInRegistries.ITEM.get(ResourceLocation.parse(components.getAnnotation(DefaultParameter.class).itemValue()))));
                     } else {
                         args.add(getItem(json,components.getName()));
                     }
                     classes.add(components.getType());
                 } else if (Block.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getBlockOrDefault(json, components.getName(),BuiltInRegistries.BLOCK.get(new ResourceLocation(components.getAnnotation(DefaultParameter.class).blockValue()))));
+                        args.add(getBlockOrDefault(json, components.getName(),BuiltInRegistries.BLOCK.get(ResourceLocation.parse(components.getAnnotation(DefaultParameter.class).blockValue()))));
                     } else {
                         args.add(getBlock(json,components.getName()));
                     }
                     classes.add(components.getType());
                 } else if (EntityType.class.equals(components.getType())) {
                     if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getEntityTypeOrDefault(json, components.getName(),BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(components.getAnnotation(DefaultParameter.class).entityTypeValue()))));
+                        args.add(getEntityTypeOrDefault(json, components.getName(),BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(components.getAnnotation(DefaultParameter.class).entityTypeValue()))));
                     } else {
                         args.add(getEntityType(json,components.getName()));
-                    }
-                    classes.add(components.getType());
-                } else if (Enchantment.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getEnchantmentOrDefault(json, components.getName(),BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(components.getAnnotation(DefaultParameter.class).enchantmentValue()))));
-                    } else {
-                        args.add(getEnchantment(json,components.getName()));
                     }
                     classes.add(components.getType());
                 } else if (ResourceLocation.class.equals(components.getType())) {

@@ -32,13 +32,13 @@ public class ModItem {
     public static final DeferredItem<Item> BLAZUM_INGOT = ITEMS.register("blazum_ingot",() -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LAVIUM_INGOT = ITEMS.register("lavium_ingot",() -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> NETHERITE_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("iglium_upgrade_smithing_template", ()-> new SmithingTemplateItem(
-            Component.translatable(Util.makeDescriptionId("item", new ResourceLocation(MODID,"smithing_template.iglium_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
-            Component.translatable(Util.makeDescriptionId("item", new ResourceLocation(MODID,"smithing_template.iglium_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
+            Component.translatable(Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID,"smithing_template.iglium_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
+            Component.translatable(Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID,"smithing_template.iglium_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
             Component.translatable("item.igleelib.iglium_upgrade_smithing_template"),
-            Component.translatable(Util.makeDescriptionId("item", new ResourceLocation(MODID,"smithing_template.iglium_upgrade.base_slot_description"))),
-            Component.translatable(Util.makeDescriptionId("item", new ResourceLocation(MODID,"smithing_template.iglium_upgrade.additions_slot_description"))),
-            List.of(new ResourceLocation("item/empty_slot_ingot")),
-            List.of(new ResourceLocation("item/empty_slot_diamond"))));
+            Component.translatable(Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID,"smithing_template.iglium_upgrade.base_slot_description"))),
+            Component.translatable(Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID,"smithing_template.iglium_upgrade.additions_slot_description"))),
+            List.of(ResourceLocation.withDefaultNamespace("item/empty_slot_ingot")),
+            List.of(ResourceLocation.withDefaultNamespace("item/empty_slot_diamond"))));
 
 
 }

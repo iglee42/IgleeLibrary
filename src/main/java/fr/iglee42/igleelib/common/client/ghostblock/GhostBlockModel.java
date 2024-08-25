@@ -119,7 +119,7 @@ public class GhostBlockModel implements BakedModel {
         TextureAtlasSprite overlaySprite = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ClientEvents.GHOST_OVERLAY_LOCATION);
         int[] data = Arrays.copyOf(quad.getVertices(), quad.getVertices().length);
         for (int i = 0; i < 4; i++) {
-            int j = DefaultVertexFormat.BLOCK.getIntegerSize() * i;
+            int j = DefaultVertexFormat.BLOCK.getVertexSize()/4 * i;
 
             float x = intBitsToFloat(data[j]) + 0.001F*quad.getDirection().getStepX();
             float y = intBitsToFloat(data[j+1]) + 0.001F*quad.getDirection().getStepY();
