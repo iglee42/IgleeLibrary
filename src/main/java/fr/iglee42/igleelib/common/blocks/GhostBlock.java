@@ -2,6 +2,7 @@ package fr.iglee42.igleelib.common.blocks;
 
 import fr.iglee42.igleelib.common.blocks.entity.GhostBlockEntity;
 import fr.iglee42.igleelib.common.init.ModBlockEntities;
+import net.minecraft.client.model.Model;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,6 +21,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -32,10 +35,20 @@ import org.jetbrains.annotations.Nullable;
 
 public class GhostBlock extends Block implements EntityBlock {
 
-    public static final ModelProperty<BlockState> PS_BLOCKSTATE = new ModelProperty<>();
-    public static final ModelProperty<FluidState> PS_FLUIDSTATE = new ModelProperty<>();
-    public GhostBlock() {
-        super(Properties.ofFullCopy(Blocks.GLASS).strength(-1,36000).noOcclusion().noCollission());
+    public static final BooleanProperty IS_FULL_BLOCK = BooleanProperty.create("is_full_block");
+    public GhostBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext p_49820_) {
+        return super.getStateForPlacement(p_49820_).setValue(IS_FULL_BLOCK,true);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(IS_FULL_BLOCK);
+        super.createBlockStateDefinition(builder);
     }
 
     public boolean propagatesSkylightDown(BlockState p_49100_, BlockGetter p_49101_, BlockPos p_49102_) {
@@ -48,7 +61,7 @@ public class GhostBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide()) return InteractionResult.sidedSuccess(level.isClientSide());
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (level.getBlockEntity(pos) instanceof GhostBlockEntity be){
             if (be.getStockedBlock().is(be.getStockedBlock().getFluidState().createLegacyBlock().getBlock()) && be.getStockedBlock().getFluidState().getType() != Fluids.EMPTY){
                 if (player.getMainHandItem().is(be.getStockedBlock().getFluidState().getType().getBucket())){
@@ -74,8 +87,8 @@ public class GhostBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState p_49232_) {
-        return RenderShape.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return state.getValue(IS_FULL_BLOCK) ? RenderShape.MODEL : RenderShape.MODEL;
     }
 
     @Override
@@ -93,6 +106,7 @@ public class GhostBlock extends Block implements EntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         GhostBlockEntity be = (GhostBlockEntity) getter.getBlockEntity(pos);
+        if (be == null) return Shapes.block();
         return be.getStockedBlock().is(Blocks.AIR) ? Shapes.empty() : be.getStockedBlock().getShape(getter,pos,context);
     }
 

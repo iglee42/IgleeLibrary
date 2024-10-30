@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.api.utils;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -7,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 
@@ -35,15 +37,15 @@ public class InventoryUtil {
 
     public static Item getItem(String name){
         String[] it = ModsUtils.split(name,":");
-        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
+        return BuiltInRegistries.ITEM.getValue(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
     public static Block getBlock(String name){
         String[] it = ModsUtils.split(name,":");
-        return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
+        return BuiltInRegistries.BLOCK.getValue(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
     public static EntityType<?> getEntity(String name){
         String[] it = ModsUtils.split(name,":");
-        return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
+        return BuiltInRegistries.ENTITY_TYPE.getValue(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 }

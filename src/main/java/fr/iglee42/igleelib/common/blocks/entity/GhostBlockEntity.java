@@ -7,13 +7,18 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class GhostBlockEntity extends BlockEntity {
     private BlockState stockedBlock = Blocks.BEDROCK.defaultBlockState();
@@ -24,11 +29,13 @@ public class GhostBlockEntity extends BlockEntity {
         super(ModBlockEntities.GHOST_BLOCK.get(), p_155229_, p_155230_);
     }
 
-
-
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider p_323635_) {
         super.saveAdditional(tag, p_323635_);
+        save(tag);
+    }
+
+    private void save(CompoundTag tag){
         tag.put("stockedBlock", NbtUtils.writeBlockState(stockedBlock));
         tag.putInt("dispearTime",dispearTime);
     }
@@ -47,20 +54,18 @@ public class GhostBlockEntity extends BlockEntity {
     @Override
     public ModelData getModelData() {
         if (this.remove) super.getModelData();
-        ModelData.Builder builder = ModelData.builder()
-                .with(GhostBlock.PS_BLOCKSTATE, stockedBlock)
-                .with(GhostBlock.PS_FLUIDSTATE, stockedBlock.getFluidState());
+        ModelData.Builder builder = ModelData.builder();
+                //.with(GhostBlock.PS_BLOCKSTATE, stockedBlock)
+                //.with(GhostBlock.PS_FLUIDSTATE, stockedBlock.getFluidState());
         return builder.build();
     }
 
 
 
     public void tick(Level level, BlockPos pos, BlockState state){
-        if (!level.isClientSide) {
-            if (previousStockedBlock != stockedBlock) {
-                level.sendBlockUpdated(pos,state,state,Block.UPDATE_CLIENTS);
-            }
-        }
+        if (level.isClientSide) return;
+        level.sendBlockUpdated(pos,state,state,Block.UPDATE_CLIENTS);
+        level.setBlockAndUpdate(pos,state.setValue(GhostBlock.IS_FULL_BLOCK,getStockedBlock().getShape(level,pos).bounds().equals(new AABB(0,0,0,1,1,1))));
         if (dispearTime > 0){
             dispearTime--;
         }
@@ -80,5 +85,17 @@ public class GhostBlockEntity extends BlockEntity {
 
     public void setDispearTime(int time) {
         dispearTime = time;
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider p_323910_) {
+        CompoundTag tag = new CompoundTag();
+        save(tag);
+        return tag;
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }

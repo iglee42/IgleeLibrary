@@ -2,7 +2,6 @@ package fr.iglee42.igleelib.common.baseutils;
 
 import fr.iglee42.igleelib.IgleeLibrary;
 import fr.iglee42.igleelib.common.blocks.entity.GhostBlockEntity;
-import fr.iglee42.igleelib.common.client.ghostblock.GhostBlockModel;
 import fr.iglee42.igleelib.common.client.ghostblock.GhostBlockRenderer;
 import fr.iglee42.igleelib.common.init.ModBlock;
 import fr.iglee42.igleelib.common.init.ModBlockEntities;
@@ -33,7 +32,6 @@ import java.util.function.Function;
 public class ClientEvents {
 
    public static final ResourceLocation GHOST_OVERLAY_LOCATION = ResourceLocation.fromNamespaceAndPath(IgleeLibrary.MODID, "block/ghost_block_overlay");
-    public static TextureAtlasSprite ghostOverlaySprite;
 
     @SubscribeEvent
     public static void clientStuff(final FMLClientSetupEvent event) {
@@ -41,20 +39,9 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public static void onTextureStitched(TextureAtlasStitchedEvent event) {
-        if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-            ghostOverlaySprite = event.getAtlas().getSprite(GHOST_OVERLAY_LOCATION);
-        }
-    }
-    @SubscribeEvent
     public static void onBlockColors(RegisterColorHandlersEvent.Block event) {
         BlockColors colors = event.getBlockColors();
         colors.register((state, world, pos, index) -> colors.getColor(((GhostBlockEntity)world.getBlockEntity(pos)).getStockedBlock(),world,pos,index), ModBlock.GHOST_BLOCK.get());
-    }
-    @SubscribeEvent
-    public static void onModelBaked(ModelEvent.ModifyBakingResult event) {
-        Map<ModelResourceLocation, BakedModel> registry = event.getModels();
-        put(registry, GhostBlockModel::new,ModBlock.GHOST_BLOCK.get());
     }
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
@@ -62,11 +49,5 @@ public class ClientEvents {
                 GhostBlockRenderer::new);
     }
 
-    private static void put(Map<ModelResourceLocation, BakedModel> registry, Function<BakedModel, BakedModel> creator, Block block) {
-        for (BlockState state : block.getStateDefinition().getPossibleStates()) {
-            registry.put(BlockModelShaper.stateToModelLocation(state), creator.apply(registry.get(BlockModelShaper.stateToModelLocation(state))));
-
-        }
-    }
 
 }
