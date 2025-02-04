@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "fr.iglee42.igleelib.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "projectedstructures.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "AccessorMultiBufferSource"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
