@@ -183,11 +183,10 @@ publishing {
     repositories {
         maven {
             name = 'igleeRepo'
-            url = 'https://iglee.fr:8081/releases'
-            allowInsecureProtocol = true
+            url = 'https://maven.iglee.fr/releases'
             credentials {
-                username = System.getenv("MAVEN_USER")
-                password = System.getenv("MAVEN_PASS")
+                username = System.getenv().get("MAVEN_REPO_USERNAME")
+                password = System.getenv().get("MAVEN_REPO_PASSWORD")
             }
         }
     }
