@@ -1,7 +1,9 @@
 package fr.iglee42.igleelib.api.utils;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
+import fr.iglee42.igleelib.IgleeLibrary;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -13,6 +15,7 @@ import java.lang.reflect.RecordComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class JsonHelper {
 
@@ -70,62 +73,64 @@ public class JsonHelper {
         return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.fromNamespaceAndPath(it[0],it[1]));
     }
 
-    public static <O extends Record> O createRecordFromJson(Class<O> recordClass ,JsonObject json){
+    public static <O extends Record,T,J extends JsonElement> O createRecordFromJson(Class<O> recordClass , JsonObject json){
         try {
             List<Object> args = new ArrayList<>();
             List<Class<?>> classes = new ArrayList<>();
-            for (RecordComponent components : recordClass.getRecordComponents()) {
-                if (Integer.class.equals(components.getType()) || int.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getIntOrDefault(json, components.getName(),components.getAnnotation(DefaultParameter.class).intValue()));
+            for (RecordComponent component : recordClass.getRecordComponents()) {
+                if (Integer.class.equals(component.getType()) || int.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(getIntOrDefault(json, component.getName(),component.getAnnotation(DefaultParameter.class).intValue()));
                     } else {
-                        args.add(getInt(json,components.getName()));
+                        args.add(getInt(json,component.getName()));
                     }
-                    classes.add(components.getType());
-                } else if (String.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getStringOrDefault(json, components.getName(),components.getAnnotation(DefaultParameter.class).stringValue()));
+                    classes.add(component.getType());
+                } else if (String.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(getStringOrDefault(json, component.getName(),component.getAnnotation(DefaultParameter.class).stringValue()));
                     } else {
-                        args.add(getString(json,components.getName()));
+                        args.add(getString(json,component.getName()));
                     }
-                    classes.add(components.getType());
-                } else if (Boolean.class.equals(components.getType()) ||boolean.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getBooleanOrDefault(json, components.getName(),components.getAnnotation(DefaultParameter.class).booleanValue()));
+                    classes.add(component.getType());
+                } else if (Boolean.class.equals(component.getType()) ||boolean.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(getBooleanOrDefault(json, component.getName(),component.getAnnotation(DefaultParameter.class).booleanValue()));
                     } else {
-                        args.add(getBoolean(json,components.getName()));
+                        args.add(getBoolean(json,component.getName()));
                     }
-                    classes.add(components.getType());
-                } else if (Item.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                            args.add(getItemOrDefault(json, components.getName(), BuiltInRegistries.ITEM.get(ResourceLocation.parse(components.getAnnotation(DefaultParameter.class).itemValue()))));
+                    classes.add(component.getType());
+                } else if (Item.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(getItemOrDefault(json, component.getName(), BuiltInRegistries.ITEM.get(ResourceLocation.parse(component.getAnnotation(DefaultParameter.class).itemValue()))));
                     } else {
-                        args.add(getItem(json,components.getName()));
+                        args.add(getItem(json,component.getName()));
                     }
-                    classes.add(components.getType());
-                } else if (Block.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getBlockOrDefault(json, components.getName(),BuiltInRegistries.BLOCK.get(ResourceLocation.parse(components.getAnnotation(DefaultParameter.class).blockValue()))));
+                    classes.add(component.getType());
+                } else if (Block.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(getBlockOrDefault(json, component.getName(),BuiltInRegistries.BLOCK.get(ResourceLocation.parse(component.getAnnotation(DefaultParameter.class).blockValue()))));
                     } else {
-                        args.add(getBlock(json,components.getName()));
+                        args.add(getBlock(json,component.getName()));
                     }
-                    classes.add(components.getType());
-                } else if (EntityType.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(getEntityTypeOrDefault(json, components.getName(),BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(components.getAnnotation(DefaultParameter.class).entityTypeValue()))));
+                    classes.add(component.getType());
+                } else if (EntityType.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(getEntityTypeOrDefault(json, component.getName(),BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(component.getAnnotation(DefaultParameter.class).entityTypeValue()))));
                     } else {
-                        args.add(getEntityType(json,components.getName()));
+                        args.add(getEntityType(json,component.getName()));
                     }
-                    classes.add(components.getType());
-                } else if (ResourceLocation.class.equals(components.getType())) {
-                    if (components.isAnnotationPresent(DefaultParameter.class)) {
-                        args.add(ResourceLocation.tryParse(getStringOrDefault(json,components.getName(),components.getAnnotation(DefaultParameter.class).stringValue())));
+                    classes.add(component.getType());
+                } else if (ResourceLocation.class.equals(component.getType())) {
+                    if (component.isAnnotationPresent(DefaultParameter.class)) {
+                        args.add(ResourceLocation.tryParse(getStringOrDefault(json,component.getName(),component.getAnnotation(DefaultParameter.class).stringValue())));
                     } else {
-                        args.add(ResourceLocation.tryParse(getString(json,components.getName())));
+                        args.add(ResourceLocation.tryParse(getString(json,component.getName())));
                     }
-                    classes.add(components.getType());
+                    classes.add(component.getType());
                 } else {
-                    throw new IllegalArgumentException("The parameter type is not supported !");
+                    Function<J,T> parser = (Function<J,T>) IgleeLibrary.getClassParser(component.getType());
+                    args.add(parser.apply((J) json.get(component.getName())));
+                    classes.add(component.getType());
                 }
             }
             return recordClass.getConstructor(classes.toArray(new Class[]{})).newInstance(args.toArray(new Object[]{}));

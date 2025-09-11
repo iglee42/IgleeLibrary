@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib;
 
+import com.google.gson.JsonElement;
 import fr.iglee42.igleelib.common.baseutils.ClientEvents;
 import fr.iglee42.igleelib.common.baseutils.GhostBlock;
 import fr.iglee42.igleelib.common.init.ModBlock;
@@ -17,12 +18,18 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Function;
+
 
 @Mod(IgleeLibrary.MODID)
 public class IgleeLibrary {
 
     public static final List<GhostBlock> ghostBlocks = new ArrayList<>();
     public static final String MODID = "igleelib";
+    private static final HashMap<Class<?>,Function<? extends JsonElement,Object>> CLASS_PARSERS = new HashMap<>();;
 
     public IgleeLibrary(IEventBus bus, ModContainer container) {
         ModBlock.BLOCKS.register(bus);
@@ -41,6 +48,16 @@ public class IgleeLibrary {
                 event.accept(holder.get());
             });
         }
+    }
+
+    public static <T, J extends JsonElement> void addClassParser(Class<T> clazz, Function<J,T> parser){
+        CLASS_PARSERS.put(clazz, (Function<? extends JsonElement, Object>) parser);
+    }
+
+    public static <T,J extends JsonElement> Function<J,T> getClassParser(Class<T> clazz){
+        if (CLASS_PARSERS.containsKey(clazz))
+            return (Function<J, T>) CLASS_PARSERS.get(clazz);
+        throw new IllegalArgumentException("There isn't a class parse for " + clazz.getName());
     }
 
 }
