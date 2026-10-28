@@ -17,4 +17,4 @@ And then add the dependency to your build.gradle
 implementation "fr.iglee42:IgleeLib:${minecraft_version}-${iglee_lib_version}"
 ```
 
-The latest version of the library is : [![Latest Lib Version](https://flat.badgen.net/maven/v/metadata-url/https/maven.iglee.fr/releases/fr/iglee42/IgleeLib/maven-metadata.xml?color=cf9555&label=")](https://maven.iglee.fr/#/releases/fr/iglee42/IgleeLib)
+The latest version of the library is : [![Latest Lib Version](https://flat.badgen.net/maven/v/metadata-url/https/maven.iglee.fr/releases/fr/iglee42/IgleeLib/maven-metadata.xml?color=cf9555&label=)](https://maven.iglee.fr/#/releases/fr/iglee42/IgleeLib)
