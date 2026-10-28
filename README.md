@@ -1,3 +1,9 @@
-TechResources - BaseMod !
+# Iglee's Library
 
-[![](http://cf.way2muchnoise.eu/title/iglee-library.svg) ![](http://cf.way2muchnoise.eu/iglee-library.svg) ![](https://cf.way2muchnoise.eu/packs/iglee-library.svg) ![](http://cf.way2muchnoise.eu/versions/iglee-library.svg)](https://www.curseforge.com/minecraft/mc-mods/iglee-library)
+The library for all mods of iglee42.
+
+## Release
+
+Run the `Build` GitHub workflow manually with `is-release` enabled (and `dry-run` disabled for a real release).
+Required secrets: `MAVEN_USERNAME`, `MAVEN_PASSWORD`, `MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`, `DISCORD_WEBHOOK`, `DISCORD_WEBHOOK_DRY_RUN`.
+Project IDs are set in `gradle.properties` (`publish_*`). The changelog comes from `CHANGELOG.md`.

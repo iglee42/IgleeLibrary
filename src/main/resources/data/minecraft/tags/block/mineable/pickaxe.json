@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "igleelib:modium_block",
-    "igleelib:derium_block",
-    "igleelib:blazum_block",
-    "igleelib:lavium_block"
-  ]
-}
