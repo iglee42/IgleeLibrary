@@ -52,7 +52,7 @@ public abstract class SavedBlockEntity extends BlockEntity {
 			field.setAccessible(true);
 			try {
 				FieldSerializer serializer = FieldSerializer.fromField(field);
-				field.set(this, serializer.decode(registries, input, field.getName()));
+				field.set(this, serializer.decode(registries, input, field.getName(), field.get(this)));
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException(
 						"Cannot access @Save field '" + getClass().getName() + "." + field.getName() + "'", e

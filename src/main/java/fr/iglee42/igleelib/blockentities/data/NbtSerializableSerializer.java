@@ -1,8 +1,7 @@
 package fr.iglee42.igleelib.blockentities.data;
 
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
+import com.mojang.serialization.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -12,7 +11,7 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 import java.lang.reflect.Constructor;
 
 /**
- * Serializer for classes implementing {@link INBTSerializable}. The class needs a no-arg constructor.
+ * Serializer for classes implementing {@link INBTSerializable}. The field's existing value is reused when present, otherwise a no-arg constructor is required.
  * When used as a list/map element, registries are not available (an empty provider is used).
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -24,35 +23,35 @@ public final class NbtSerializableSerializer implements FieldSerializer {
 
     public NbtSerializableSerializer(Class<?> clazz) {
         this.clazz = clazz;
+        Constructor<?> ctor = null;
         try {
-            this.constructor = clazz.getDeclaredConstructor();
-            this.constructor.setAccessible(true);
-        } catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException(
-                "INBTSerializable type '" + clazz.getName() + "' requires a no-arg constructor", e
-            );
+            ctor = clazz.getDeclaredConstructor();
+            ctor.setAccessible(true);
+        } catch (NoSuchMethodException ignored) {
+            // Only usable when the field already holds an instance to deserialize into
         }
+        this.constructor = ctor;
         this.codec = Codec.of(
-            new com.mojang.serialization.Encoder<Object>() {
-                @Override
-                public <T> DataResult<T> encode(Object input, com.mojang.serialization.DynamicOps<T> ops, T prefix) {
-                    Tag tag = ((INBTSerializable<Tag>) input).serializeNBT(HolderLookup.Provider.create(java.util.stream.Stream.empty()));
-                    return DataResult.success(NbtOps.INSTANCE.convertTo(ops, tag));
-                }
-            },
-            new com.mojang.serialization.Decoder<Object>() {
-                @Override
-                public <T> DataResult<Pair<Object, T>> decode(com.mojang.serialization.DynamicOps<T> ops, T input) {
-                    try {
-                        Tag tag = ops.convertTo(NbtOps.INSTANCE, input);
-                        INBTSerializable<Tag> obj = (INBTSerializable<Tag>) constructor.newInstance();
-                        obj.deserializeNBT(HolderLookup.Provider.create(java.util.stream.Stream.empty()), tag);
-                        return DataResult.success(Pair.of(obj, input));
-                    } catch (ReflectiveOperationException | RuntimeException e) {
-                        return DataResult.error(() -> "Failed to decode " + clazz.getName() + ": " + e.getMessage());
+                new Encoder<>() {
+                    @Override
+                    public <T> DataResult<T> encode(Object input, DynamicOps<T> ops, T prefix) {
+                        Tag tag = ((INBTSerializable<Tag>) input).serializeNBT(HolderLookup.Provider.create(java.util.stream.Stream.empty()));
+                        return DataResult.success(NbtOps.INSTANCE.convertTo(ops, tag));
+                    }
+                },
+                new Decoder<>() {
+                    @Override
+                    public <T> DataResult<Pair<Object, T>> decode(DynamicOps<T> ops, T input) {
+                        try {
+                            Tag tag = ops.convertTo(NbtOps.INSTANCE, input);
+                            INBTSerializable<Tag> obj = (INBTSerializable<Tag>) newInstance();
+                            obj.deserializeNBT(HolderLookup.Provider.create(java.util.stream.Stream.empty()), tag);
+                            return DataResult.success(Pair.of(obj, input));
+                        } catch (RuntimeException e) {
+                            return DataResult.error(() -> "Failed to decode " + clazz.getName() + ": " + e.getMessage());
+                        }
                     }
                 }
-            }
         );
     }
 
@@ -64,11 +63,26 @@ public final class NbtSerializableSerializer implements FieldSerializer {
 
     @Override
     public Object decode(HolderLookup.Provider registries, CompoundTag in, String name) {
-        if (!in.contains(name)) return null;
+        return decode(registries, in, name, null);
+    }
+
+    /** Deserializes into {@code current} when it is an instance of the handled type, otherwise uses the no-arg constructor. */
+    @Override
+    public Object decode(HolderLookup.Provider registries, CompoundTag in, String name, Object current) {
+        boolean reuse = clazz.isInstance(current);
+        if (!in.contains(name)) return reuse ? current : null;
+        INBTSerializable<Tag> obj = (INBTSerializable<Tag>) (reuse ? current : newInstance());
+        obj.deserializeNBT(registries, in.get(name));
+        return obj;
+    }
+
+    private Object newInstance() {
+        if (constructor == null)
+            throw new IllegalStateException(
+                "INBTSerializable type '" + clazz.getName() + "' needs a no-arg constructor or a default value on the field"
+            );
         try {
-            INBTSerializable<Tag> obj = (INBTSerializable<Tag>) constructor.newInstance();
-            obj.deserializeNBT(registries, in.get(name));
-            return obj;
+            return constructor.newInstance();
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("Cannot instantiate " + clazz.getName(), e);
         }

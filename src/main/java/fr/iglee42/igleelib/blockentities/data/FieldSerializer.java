@@ -17,6 +17,11 @@ public sealed interface FieldSerializer permits FieldType, ListSerializer, MapSe
 
     Object decode(HolderLookup.Provider registries, CompoundTag in, String name);
 
+    /** Decodes with access to the field's current value (may be null); serializers can deserialize into it. */
+    default Object decode(HolderLookup.Provider registries, CompoundTag in, String name, Object current) {
+        return decode(registries, in, name);
+    }
+
     Codec<Object> codec();
 
     static FieldSerializer fromField(Field field) {
