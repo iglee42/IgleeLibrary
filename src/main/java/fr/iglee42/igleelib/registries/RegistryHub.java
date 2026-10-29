@@ -15,7 +15,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -34,53 +36,72 @@ public class RegistryHub {
 		return modid;
 	}
 
-	private <R extends DeferredRegister<?>> R track(R register) {
-		registers.add(register::register);
+	private ItemDeferredRegister items;
+	private BlockDeferredRegister blocks;
+	private BlockEntityDeferredRegister blockEntities;
+	private EntityTypeDeferredRegister entities;
+	private CreativeTabDeferredRegister creativeTabs;
+	private RecipeDeferredRegister recipes;
+	private DataComponentDeferredRegister dataComponents;
+	private SoundDeferredRegister sounds;
+	private final Map<ResourceKey<?>, ExtendedDeferredRegister<?>> customs = new HashMap<>();
+
+	private <R> R track(R register, Consumer<IEventBus> registrar) {
+		registers.add(registrar);
 		return register;
+	}
+
+	private <R extends DeferredRegister<?>> R track(R register) {
+		return track(register, register::register);
+	}
+
+	private <R extends BiDeferredRegister<?, ?>> R trackBi(R register) {
+		return track(register, register::register);
 	}
 
 	public ItemDeferredRegister items() {
-		return track(new ItemDeferredRegister(modid));
+		if (items == null) items = track(new ItemDeferredRegister(modid));
+		return items;
 	}
 
 	public BlockDeferredRegister blocks() {
-		BlockDeferredRegister register = new BlockDeferredRegister(modid);
-		registers.add(register::register);
-		return register;
+		if (blocks == null) blocks = trackBi(new BlockDeferredRegister(modid));
+		return blocks;
 	}
 
 	public BlockEntityDeferredRegister blockEntities() {
-		return track(new BlockEntityDeferredRegister(modid));
+		if (blockEntities == null) blockEntities = track(new BlockEntityDeferredRegister(modid));
+		return blockEntities;
 	}
 
 	public EntityTypeDeferredRegister entities() {
-		EntityTypeDeferredRegister register = new EntityTypeDeferredRegister(modid);
-		registers.add(register::register);
-		return register;
+		if (entities == null) entities = track(new EntityTypeDeferredRegister(modid));
+		return entities;
 	}
 
 	public CreativeTabDeferredRegister creativeTabs() {
-		CreativeTabDeferredRegister register = new CreativeTabDeferredRegister(modid);
-		registers.add(register::register);
-		return register;
+		if (creativeTabs == null) creativeTabs = track(new CreativeTabDeferredRegister(modid));
+		return creativeTabs;
 	}
 
 	public RecipeDeferredRegister recipes() {
-		RecipeDeferredRegister register = new RecipeDeferredRegister(modid);
-		registers.add(register::register);
-		return register;
+		if (recipes == null) recipes = trackBi(new RecipeDeferredRegister(modid));
+		return recipes;
 	}
 
 	public DataComponentDeferredRegister dataComponents() {
-		return track(new DataComponentDeferredRegister(modid));
+		if (dataComponents == null) dataComponents = track(new DataComponentDeferredRegister(modid));
+		return dataComponents;
 	}
 
 	public SoundDeferredRegister sounds() {
-		return track(new SoundDeferredRegister(modid));
+		if (sounds == null) sounds = track(new SoundDeferredRegister(modid));
+		return sounds;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> ExtendedDeferredRegister<T> custom(ResourceKey<? extends Registry<T>> key) {
-		return track(new ExtendedDeferredRegister<>(key, modid));
+		return (ExtendedDeferredRegister<T>) customs.computeIfAbsent(key, k -> track(new ExtendedDeferredRegister<>(key, modid)));
 	}
 
 	public void register(IEventBus bus) {
