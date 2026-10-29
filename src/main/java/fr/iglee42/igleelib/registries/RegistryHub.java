@@ -46,16 +46,16 @@ public class RegistryHub {
 	private SoundDeferredRegister sounds;
 	private final Map<ResourceKey<?>, ExtendedDeferredRegister<?>> customs = new HashMap<>();
 
-	private <R> R track(R register, Consumer<IEventBus> registrar) {
+	protected final <R> R track(R register, Consumer<IEventBus> registrar) {
 		registers.add(registrar);
 		return register;
 	}
 
-	private <R extends DeferredRegister<?>> R track(R register) {
+	protected final <R extends DeferredRegister<?>> R track(R register) {
 		return track(register, register::register);
 	}
 
-	private <R extends BiDeferredRegister<?, ?>> R trackBi(R register) {
+	protected final <R extends BiDeferredRegister<?, ?>> R trackBi(R register) {
 		return track(register, register::register);
 	}
 
