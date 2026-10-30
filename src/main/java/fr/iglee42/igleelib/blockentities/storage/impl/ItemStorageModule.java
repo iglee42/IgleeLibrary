@@ -174,32 +174,36 @@ public class ItemStorageModule extends SidedStorageModule<IItemHandler> {
     public static class Builder {
         private final List<InventorySlot> slots = new ArrayList<>();
 
-        public Builder addSlot(InventorySlot slot) {
+        public <T extends InventorySlot> T addSlot(T slot) {
             slots.add(slot);
-            return this;
+            return slot;
         }
 
-        public Builder addBasicSlot(int x, int y) {
-            slots.add(new BasicInventorySlot(x, y));
-            return this;
+        public BasicInventorySlot addBasicSlot(int x, int y) {
+            BasicInventorySlot slot = new BasicInventorySlot(x, y);
+            slots.add(slot);
+            return slot;
         }
 
-        public Builder addBasicSlot(int x, int y, int limit) {
+        public BasicInventorySlot addBasicSlot(int x, int y, int limit) {
             int index = slots.size();
-            slots.add(new BasicInventorySlot(x, y).limit(limit));
-            return this;
+            BasicInventorySlot slot = new BasicInventorySlot(x, y).limit(limit);
+            slots.add(slot);
+            return slot;
         }
 
-        public Builder addBasicSlot(int x, int y, BiPredicate<Integer, ItemStack> validator) {
+        public BasicInventorySlot addBasicSlot(int x, int y, BiPredicate<Integer, ItemStack> validator) {
             int index = slots.size();
-            slots.add(new BasicInventorySlot(x, y).validator(stack -> validator.test(index, stack)));
-            return this;
+            BasicInventorySlot slot = new BasicInventorySlot(x, y).validator(stack -> validator.test(index, stack));
+            slots.add(slot);
+            return slot;
         }
 
-        public Builder addBasicSlot(int x, int y, int limit, BiPredicate<Integer, ItemStack> validator) {
+        public BasicInventorySlot addBasicSlot(int x, int y, int limit, BiPredicate<Integer, ItemStack> validator) {
             int index = slots.size();
-            slots.add(new BasicInventorySlot(x, y).limit(limit).validator(stack -> validator.test(index, stack)));
-            return this;
+            BasicInventorySlot slot = new BasicInventorySlot(x, y).limit(limit).validator(stack -> validator.test(index, stack));
+            slots.add(slot);
+            return slot;
         }
 
         public ItemStorageModule build() {

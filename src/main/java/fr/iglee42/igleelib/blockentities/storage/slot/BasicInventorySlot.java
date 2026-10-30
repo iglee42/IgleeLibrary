@@ -3,6 +3,7 @@ package fr.iglee42.igleelib.blockentities.storage.slot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Predicate;
@@ -13,7 +14,7 @@ public class BasicInventorySlot implements InventorySlot {
     private final int x,y;
     private ItemStack stack = ItemStack.EMPTY;
     private Runnable listener = () -> {};
-    private int limit = 64;
+    private int limit = Item.DEFAULT_MAX_STACK_SIZE;
     private Predicate<ItemStack> validator = s -> true;
     private boolean canInsert = true;
     private boolean canExtract = true;

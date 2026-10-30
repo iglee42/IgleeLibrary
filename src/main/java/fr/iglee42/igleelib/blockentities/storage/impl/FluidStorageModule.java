@@ -92,20 +92,20 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
     public static class Builder {
         private final List<FluidTankSlot> tanks = new ArrayList<>();
 
-        public Builder tank(FluidTankSlot tank) {
+        public <T extends FluidTankSlot> T tank(T tank) {
             tanks.add(tank);
-            return this;
+            return tank;
         }
 
-        public Builder tank(int capacity) {
+        public BasicFluidTank tank(int capacity) {
             return tank(BasicFluidTank.builder(capacity).build());
         }
 
-        public Builder inputTank(int capacity) {
+        public BasicFluidTank inputTank(int capacity) {
             return tank(BasicFluidTank.builder(capacity).inputOnly().build());
         }
 
-        public Builder outputTank(int capacity) {
+        public BasicFluidTank outputTank(int capacity) {
             return tank(BasicFluidTank.builder(capacity).outputOnly().build());
         }
 
