@@ -15,9 +15,6 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 
 public abstract class ExtendedBlockEntity extends SavedBlockEntity {
 
-    @Save(synchronize = true)
-    private int tickCount = 0;
-
     public ExtendedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -30,7 +27,6 @@ public abstract class ExtendedBlockEntity extends SavedBlockEntity {
             clientTick(level,pos,state);
         else {
             boolean sendUpdatePacket = serverTick((ServerLevel) level,pos,state);
-            tickCount++;
             if (sendUpdatePacket) setChanged();
         }
     }
