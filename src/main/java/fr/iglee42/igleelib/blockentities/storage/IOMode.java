@@ -15,6 +15,10 @@ public enum IOMode {
         this.output = output;
     }
 
+    public static IOMode of(boolean input, boolean output) {
+        return input ? (output ? BOTH : INPUT) : (output ? OUTPUT : NONE);
+    }
+
     public boolean canInput() {
         return input;
     }

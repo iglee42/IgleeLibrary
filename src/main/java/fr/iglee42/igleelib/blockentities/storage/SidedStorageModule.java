@@ -5,9 +5,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 /**
  * Base class handling per-side IO configuration and change notification.
  *
@@ -15,9 +12,8 @@ import java.util.Map;
  */
 public abstract class SidedStorageModule<H> implements StorageModule<H> {
 
-    private final Map<Direction, IOMode> modes = new EnumMap<>(Direction.class);
+    private final IOConfig io = new IOConfig();
     private final Object[] sideHandlers = new Object[Direction.values().length];
-    private IOMode defaultMode = IOMode.BOTH;
     private Runnable listener = () -> {};
 
     /** Internal, unrestricted handler. */
@@ -48,18 +44,34 @@ public abstract class SidedStorageModule<H> implements StorageModule<H> {
     }
 
     public IOMode getMode(Direction side) {
-        return modes.getOrDefault(side, defaultMode);
+        return io.get(side);
+    }
+
+    /** The module-wide IO configuration. Prefer the setters below so listeners get notified. */
+    public IOConfig io() {
+        return io;
     }
 
     public SidedStorageModule<H> setMode(Direction side, IOMode mode) {
-        modes.put(side, mode);
+        io.set(side, mode);
+        notifyChanged();
+        return this;
+    }
+
+    public SidedStorageModule<H> setInput(Direction side, boolean enabled) {
+        io.setInput(side, enabled);
+        notifyChanged();
+        return this;
+    }
+
+    public SidedStorageModule<H> setOutput(Direction side, boolean enabled) {
+        io.setOutput(side, enabled);
         notifyChanged();
         return this;
     }
 
     public SidedStorageModule<H> setAllModes(IOMode mode) {
-        defaultMode = mode;
-        modes.clear();
+        io.setAll(mode);
         notifyChanged();
         return this;
     }
@@ -77,32 +89,15 @@ public abstract class SidedStorageModule<H> implements StorageModule<H> {
     public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
         saveContent(tag, registries);
-        CompoundTag io = new CompoundTag();
-        io.putString("default", defaultMode.name());
-        for (var entry : modes.entrySet()) io.putString(entry.getKey().getSerializedName(), entry.getValue().name());
-        tag.put("io", io);
+        CompoundTag ioTag = new CompoundTag();
+        io.save(ioTag);
+        tag.put("io", ioTag);
         return tag;
     }
 
     @Override
     public void deserializeNBT(HolderLookup.Provider registries, CompoundTag tag) {
         loadContent(tag, registries);
-        modes.clear();
-        if (tag.contains("io")) {
-            CompoundTag io = tag.getCompound("io");
-            if (io.contains("default")) defaultMode = parse(io.getString("default"), IOMode.BOTH);
-            for (Direction dir : Direction.values()) {
-                if (io.contains(dir.getSerializedName()))
-                    modes.put(dir, parse(io.getString(dir.getSerializedName()), defaultMode));
-            }
-        }
-    }
-
-    private static IOMode parse(String name, IOMode fallback) {
-        try {
-            return IOMode.valueOf(name);
-        } catch (IllegalArgumentException e) {
-            return fallback;
-        }
+        if (tag.contains("io")) io.load(tag.getCompound("io"));
     }
 }
