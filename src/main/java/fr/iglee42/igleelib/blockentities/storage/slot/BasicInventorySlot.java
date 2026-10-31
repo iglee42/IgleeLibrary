@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.slot;
 
+import fr.iglee42.igleelib.menus.slot.InventoryContainerSlot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.Slot;
