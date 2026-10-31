@@ -68,4 +68,5 @@ public interface InventorySlot extends INBTSerializable<CompoundTag> {
         return result;
     }
 
+    InventorySlot copy();
 }

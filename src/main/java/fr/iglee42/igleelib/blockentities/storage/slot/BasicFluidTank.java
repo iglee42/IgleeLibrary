@@ -16,6 +16,14 @@ public class BasicFluidTank implements FluidTankSlot {
     private FluidStack fluid = FluidStack.EMPTY;
     private Runnable listener = () -> {};
 
+    private BasicFluidTank(BasicFluidTank oldTank){
+        this.capacity = oldTank.capacity;
+        this.validator = oldTank.validator;
+        this.canInsert = oldTank.canInsert;
+        this.canExtract = oldTank.canExtract;
+        this.fluid = oldTank.fluid.copy();
+    }
+
     private BasicFluidTank(Builder builder) {
         this.capacity = builder.capacity;
         this.validator = builder.validator;
@@ -113,5 +121,10 @@ public class BasicFluidTank implements FluidTankSlot {
         public BasicFluidTank build() {
             return new BasicFluidTank(this);
         }
+    }
+
+    @Override
+    public FluidTankSlot copy() {
+        return new BasicFluidTank(this);
     }
 }

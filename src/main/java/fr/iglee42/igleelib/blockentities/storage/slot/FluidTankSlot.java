@@ -57,4 +57,6 @@ public interface FluidTankSlot extends INBTSerializable<CompoundTag> {
         if (!simulate) setFluid(drained >= current.getAmount() ? FluidStack.EMPTY : current.copyWithAmount(current.getAmount() - drained));
         return result;
     }
+
+    FluidTankSlot copy();
 }

@@ -19,6 +19,16 @@ public class BasicInventorySlot implements InventorySlot {
     private boolean canInsert = true;
     private boolean canExtract = true;
 
+    private BasicInventorySlot(BasicInventorySlot oldSlot){
+        this.x = oldSlot.x;
+        this.y = oldSlot.y;
+        this.stack = oldSlot.stack.copy();
+        this.limit = oldSlot.limit;
+        this.validator = oldSlot.validator;
+        this.canInsert = oldSlot.canInsert;
+        this.canExtract = oldSlot.canExtract;
+    }
+
     public BasicInventorySlot(int x, int y) {
         this.x = x;
         this.y = y;
@@ -93,5 +103,10 @@ public class BasicInventorySlot implements InventorySlot {
     @Override
     public void deserializeNBT(HolderLookup.Provider registries, CompoundTag tag) {
         stack = ItemStack.parseOptional(registries, tag);
+    }
+
+    @Override
+    public InventorySlot copy() {
+        return new BasicInventorySlot(this);
     }
 }
