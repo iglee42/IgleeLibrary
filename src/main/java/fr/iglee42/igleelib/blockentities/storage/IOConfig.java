@@ -14,12 +14,11 @@ import java.util.Map;
 public class IOConfig {
 
     private final Map<Direction, IOMode> modes = new EnumMap<>(Direction.class);
-    private IOMode defaultMode = IOMode.BOTH;
     private boolean autoInput = false;
     private boolean autoOutput = false;
 
     public IOMode get(Direction side) {
-        return modes.getOrDefault(side, defaultMode);
+        return modes.getOrDefault(side, IOMode.BOTH);
     }
 
     public boolean canInput(Direction side) {
@@ -45,7 +44,6 @@ public class IOConfig {
 
     /** Sets the same mode on every side. */
     public IOConfig setAll(IOMode mode) {
-        defaultMode = mode;
         modes.clear();
         return this;
     }
@@ -79,28 +77,35 @@ public class IOConfig {
     }
 
     public void save(CompoundTag tag) {
-        tag.putString("default", defaultMode.name());
-        for (var entry : modes.entrySet()) tag.putString(entry.getKey().getSerializedName(), entry.getValue().name());
+        byte[] directions = new byte[Direction.values().length];
+		for (int i = 0; i < directions.length; i++){
+			Direction dir = Direction.values()[i];
+			directions[i] = (byte) get(dir).ordinal();
+		}
+		tag.putByteArray("modes", directions);
         tag.putBoolean("auto_input", autoInput);
         tag.putBoolean("auto_output", autoOutput);
     }
 
     public void load(CompoundTag tag) {
         modes.clear();
-        if (tag.contains("default")) defaultMode = parse(tag.getString("default"), IOMode.BOTH);
-        for (Direction dir : Direction.values()) {
-            if (tag.contains(dir.getSerializedName()))
-                modes.put(dir, parse(tag.getString(dir.getSerializedName()), defaultMode));
-        }
+        if (tag.contains("modes")) {
+			byte[] directions = tag.getByteArray("modes");
+			for (int i = 0; i < directions.length; i++) {
+				Direction dir = Direction.values()[i];
+				IOMode mode = parse(directions[i]);
+				modes.put(dir, mode);
+			}
+		}
         if (tag.contains("auto_input")) autoInput = tag.getBoolean("auto_input");
         if (tag.contains("auto_output")) autoOutput = tag.getBoolean("auto_output");
     }
 
-    private static IOMode parse(String name, IOMode fallback) {
+    private static IOMode parse(byte id) {
         try {
-            return IOMode.valueOf(name);
-        } catch (IllegalArgumentException e) {
-            return fallback;
+            return IOMode.values()[id];
+        } catch (Exception e) {
+            return IOMode.BOTH;
         }
     }
 }
