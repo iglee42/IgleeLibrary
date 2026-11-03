@@ -6,6 +6,7 @@ import fr.iglee42.igleelib.registries.impl.CreativeTabDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.DataComponentDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.EntityTypeDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.ItemDeferredRegister;
+import fr.iglee42.igleelib.registries.impl.MenuTypeDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.RecipeDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.SoundDeferredRegister;
 import net.minecraft.core.Registry;
@@ -44,6 +45,7 @@ public class RegistryHub {
 	private RecipeDeferredRegister recipes;
 	private DataComponentDeferredRegister dataComponents;
 	private SoundDeferredRegister sounds;
+	private MenuTypeDeferredRegister menuTypes;
 	private final Map<ResourceKey<?>, ExtendedDeferredRegister<?>> customs = new HashMap<>();
 
 	protected final <R> R track(R register, Consumer<IEventBus> registrar) {
@@ -97,6 +99,11 @@ public class RegistryHub {
 	public SoundDeferredRegister sounds() {
 		if (sounds == null) sounds = track(new SoundDeferredRegister(modid));
 		return sounds;
+	}
+
+	public MenuTypeDeferredRegister menuTypes() {
+		if (menuTypes == null) menuTypes = track(new MenuTypeDeferredRegister(modid));
+		return menuTypes;
 	}
 
 	@SuppressWarnings("unchecked")
