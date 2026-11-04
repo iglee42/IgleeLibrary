@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public interface InsertableSlot {
 
 	/** Attempts to insert the given stack into this slot. Returns the remainder.
-	 * Works like the {@link fr.iglee42.igleelib.blockentities.storage.slot.InventorySlot#insert(ItemStack, boolean)}
+	 * Works like the {@link fr.iglee42.igleelib.blockentities.storage.slot.InventorySlot#insert(ItemStack, boolean, fr.iglee42.igleelib.blockentities.storage.AutomationType)}
 	 */
 	@NotNull
 	ItemStack insertItem(@NotNull ItemStack stack, boolean simulate);

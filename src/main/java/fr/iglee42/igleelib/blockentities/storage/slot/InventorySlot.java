@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.slot;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.Slot;
 import net.neoforged.neoforge.common.util.INBTSerializable;
@@ -28,13 +29,13 @@ public interface InventorySlot extends INBTSerializable<CompoundTag> {
         return true;
     }
 
-    /** Whether items can be inserted into this slot (by sided handlers and by players through the container slot). */
-    default boolean canInsert() {
+    /** Whether items can be inserted into this slot for the given origin. */
+    default boolean canInsert(AutomationType type) {
         return true;
     }
 
-    /** Whether items can be extracted from this slot by sided handlers. */
-    default boolean canExtract() {
+    /** Whether items can be extracted from this slot for the given origin. */
+    default boolean canExtract(AutomationType type) {
         return true;
     }
 
@@ -42,8 +43,8 @@ public interface InventorySlot extends INBTSerializable<CompoundTag> {
     void setChangeListener(Runnable listener);
 
     /** Inserts a stack and returns the remainder. */
-    default ItemStack insert(ItemStack stack, boolean simulate) {
-        if (stack.isEmpty() || !isValid(stack)) return stack;
+    default ItemStack insert(ItemStack stack, boolean simulate, AutomationType type) {
+        if (stack.isEmpty() || !isValid(stack) || !canInsert(type)) return stack;
         ItemStack existing = getStack();
         int limit = Math.min(getLimit(stack), stack.getMaxStackSize());
         if (!existing.isEmpty()) {
@@ -57,9 +58,9 @@ public interface InventorySlot extends INBTSerializable<CompoundTag> {
     }
 
     /** Extracts up to {@code amount} items. */
-    default ItemStack extract(int amount, boolean simulate) {
+    default ItemStack extract(int amount, boolean simulate, AutomationType type) {
         ItemStack existing = getStack();
-        if (amount <= 0 || existing.isEmpty()) return ItemStack.EMPTY;
+        if (amount <= 0 || existing.isEmpty() || !canExtract(type)) return ItemStack.EMPTY;
         int toExtract = Math.min(amount, existing.getMaxStackSize());
         ItemStack result = existing.copyWithCount(Math.min(toExtract, existing.getCount()));
         if (!simulate) {

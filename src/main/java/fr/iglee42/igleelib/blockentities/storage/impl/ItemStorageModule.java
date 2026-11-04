@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.impl;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import fr.iglee42.igleelib.blockentities.storage.SidedStorageModule;
 import fr.iglee42.igleelib.blockentities.storage.slot.BasicInventorySlot;
 import fr.iglee42.igleelib.blockentities.storage.slot.InventorySlot;
@@ -110,12 +111,12 @@ public class ItemStorageModule extends SidedStorageModule<IItemHandler> {
 
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            return slots.get(slot).insert(stack, simulate);
+            return slots.get(slot).insert(stack, simulate, AutomationType.INTERNAL);
         }
 
         @Override
         public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return slots.get(slot).extract(amount, simulate);
+            return slots.get(slot).extract(amount, simulate, AutomationType.INTERNAL);
         }
 
         @Override
@@ -149,14 +150,12 @@ public class ItemStorageModule extends SidedStorageModule<IItemHandler> {
 
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            InventorySlot s = slots.get(slot);
-            return getMode(side).canInput() && s.canInsert() ? s.insert(stack, simulate) : stack;
+            return getMode(side).canInput() ? slots.get(slot).insert(stack, simulate, AutomationType.EXTERNAL) : stack;
         }
 
         @Override
         public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-            InventorySlot s = slots.get(slot);
-            return getMode(side).canOutput() && s.canExtract() ? s.extract(amount, simulate) : ItemStack.EMPTY;
+            return getMode(side).canOutput() ? slots.get(slot).extract(amount, simulate, AutomationType.EXTERNAL) : ItemStack.EMPTY;
         }
 
         @Override
@@ -167,7 +166,7 @@ public class ItemStorageModule extends SidedStorageModule<IItemHandler> {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             InventorySlot s = slots.get(slot);
-            return getMode(side).canInput() && s.canInsert() && s.isValid(stack);
+            return getMode(side).canInput() && s.canInsert(AutomationType.EXTERNAL) && s.isValid(stack);
         }
     }
 

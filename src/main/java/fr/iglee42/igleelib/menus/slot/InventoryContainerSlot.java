@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.menus.slot;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import fr.iglee42.igleelib.blockentities.storage.slot.InventorySlot;
 import fr.iglee42.igleelib.menus.slot.api.InsertableSlot;
 import net.minecraft.world.SimpleContainer;
@@ -43,12 +44,12 @@ public class InventoryContainerSlot extends Slot implements InsertableSlot {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return slot.canInsert() && slot.isValid(stack);
+        return slot.canInsert(AutomationType.GUI) && slot.isValid(stack);
     }
 
     @Override
     public boolean mayPickup(Player player) {
-        return true;
+        return slot.canExtract(AutomationType.GUI);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class InventoryContainerSlot extends Slot implements InsertableSlot {
 
 	@Override
 	public @NotNull ItemStack insertItem(@NotNull ItemStack stack, boolean simulate) {
-		ItemStack remainder = slot.insert(stack, simulate);
+		ItemStack remainder = slot.insert(stack, simulate, AutomationType.GUI);
 		if (!simulate && remainder.getCount() != stack.getCount())
 			setChanged();
 		return remainder;

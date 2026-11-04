@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.impl;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import fr.iglee42.igleelib.blockentities.storage.SidedStorageModule;
 import fr.iglee42.igleelib.blockentities.storage.slot.BasicFluidTank;
 import fr.iglee42.igleelib.blockentities.storage.slot.FluidTankSlot;
@@ -122,12 +123,16 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
             this.side = side;
         }
 
+        private AutomationType type() {
+            return side == null ? AutomationType.INTERNAL : AutomationType.EXTERNAL;
+        }
+
         private boolean mayInsert(FluidTankSlot tank) {
-            return side == null || (getMode(side).canInput() && tank.canInsert());
+            return side == null || (getMode(side).canInput() && tank.canInsert(AutomationType.EXTERNAL));
         }
 
         private boolean mayExtract(FluidTankSlot tank) {
-            return side == null || (getMode(side).canOutput() && tank.canExtract());
+            return side == null || (getMode(side).canOutput() && tank.canExtract(AutomationType.EXTERNAL));
         }
 
         @Override
@@ -158,13 +163,13 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
             // Prefer tanks already holding this fluid, then fall back to empty ones.
             for (FluidTankSlot tank : tanks) {
                 if (mayInsert(tank) && !tank.getFluid().isEmpty() && FluidStack.isSameFluidSameComponents(tank.getFluid(), resource)) {
-                    int filled = tank.fill(resource, simulate);
+                    int filled = tank.fill(resource, simulate, type());
                     if (filled > 0) return filled;
                 }
             }
             for (FluidTankSlot tank : tanks) {
                 if (mayInsert(tank) && tank.getFluid().isEmpty()) {
-                    int filled = tank.fill(resource, simulate);
+                    int filled = tank.fill(resource, simulate, type());
                     if (filled > 0) return filled;
                 }
             }
@@ -176,7 +181,7 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
             if (resource.isEmpty()) return FluidStack.EMPTY;
             for (FluidTankSlot tank : tanks) {
                 if (mayExtract(tank) && FluidStack.isSameFluidSameComponents(tank.getFluid(), resource)) {
-                    FluidStack drained = tank.drain(resource.getAmount(), action.simulate());
+                    FluidStack drained = tank.drain(resource.getAmount(), action.simulate(), type());
                     if (!drained.isEmpty()) return drained;
                 }
             }
@@ -187,7 +192,7 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
         public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
             for (FluidTankSlot tank : tanks) {
                 if (mayExtract(tank) && !tank.getFluid().isEmpty()) {
-                    FluidStack drained = tank.drain(maxDrain, action.simulate());
+                    FluidStack drained = tank.drain(maxDrain, action.simulate(), type());
                     if (!drained.isEmpty()) return drained;
                 }
             }

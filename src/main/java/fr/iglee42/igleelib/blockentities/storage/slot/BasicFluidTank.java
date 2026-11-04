@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.slot;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -11,8 +12,8 @@ public class BasicFluidTank implements FluidTankSlot {
 
     private final int capacity;
     private final Predicate<FluidStack> validator;
-    private final boolean canInsert;
-    private final boolean canExtract;
+    private final Predicate<AutomationType> canInsert;
+    private final Predicate<AutomationType> canExtract;
     private FluidStack fluid = FluidStack.EMPTY;
     private Runnable listener = () -> {};
 
@@ -57,13 +58,13 @@ public class BasicFluidTank implements FluidTankSlot {
     }
 
     @Override
-    public boolean canInsert() {
-        return canInsert;
+    public boolean canInsert(AutomationType type) {
+        return canInsert.test(type);
     }
 
     @Override
-    public boolean canExtract() {
-        return canExtract;
+    public boolean canExtract(AutomationType type) {
+        return canExtract.test(type);
     }
 
     @Override
@@ -86,8 +87,8 @@ public class BasicFluidTank implements FluidTankSlot {
     public static class Builder {
         private final int capacity;
         private Predicate<FluidStack> validator = f -> true;
-        private boolean canInsert = true;
-        private boolean canExtract = true;
+        private Predicate<AutomationType> canInsert = t -> true;
+        private Predicate<AutomationType> canExtract = t -> true;
 
         private Builder(int capacity) {
             this.capacity = capacity;
@@ -98,14 +99,24 @@ public class BasicFluidTank implements FluidTankSlot {
             return this;
         }
 
-        public Builder canInsert(boolean canInsert) {
+        public Builder canInsert(Predicate<AutomationType> canInsert) {
             this.canInsert = canInsert;
             return this;
         }
 
-        public Builder canExtract(boolean canExtract) {
+        public Builder canExtract(Predicate<AutomationType> canExtract) {
             this.canExtract = canExtract;
             return this;
+        }
+
+        /** Shortcut: when false, only {@link AutomationType#INTERNAL} may fill. */
+        public Builder canInsert(boolean canInsert) {
+            return canInsert(t -> t == AutomationType.INTERNAL || canInsert);
+        }
+
+        /** Shortcut: when false, only {@link AutomationType#INTERNAL} may drain. */
+        public Builder canExtract(boolean canExtract) {
+            return canExtract(t -> t == AutomationType.INTERNAL || canExtract);
         }
 
         /** Outside handlers can only fill this tank (e.g. a machine ingredient). */

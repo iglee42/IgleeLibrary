@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.slot;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import fr.iglee42.igleelib.menus.slot.InventoryContainerSlot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -17,8 +18,8 @@ public class BasicInventorySlot implements InventorySlot {
     private Runnable listener = () -> {};
     private int limit = Item.DEFAULT_MAX_STACK_SIZE;
     private Predicate<ItemStack> validator = s -> true;
-    private boolean canInsert = true;
-    private boolean canExtract = true;
+    private Predicate<AutomationType> canInsert = t -> true;
+    private Predicate<AutomationType> canExtract = t -> true;
 
     private BasicInventorySlot(BasicInventorySlot oldSlot){
         this.x = oldSlot.x;
@@ -45,14 +46,24 @@ public class BasicInventorySlot implements InventorySlot {
         return this;
     }
 
-    public BasicInventorySlot canInsert(boolean canInsert) {
+    public BasicInventorySlot canInsert(Predicate<AutomationType> canInsert) {
         this.canInsert = canInsert;
         return this;
     }
 
-    public BasicInventorySlot canExtract(boolean canExtract) {
+    public BasicInventorySlot canExtract(Predicate<AutomationType> canExtract) {
         this.canExtract = canExtract;
         return this;
+    }
+
+    /** Shortcut: when false, only {@link AutomationType#INTERNAL} may insert. */
+    public BasicInventorySlot canInsert(boolean canInsert) {
+        return canInsert(t -> t == AutomationType.INTERNAL || canInsert);
+    }
+
+    /** Shortcut: when false, only {@link AutomationType#EXTERNAL} is denied. */
+    public BasicInventorySlot canExtract(boolean canExtract) {
+        return canExtract(t -> t != AutomationType.EXTERNAL || canExtract);
     }
 
     @Override
@@ -82,13 +93,13 @@ public class BasicInventorySlot implements InventorySlot {
     }
 
     @Override
-    public boolean canInsert() {
-        return canInsert;
+    public boolean canInsert(AutomationType type) {
+        return canInsert.test(type);
     }
 
     @Override
-    public boolean canExtract() {
-        return canExtract;
+    public boolean canExtract(AutomationType type) {
+        return canExtract.test(type);
     }
 
     @Override

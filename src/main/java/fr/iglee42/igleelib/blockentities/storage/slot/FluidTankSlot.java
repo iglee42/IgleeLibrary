@@ -1,5 +1,6 @@
 package fr.iglee42.igleelib.blockentities.storage.slot;
 
+import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -20,13 +21,13 @@ public interface FluidTankSlot extends INBTSerializable<CompoundTag> {
         return true;
     }
 
-    /** Whether outside handlers may fill this tank. */
-    default boolean canInsert() {
+    /** Whether this tank may be filled from the given origin. */
+    default boolean canInsert(AutomationType type) {
         return true;
     }
 
-    /** Whether outside handlers may drain this tank. */
-    default boolean canExtract() {
+    /** Whether this tank may be drained from the given origin. */
+    default boolean canExtract(AutomationType type) {
         return true;
     }
 
@@ -34,8 +35,8 @@ public interface FluidTankSlot extends INBTSerializable<CompoundTag> {
     void setChangeListener(Runnable listener);
 
     /** Fills the tank and returns the amount accepted. */
-    default int fill(FluidStack resource, boolean simulate) {
-        if (resource.isEmpty() || !isValid(resource)) return 0;
+    default int fill(FluidStack resource, boolean simulate, AutomationType type) {
+        if (resource.isEmpty() || !isValid(resource) || !canInsert(type)) return 0;
         FluidStack current = getFluid();
         if (current.isEmpty()) {
             int filled = Math.min(getCapacity(), resource.getAmount());
@@ -49,9 +50,9 @@ public interface FluidTankSlot extends INBTSerializable<CompoundTag> {
     }
 
     /** Drains up to {@code amount} and returns what was removed. */
-    default FluidStack drain(int amount, boolean simulate) {
+    default FluidStack drain(int amount, boolean simulate, AutomationType type) {
         FluidStack current = getFluid();
-        if (current.isEmpty() || amount <= 0) return FluidStack.EMPTY;
+        if (current.isEmpty() || amount <= 0 || !canExtract(type)) return FluidStack.EMPTY;
         int drained = Math.min(current.getAmount(), amount);
         FluidStack result = current.copyWithAmount(drained);
         if (!simulate) setFluid(drained >= current.getAmount() ? FluidStack.EMPTY : current.copyWithAmount(current.getAmount() - drained));
