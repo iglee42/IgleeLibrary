@@ -48,7 +48,18 @@ public class StorageManager implements INBTSerializable<CompoundTag> {
         return type.cast(module);
     }
 
-    public Map<String, StorageModule<?>> modules() {
+	public <M extends StorageModule<?>> M getNullable(String id, Class<M> type) {
+		StorageModule<?> module = modules.get(id);
+		if (module == null || !type.isInstance(module))
+			return null;
+		return type.cast(module);
+	}
+
+	public <M extends StorageModule<?>> Optional<M> getOptional(String id, Class<M> type) {
+		return Optional.ofNullable(getNullable(id, type));
+	}
+
+	public Map<String, StorageModule<?>> modules() {
         return java.util.Collections.unmodifiableMap(modules);
     }
 
