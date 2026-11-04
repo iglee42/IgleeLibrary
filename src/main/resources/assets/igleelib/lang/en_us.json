@@ -1,0 +1,13 @@
+{
+  "side.igleelib.front": "Front",
+  "side.igleelib.back": "Back",
+  "side.igleelib.left": "Left",
+  "side.igleelib.right": "Right",
+  "side.igleelib.top": "Top",
+  "side.igleelib.bottom": "Bottom",
+
+  "io_mode.igleelib.input": "Input",
+  "io_mode.igleelib.output": "Output",
+  "io_mode.igleelib.both": "Input/Output",
+  "io_mode.igleelib.none": "None"
+}

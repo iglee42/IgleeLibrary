@@ -2,8 +2,10 @@ package fr.iglee42.igleelib.blockentities.storage;
 
 import com.mojang.serialization.Codec;
 
+import fr.iglee42.igleelib.IgleeLibrary;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
@@ -84,5 +86,9 @@ public enum RelativeSide implements StringRepresentable {
 	@Override
 	public @NotNull String getSerializedName() {
 		return serializedName;
+	}
+
+	public Component translate(){
+		return Component.translatable("side."+ IgleeLibrary.MODID + "." + serializedName);
 	}
 }
