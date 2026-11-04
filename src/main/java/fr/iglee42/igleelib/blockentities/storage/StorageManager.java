@@ -7,6 +7,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -25,16 +27,31 @@ public class StorageManager implements INBTSerializable<CompoundTag> {
 
     private final Map<String, StorageModule<?>> modules = new LinkedHashMap<>();
     private final Runnable changeListener;
+    private final BlockEntity owner;
 
-    public StorageManager(Runnable changeListener) {
+    public StorageManager(Runnable changeListener, BlockEntity owner) {
         this.changeListener = changeListener;
+        this.owner = owner;
     }
 
     public <M extends StorageModule<?>> M add(String id, M module) {
         if (modules.putIfAbsent(id, module) != null)
             throw new IllegalArgumentException("Storage module '" + id + "' is already registered");
         module.setChangeListener(changeListener);
+        if (module instanceof SidedStorageModule<?> sidedModule)
+            sidedModule.setFacingSupplier(this::resolveOwnerFacing);
         return module;
+    }
+
+    private Direction resolveOwnerFacing() {
+        if (owner == null) return Direction.NORTH;
+        BlockState state = owner.getBlockState();
+        if (state == null) return Direction.NORTH;
+        if (state.hasProperty(BlockStateProperties.FACING))
+            return state.getValue(BlockStateProperties.FACING);
+        if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING))
+            return state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        return Direction.NORTH;
     }
 
     public Optional<StorageModule<?>> get(String id) {

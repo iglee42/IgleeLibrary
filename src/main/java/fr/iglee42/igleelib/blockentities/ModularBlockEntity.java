@@ -21,7 +21,7 @@ public abstract class ModularBlockEntity extends ExtendedBlockEntity {
 
     public static final String STORAGE_TAG = "storage";
 
-    private final StorageManager storage = new StorageManager(this::setChanged);
+    private final StorageManager storage = new StorageManager(this::setChanged, this);
 
     public ModularBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

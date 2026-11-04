@@ -5,6 +5,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 /**
  * Base class handling per-side IO configuration and change notification.
  *
@@ -50,6 +52,10 @@ public abstract class SidedStorageModule<H> implements StorageModule<H> {
     /** The module-wide IO configuration. Prefer the setters below so listeners get notified. */
     public IOConfig io() {
         return io;
+    }
+
+    void setFacingSupplier(Supplier<Direction> facingSupplier) {
+        io.setFacingSupplier(facingSupplier);
     }
 
     public SidedStorageModule<H> setMode(Direction side, IOMode mode) {
