@@ -7,6 +7,7 @@ import fr.iglee42.igleelib.registries.impl.DataComponentDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.EntityTypeDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.ItemDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.MenuTypeDeferredRegister;
+import fr.iglee42.igleelib.registries.impl.PacketDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.RecipeDeferredRegister;
 import fr.iglee42.igleelib.registries.impl.SoundDeferredRegister;
 import net.minecraft.core.Registry;
@@ -46,6 +47,7 @@ public class RegistryHub {
 	private DataComponentDeferredRegister dataComponents;
 	private SoundDeferredRegister sounds;
 	private MenuTypeDeferredRegister menuTypes;
+	private PacketDeferredRegister packets;
 	private final Map<ResourceKey<?>, ExtendedDeferredRegister<?>> customs = new HashMap<>();
 
 	protected final <R> R track(R register, Consumer<IEventBus> registrar) {
@@ -104,6 +106,20 @@ public class RegistryHub {
 	public MenuTypeDeferredRegister menuTypes() {
 		if (menuTypes == null) menuTypes = track(new MenuTypeDeferredRegister(modid));
 		return menuTypes;
+	}
+
+	/**
+	 * Returns the payload register using the given network protocol version.
+	 * All calls for this hub must use the same version.
+	 */
+	public PacketDeferredRegister packets(String version) {
+		if (packets == null) {
+			PacketDeferredRegister register = new PacketDeferredRegister(modid, version);
+			packets = track(register, register::register);
+		} else if (!packets.version().equals(version)) {
+			throw new IllegalArgumentException("Packet register already configured with version " + packets.version());
+		}
+		return packets;
 	}
 
 	@SuppressWarnings("unchecked")
