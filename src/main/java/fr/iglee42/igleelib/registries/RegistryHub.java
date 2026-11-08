@@ -13,6 +13,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class RegistryHub {
 	public EntityTypeDeferredRegister entities() {
 		if (entities == null) entities = track(new EntityTypeDeferredRegister(modid));
 		return entities;
+	}
+
+	public CreativeTabDeferredRegister creativeTabs(Consumer<BuildCreativeModeTabContentsEvent> addToExistingTabs) {
+		if (creativeTabs == null) creativeTabs = track(new CreativeTabDeferredRegister(modid, addToExistingTabs));
+		return creativeTabs;
 	}
 
 	public CreativeTabDeferredRegister creativeTabs() {
