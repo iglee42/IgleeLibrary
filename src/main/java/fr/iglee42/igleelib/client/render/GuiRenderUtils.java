@@ -20,18 +20,56 @@ public final class GuiRenderUtils {
     private GuiRenderUtils() {
     }
 
-    /**
+	/**
+	 * Renders a nine-sliced texture region using a single buffered draw call.
+	 * <p>
+	 * This overload is the convenient symmetric variant where left/right share the same corner width
+	 * and top/bottom share the same corner height. The source region starts at {@code (0, 0)} and the
+	 * quad is rendered at z-level {@code 0}.
+	 *
+	 * @param guiGraphics the active gui graphics context
+	 * @param texture the texture to sample
+	 * @param x destination x position
+	 * @param y destination y position
+	 * @param width destination width
+	 * @param height destination height
+	 * @param sourceWidth source nine-slice width inside the texture
+	 * @param sourceHeight source nine-slice height inside the texture
+	 * @param cornerWidth corner width used for both left and right borders
+	 * @param cornerHeight corner height used for both top and bottom borders
+	 * @param textureWidth full texture width used to normalize U coordinates
+	 * @param textureHeight full texture height used to normalize V coordinates
+	 */
+	public static void blitNineSlicedSized(
+		GuiGraphics guiGraphics,
+		ResourceLocation texture,
+		int x,
+		int y,
+		int width,
+		int height,
+		int sourceWidth,
+		int sourceHeight,
+		int cornerWidth,
+		int cornerHeight,
+		int textureWidth,
+		int textureHeight
+	) {
+		blitNineSlicedSized(guiGraphics, texture, x, y, 0, width, height, sourceWidth, sourceHeight,  cornerWidth, cornerHeight, textureWidth, textureHeight);
+	}
+
+
+	/**
      * Renders a nine-sliced texture region using a single buffered draw call.
      * <p>
      * This overload is the convenient symmetric variant where left/right share the same corner width
-     * and top/bottom share the same corner height. The source region starts at {@code (0, 0)} and the
-     * quad is rendered at z-level {@code 0}.
+     * and top/bottom share the same corner height. The source region starts at {@code (0, 0)}.
      *
      * @param guiGraphics the active gui graphics context
      * @param texture the texture to sample
      * @param x destination x position
      * @param y destination y position
-     * @param width destination width
+	 * @param z destination z level
+	 * @param width destination width
      * @param height destination height
      * @param sourceWidth source nine-slice width inside the texture
      * @param sourceHeight source nine-slice height inside the texture
@@ -45,6 +83,7 @@ public final class GuiRenderUtils {
         ResourceLocation texture,
         int x,
         int y,
+		int z,
         int width,
         int height,
         int sourceWidth,
@@ -54,7 +93,7 @@ public final class GuiRenderUtils {
         int textureWidth,
         int textureHeight
     ) {
-        blitNineSlicedSized(guiGraphics, texture, x, y, 0, width, height, 0, 0, sourceWidth, sourceHeight, textureWidth, textureHeight, cornerWidth, cornerWidth, cornerHeight, cornerHeight);
+        blitNineSlicedSized(guiGraphics, texture, x, y, z, width, height, 0, 0, sourceWidth, sourceHeight, textureWidth, textureHeight, cornerWidth, cornerWidth, cornerHeight, cornerHeight);
     }
 
     /**
