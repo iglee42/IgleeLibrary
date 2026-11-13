@@ -17,6 +17,13 @@ import org.joml.Matrix4f;
 @OnlyIn(Dist.CLIENT)
 public final class GuiRenderUtils {
 
+    public enum RemovedSide {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
+    }
+
     private GuiRenderUtils() {
     }
 
@@ -56,6 +63,185 @@ public final class GuiRenderUtils {
 	) {
 		blitNineSlicedSized(guiGraphics, texture, x, y, 0, width, height, sourceWidth, sourceHeight,  cornerWidth, cornerHeight, textureWidth, textureHeight);
 	}
+
+  /**
+   * Renders a six-sliced texture by removing one side from a regular nine-slice layout.
+   * <p>
+   * The removed side's source pixels are skipped and its destination border is collapsed,
+   * allowing the remaining slices to fill the full destination area.
+   *
+   * @param guiGraphics the active gui graphics context
+   * @param texture the texture to sample
+   * @param x destination x position
+   * @param y destination y position
+   * @param width destination width
+   * @param height destination height
+   * @param sourceWidth source slice width inside the texture
+   * @param sourceHeight source slice height inside the texture
+   * @param sideToRemove side to remove from the slice layout
+   * @param cornerWidth corner width used for both left and right borders
+   * @param cornerHeight corner height used for both top and bottom borders
+   * @param textureWidth full texture width used to normalize U coordinates
+   * @param textureHeight full texture height used to normalize V coordinates
+   */
+  public static void blitSixSlicedSized(
+    GuiGraphics guiGraphics,
+    ResourceLocation texture,
+    int x,
+    int y,
+    int width,
+    int height,
+    int sourceWidth,
+    int sourceHeight,
+    RemovedSide sideToRemove,
+    int cornerWidth,
+    int cornerHeight,
+    int textureWidth,
+    int textureHeight
+  ) {
+    blitSixSlicedSized(guiGraphics, texture, x, y, 0, width, height, sourceWidth, sourceHeight, sideToRemove, cornerWidth, cornerHeight, textureWidth, textureHeight);
+  }
+
+  /**
+   * Renders a six-sliced texture by removing one side from a regular nine-slice layout.
+   *
+   * @param guiGraphics the active gui graphics context
+   * @param texture the texture to sample
+   * @param x destination x position
+   * @param y destination y position
+   * @param z destination z level
+   * @param width destination width
+   * @param height destination height
+   * @param sourceWidth source slice width inside the texture
+   * @param sourceHeight source slice height inside the texture
+   * @param sideToRemove side to remove from the slice layout
+   * @param cornerWidth corner width used for both left and right borders
+   * @param cornerHeight corner height used for both top and bottom borders
+   * @param textureWidth full texture width used to normalize U coordinates
+   * @param textureHeight full texture height used to normalize V coordinates
+   */
+  public static void blitSixSlicedSized(
+    GuiGraphics guiGraphics,
+    ResourceLocation texture,
+    int x,
+    int y,
+    int z,
+    int width,
+    int height,
+    int sourceWidth,
+    int sourceHeight,
+    RemovedSide sideToRemove,
+    int cornerWidth,
+    int cornerHeight,
+    int textureWidth,
+    int textureHeight
+  ) {
+    blitSixSlicedSized(guiGraphics, texture, x, y, z, width, height, 0, 0, sourceWidth, sourceHeight, textureWidth, textureHeight, sideToRemove, cornerWidth, cornerWidth, cornerHeight, cornerHeight);
+  }
+
+  /**
+   * Renders a six-sliced texture by removing one side from a regular nine-slice layout.
+   * <p>
+   * This method accepts asymmetric border sizes and source offsets.
+   *
+   * @param guiGraphics the active gui graphics context
+   * @param texture the texture to sample
+   * @param x destination x position
+   * @param y destination y position
+   * @param z destination z level
+   * @param width destination width
+   * @param height destination height
+   * @param uOffset source x offset inside the texture
+   * @param vOffset source y offset inside the texture
+   * @param sourceWidth source slice width inside the texture
+   * @param sourceHeight source slice height inside the texture
+   * @param textureWidth full texture width used to normalize U coordinates
+   * @param textureHeight full texture height used to normalize V coordinates
+   * @param sideToRemove side to remove from the slice layout
+   * @param left left border width
+   * @param right right border width
+   * @param top top border height
+   * @param bottom bottom border height
+   */
+  public static void blitSixSlicedSized(
+    GuiGraphics guiGraphics,
+    ResourceLocation texture,
+    int x,
+    int y,
+    int z,
+    int width,
+    int height,
+    int uOffset,
+    int vOffset,
+    int sourceWidth,
+    int sourceHeight,
+    int textureWidth,
+    int textureHeight,
+    RemovedSide sideToRemove,
+    int left,
+    int right,
+    int top,
+    int bottom
+  ) {
+    if (sideToRemove == null) {
+      blitNineSlicedSized(guiGraphics, texture, x, y, z, width, height, uOffset, vOffset, sourceWidth, sourceHeight, textureWidth, textureHeight, left, right, top, bottom);
+      return;
+    }
+
+    int adjustedU = uOffset;
+    int adjustedV = vOffset;
+    int adjustedSourceWidth = sourceWidth;
+    int adjustedSourceHeight = sourceHeight;
+    int adjustedLeft = left;
+    int adjustedRight = right;
+    int adjustedTop = top;
+    int adjustedBottom = bottom;
+
+    switch (sideToRemove) {
+      case LEFT -> {
+        adjustedU += left;
+        adjustedSourceWidth -= left;
+        adjustedLeft = 0;
+      }
+      case RIGHT -> {
+        adjustedSourceWidth -= right;
+        adjustedRight = 0;
+      }
+      case UP -> {
+        adjustedV += top;
+        adjustedSourceHeight -= top;
+        adjustedTop = 0;
+      }
+      case DOWN -> {
+        adjustedSourceHeight -= bottom;
+        adjustedBottom = 0;
+      }
+    }
+
+    if (adjustedSourceWidth <= 0 || adjustedSourceHeight <= 0) {
+      return;
+    }
+
+    blitNineSlicedSized(
+      guiGraphics,
+      texture,
+      x,
+      y,
+      z,
+      width,
+      height,
+      adjustedU,
+      adjustedV,
+      adjustedSourceWidth,
+      adjustedSourceHeight,
+      textureWidth,
+      textureHeight,
+      adjustedLeft,
+      adjustedRight,
+      adjustedTop,
+      adjustedBottom
+    );
+  }
 
 
 	/**
