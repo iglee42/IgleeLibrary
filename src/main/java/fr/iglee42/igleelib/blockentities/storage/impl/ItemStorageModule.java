@@ -4,6 +4,7 @@ import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import fr.iglee42.igleelib.blockentities.storage.SidedStorageModule;
 import fr.iglee42.igleelib.blockentities.storage.slot.BasicInventorySlot;
 import fr.iglee42.igleelib.blockentities.storage.slot.InventorySlot;
+import fr.iglee42.igleelib.blockentities.storage.slot.SlotType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -53,6 +54,10 @@ public class ItemStorageModule extends SidedStorageModule<IItemHandler> {
     public InventorySlot slot(int index) {
         return slots.get(index);
     }
+
+	public List<InventorySlot> slots(SlotType marker){
+		return Collections.unmodifiableList(slots.stream().filter(s -> s.getType() == marker).toList());
+	}
 
     @Override
     public BlockCapability<IItemHandler, @Nullable Direction> capability() {

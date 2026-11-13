@@ -4,6 +4,7 @@ import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import fr.iglee42.igleelib.blockentities.storage.SidedStorageModule;
 import fr.iglee42.igleelib.blockentities.storage.slot.BasicFluidTank;
 import fr.iglee42.igleelib.blockentities.storage.slot.FluidTankSlot;
+import fr.iglee42.igleelib.blockentities.storage.slot.SlotType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -59,6 +60,10 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
     public FluidTankSlot tank(int index) {
         return tanks.get(index);
     }
+
+	public List<FluidTankSlot> tanks(SlotType marker){
+		return Collections.unmodifiableList(tanks.stream().filter(s -> s.getType() == marker).toList());
+	}
 
     @Override
     public BlockCapability<IFluidHandler, @Nullable Direction> capability() {
