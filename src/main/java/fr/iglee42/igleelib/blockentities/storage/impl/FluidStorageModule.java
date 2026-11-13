@@ -103,11 +103,11 @@ public class FluidStorageModule extends SidedStorageModule<IFluidHandler> {
         }
 
         public BasicFluidTank inputTank(int capacity) {
-            return tank(BasicFluidTank.builder(capacity).inputOnly().build());
+            return tank(BasicFluidTank.input(capacity).build());
         }
 
         public BasicFluidTank outputTank(int capacity) {
-            return tank(BasicFluidTank.builder(capacity).outputOnly().build());
+            return tank(BasicFluidTank.output(capacity).build());
         }
 
         public FluidStorageModule build() {

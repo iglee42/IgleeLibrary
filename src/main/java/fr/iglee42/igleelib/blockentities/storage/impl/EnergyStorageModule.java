@@ -18,7 +18,11 @@ public class EnergyStorageModule extends SidedStorageModule<IEnergyStorage> {
         this(capacity, capacity, capacity);
     }
 
-    public EnergyStorageModule(int capacity, int maxReceive, int maxExtract) {
+	public EnergyStorageModule(int capacity, int maxTransfer) {
+		this.storage = new Storage(capacity, maxTransfer, maxTransfer);
+	}
+
+	public EnergyStorageModule(int capacity, int maxReceive, int maxExtract) {
         this.storage = new Storage(capacity, maxReceive, maxExtract);
     }
 

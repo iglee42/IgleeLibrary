@@ -179,28 +179,27 @@ public class ItemStorageModule extends SidedStorageModule<IItemHandler> {
         }
 
         public BasicInventorySlot addBasicSlot(int x, int y) {
-            BasicInventorySlot slot = new BasicInventorySlot(x, y);
+            BasicInventorySlot slot =  BasicInventorySlot.builder(x, y).build();
             slots.add(slot);
             return slot;
         }
 
         public BasicInventorySlot addBasicSlot(int x, int y, int limit) {
-            int index = slots.size();
-            BasicInventorySlot slot = new BasicInventorySlot(x, y).limit(limit);
+            BasicInventorySlot slot = BasicInventorySlot.builder(x, y).limit(limit).build();
             slots.add(slot);
             return slot;
         }
 
         public BasicInventorySlot addBasicSlot(int x, int y, BiPredicate<Integer, ItemStack> validator) {
             int index = slots.size();
-            BasicInventorySlot slot = new BasicInventorySlot(x, y).validator(stack -> validator.test(index, stack));
+            BasicInventorySlot slot =BasicInventorySlot.builder(x, y).validator(stack -> validator.test(index, stack)).build();
             slots.add(slot);
             return slot;
         }
 
         public BasicInventorySlot addBasicSlot(int x, int y, int limit, BiPredicate<Integer, ItemStack> validator) {
             int index = slots.size();
-            BasicInventorySlot slot = new BasicInventorySlot(x, y).limit(limit).validator(stack -> validator.test(index, stack));
+            BasicInventorySlot slot = BasicInventorySlot.builder(x, y).limit(limit).validator(stack -> validator.test(index, stack)).build();
             slots.add(slot);
             return slot;
         }

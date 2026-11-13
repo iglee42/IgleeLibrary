@@ -69,5 +69,10 @@ public interface InventorySlot extends INBTSerializable<CompoundTag> {
         return result;
     }
 
+    /** Slot semantic marker. Mods can use this for auto IO detection or UI hints. */
+    default SlotType getType() {
+        return SlotType.NORMAL;
+    }
+
     InventorySlot copy();
 }

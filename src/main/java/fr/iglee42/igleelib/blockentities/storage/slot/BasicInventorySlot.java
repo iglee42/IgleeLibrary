@@ -20,6 +20,7 @@ public class BasicInventorySlot implements InventorySlot {
     private Predicate<ItemStack> validator = s -> true;
     private Predicate<AutomationType> canInsert = t -> true;
     private Predicate<AutomationType> canExtract = t -> true;
+    private SlotType type = SlotType.NORMAL;
 
     private BasicInventorySlot(BasicInventorySlot oldSlot){
         this.x = oldSlot.x;
@@ -29,44 +30,34 @@ public class BasicInventorySlot implements InventorySlot {
         this.validator = oldSlot.validator;
         this.canInsert = oldSlot.canInsert;
         this.canExtract = oldSlot.canExtract;
+        this.type = oldSlot.type;
     }
 
-    public BasicInventorySlot(int x, int y) {
-        this.x = x;
-        this.y = y;
+    private BasicInventorySlot(Builder builder) {
+        this.x = builder.x;
+        this.y = builder.y;
+        this.limit = builder.limit;
+        this.validator = builder.validator;
+        this.canInsert = builder.canInsert;
+        this.canExtract = builder.canExtract;
+        this.type = builder.type;
     }
 
-    public BasicInventorySlot limit(int limit) {
-        this.limit = limit;
-        return this;
+    public static Builder builder(int x, int y) {
+        return new Builder(x, y);
     }
 
-    public BasicInventorySlot validator(Predicate<ItemStack> validator) {
-        this.validator = validator;
-        return this;
-    }
+	/** A preconfigured builder for input slots. */
+	public static Builder input(int x, int y){
+		return builder(x,y).type(SlotType.INPUT).canInsert(true).canExtract(false);
+	}
 
-    public BasicInventorySlot canInsert(Predicate<AutomationType> canInsert) {
-        this.canInsert = canInsert;
-        return this;
-    }
+	/** A preconfigured builder for output slots. */
+	public static Builder output(int x, int y){
+		return builder(x,y).type(SlotType.OUTPUT).canInsert(false).canExtract(true);
+	}
 
-    public BasicInventorySlot canExtract(Predicate<AutomationType> canExtract) {
-        this.canExtract = canExtract;
-        return this;
-    }
-
-    /** Shortcut: when false, only {@link AutomationType#INTERNAL} may insert. */
-    public BasicInventorySlot canInsert(boolean canInsert) {
-        return canInsert(t -> t == AutomationType.INTERNAL || canInsert);
-    }
-
-    /** Shortcut: when false, only {@link AutomationType#EXTERNAL} is denied. */
-    public BasicInventorySlot canExtract(boolean canExtract) {
-        return canExtract(t -> t != AutomationType.EXTERNAL || canExtract);
-    }
-
-    @Override
+	@Override
     public ItemStack getStack() {
         return stack;
     }
@@ -120,5 +111,63 @@ public class BasicInventorySlot implements InventorySlot {
     @Override
     public InventorySlot copy() {
         return new BasicInventorySlot(this);
+    }
+
+    @Override
+    public SlotType getType() {
+        return type;
+    }
+
+    public static class Builder {
+        private final int x, y;
+        private int limit = Item.DEFAULT_MAX_STACK_SIZE;
+        private Predicate<ItemStack> validator = s -> true;
+        private Predicate<AutomationType> canInsert = t -> true;
+        private Predicate<AutomationType> canExtract = t -> true;
+        private SlotType type = SlotType.NORMAL;
+
+        private Builder(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public Builder limit(int limit) {
+            this.limit = limit;
+            return this;
+        }
+
+        public Builder validator(Predicate<ItemStack> validator) {
+            this.validator = validator;
+            return this;
+        }
+
+        public Builder canInsert(Predicate<AutomationType> canInsert) {
+            this.canInsert = canInsert;
+            return this;
+        }
+
+        public Builder canExtract(Predicate<AutomationType> canExtract) {
+            this.canExtract = canExtract;
+            return this;
+        }
+
+		/** Shortcut: when false, only {@link AutomationType#INTERNAL} may insert. */
+		public Builder canInsert(boolean canInsert) {
+			return canInsert(t -> t == AutomationType.INTERNAL || canInsert);
+		}
+
+		/** Shortcut: when false, only {@link AutomationType#EXTERNAL} is denied. */
+		public Builder canExtract(boolean canExtract) {
+			return canExtract(t -> t != AutomationType.EXTERNAL || canExtract);
+		}
+
+        public Builder type(SlotType type) {
+            this.type = type;
+            return this;
+        }
+
+        public BasicInventorySlot build() {
+            return new BasicInventorySlot(this);
+        }
     }
 }

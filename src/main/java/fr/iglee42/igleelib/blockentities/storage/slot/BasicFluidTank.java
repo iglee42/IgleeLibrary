@@ -1,6 +1,7 @@
 package fr.iglee42.igleelib.blockentities.storage.slot;
 
 import fr.iglee42.igleelib.blockentities.storage.AutomationType;
+import fr.iglee42.igleelib.blockentities.storage.slot.BasicInventorySlot.Builder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -16,6 +17,7 @@ public class BasicFluidTank implements FluidTankSlot {
     private final Predicate<AutomationType> canExtract;
     private FluidStack fluid = FluidStack.EMPTY;
     private Runnable listener = () -> {};
+    private SlotType type = SlotType.NORMAL;
 
     private BasicFluidTank(BasicFluidTank oldTank){
         this.capacity = oldTank.capacity;
@@ -23,6 +25,7 @@ public class BasicFluidTank implements FluidTankSlot {
         this.canInsert = oldTank.canInsert;
         this.canExtract = oldTank.canExtract;
         this.fluid = oldTank.fluid.copy();
+        this.type = oldTank.type;
     }
 
     private BasicFluidTank(Builder builder) {
@@ -30,13 +33,24 @@ public class BasicFluidTank implements FluidTankSlot {
         this.validator = builder.validator;
         this.canInsert = builder.canInsert;
         this.canExtract = builder.canExtract;
+        this.type = builder.type;
     }
 
     public static Builder builder(int capacity) {
         return new Builder(capacity);
     }
 
-    @Override
+	/** A preconfigured builder for input tanks. */
+	public static Builder input(int capacity){
+		return builder(capacity).type(SlotType.INPUT).canInsert(true).canExtract(false);
+	}
+
+	/** A preconfigured builder for output tanks. */
+	public static Builder output(int capacity){
+		return builder(capacity).type(SlotType.OUTPUT).canInsert(false).canExtract(true);
+	}
+
+	@Override
     public FluidStack getFluid() {
         return fluid;
     }
@@ -84,11 +98,17 @@ public class BasicFluidTank implements FluidTankSlot {
         fluid = tag.contains("fluid") ? FluidStack.parseOptional(registries, tag.getCompound("fluid")) : FluidStack.EMPTY;
     }
 
+    @Override
+    public SlotType getType() {
+        return type;
+    }
+
     public static class Builder {
         private final int capacity;
         private Predicate<FluidStack> validator = f -> true;
         private Predicate<AutomationType> canInsert = t -> true;
         private Predicate<AutomationType> canExtract = t -> true;
+        private SlotType type = SlotType.NORMAL;
 
         private Builder(int capacity) {
             this.capacity = capacity;
@@ -119,15 +139,10 @@ public class BasicFluidTank implements FluidTankSlot {
             return canExtract(t -> t == AutomationType.INTERNAL || canExtract);
         }
 
-        /** Outside handlers can only fill this tank (e.g. a machine ingredient). */
-        public Builder inputOnly() {
-            return canInsert(true).canExtract(false);
-        }
-
-        /** Outside handlers can only drain this tank (e.g. a machine result). */
-        public Builder outputOnly() {
-            return canInsert(false).canExtract(true);
-        }
+		public Builder type(SlotType type) {
+			this.type = type;
+			return this;
+		}
 
         public BasicFluidTank build() {
             return new BasicFluidTank(this);
