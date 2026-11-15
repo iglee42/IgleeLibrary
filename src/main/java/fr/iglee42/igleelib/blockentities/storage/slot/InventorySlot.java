@@ -6,6 +6,8 @@ import net.minecraft.world.inventory.Slot;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.minecraft.nbt.CompoundTag;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A single item slot of an {@link fr.iglee42.igleelib.blockentities.storage.impl.ItemStorageModule}.
  * Mods can implement it to provide slots with their own rules (output-only, filtered, custom limit...).
@@ -72,6 +74,11 @@ public interface InventorySlot extends INBTSerializable<CompoundTag> {
     /** Slot semantic marker. Mods can use this for auto IO detection or UI hints. */
     default SlotType getType() {
         return SlotType.NORMAL;
+    }
+
+	/** Slot overlay for rendering. Mods can use this for UI hints. */
+	default @Nullable SlotOverlay getOverlay() {
+        return null;
     }
 
     InventorySlot copy();

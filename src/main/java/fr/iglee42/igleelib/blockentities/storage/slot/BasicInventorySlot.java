@@ -8,6 +8,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.function.Predicate;
 
 /** Default {@link InventorySlot}: configurable limit, validator and insert/extract permissions. */
@@ -21,6 +23,8 @@ public class BasicInventorySlot implements InventorySlot {
     private Predicate<AutomationType> canInsert = t -> true;
     private Predicate<AutomationType> canExtract = t -> true;
     private SlotType type = SlotType.NORMAL;
+	@Nullable
+	private SlotOverlay overlay;
 
     private BasicInventorySlot(BasicInventorySlot oldSlot){
         this.x = oldSlot.x;
@@ -31,6 +35,7 @@ public class BasicInventorySlot implements InventorySlot {
         this.canInsert = oldSlot.canInsert;
         this.canExtract = oldSlot.canExtract;
         this.type = oldSlot.type;
+		this.overlay = oldSlot.overlay;
     }
 
     private BasicInventorySlot(Builder builder) {
@@ -41,6 +46,7 @@ public class BasicInventorySlot implements InventorySlot {
         this.canInsert = builder.canInsert;
         this.canExtract = builder.canExtract;
         this.type = builder.type;
+		this.overlay = builder.overlay;
     }
 
     public static Builder builder(int x, int y) {
@@ -118,13 +124,19 @@ public class BasicInventorySlot implements InventorySlot {
         return type;
     }
 
-    public static class Builder {
+	@Override
+	public @Nullable SlotOverlay getOverlay() {
+		return overlay;
+	}
+
+	public static class Builder {
         private final int x, y;
         private int limit = Item.DEFAULT_MAX_STACK_SIZE;
         private Predicate<ItemStack> validator = s -> true;
         private Predicate<AutomationType> canInsert = t -> true;
         private Predicate<AutomationType> canExtract = t -> true;
         private SlotType type = SlotType.NORMAL;
+        private SlotOverlay overlay = null;
 
         private Builder(int x, int y) {
             this.x = x;
@@ -165,6 +177,11 @@ public class BasicInventorySlot implements InventorySlot {
             this.type = type;
             return this;
         }
+
+		public Builder overlay(SlotOverlay overlay) {
+			this.overlay = overlay;
+			return this;
+		}
 
         public BasicInventorySlot build() {
             return new BasicInventorySlot(this);
