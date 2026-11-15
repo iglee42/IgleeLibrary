@@ -8,10 +8,11 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
 
-public sealed interface FieldSerializer permits FieldType, ListSerializer, MapSerializer, NbtSerializableSerializer {
+public sealed interface FieldSerializer permits FieldType, ListSerializer, MapSerializer, NbtSerializableSerializer, EnumSerializer, CodecBackedSerializer {
 
     void encode(HolderLookup.Provider registries, CompoundTag out, String name, Object value);
 
@@ -62,6 +63,9 @@ public sealed interface FieldSerializer permits FieldType, ListSerializer, MapSe
                 if (ft.matches(clazz)) return ft;
             }
             if (INBTSerializable.class.isAssignableFrom(clazz)) return new NbtSerializableSerializer(clazz);
+			if (clazz.isEnum()) return new EnumSerializer(clazz);
+			FieldSerializer codecBacked = codecBackedSerializer(clazz, context);
+			if (codecBacked != null) return codecBacked;
             return FieldType.from(clazz);
         }
 
@@ -87,5 +91,32 @@ public sealed interface FieldSerializer permits FieldType, ListSerializer, MapSe
             "Unsupported type '" + type.getTypeName() + "'. " +
             "Use a scalar type, List<T>, or Map<K,V>"
         );
+    }
+
+    @SuppressWarnings("unchecked")
+    private static FieldSerializer codecBackedSerializer(Class<?> clazz, String context) {
+        try {
+            Field codecField = clazz.getDeclaredField("CODEC");
+            int modifiers = codecField.getModifiers();
+            if (!Modifier.isStatic(modifiers)) {
+                throw new IllegalArgumentException("Field 'CODEC' on '" + clazz.getName() + "' must be static");
+            }
+            if (!Codec.class.isAssignableFrom(codecField.getType())) {
+                throw new IllegalArgumentException("Field 'CODEC' on '" + clazz.getName() + "' must be a Codec");
+            }
+            codecField.setAccessible(true);
+            Codec<Object> codec = (Codec<Object>) codecField.get(null);
+            if (codec == null) {
+                throw new IllegalArgumentException("Field 'CODEC' on '" + clazz.getName() + "' is null");
+            }
+            return new CodecBackedSerializer(codec);
+        } catch (NoSuchFieldException ignored) {
+            return null;
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException(
+                "Cannot access static CODEC field for type '" + context + "'",
+                e
+            );
+        }
     }
 }

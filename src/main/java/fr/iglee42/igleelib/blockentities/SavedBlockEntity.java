@@ -20,6 +20,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Reflection-driven base block entity that persists fields annotated with {@link Save}.
+ * <p>
+ * It handles three independent flows:
+ * <ul>
+ *     <li>World persistence: {@link #saveAdditional} and {@link #loadAdditional}.</li>
+ *     <li>Client synchronization: {@link #getUpdateTag} and {@link #handleUpdateTag}.</li>
+ *     <li>Item component bridge: {@link #collectImplicitComponents} and {@link #applyImplicitComponents}.</li>
+ * </ul>
+ *
+ * Per-field cases:
+ * <ul>
+ *     <li>Field not annotated with {@code @Save}: ignored.</li>
+ *     <li>{@code @Save(synchronize = false)}: excluded from client update tags.</li>
+ *     <li>{@code @Save(itemSaved = false)}: excluded from item component transfer.</li>
+ *     <li>Unsupported type or invalid serializer metadata: fails fast with a runtime exception describing the field.</li>
+ * </ul>
+ */
 public abstract class SavedBlockEntity extends BlockEntity {
 
 	public SavedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -40,6 +58,16 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		save(output, registries, false);
 	}
 
+	/**
+	 * Reads values for all discovered {@link Save} fields.
+	 * <p>
+	 * Cases:
+	 * <ul>
+	 *     <li>{@code forClient == false}: all {@code @Save} fields are considered.</li>
+	 *     <li>{@code forClient == true}: only {@code @Save(synchronize = true)} fields are considered.</li>
+	 *     <li>Missing field payload: serializer-specific fallback applies (often current value or default).</li>
+	 * </ul>
+	 */
 	protected void load(CompoundTag input, HolderLookup.Provider registries, boolean forClient) {
 		for (Field field : getSaveFields()) {
 			Save annotation = field.getAnnotation(Save.class);
@@ -63,6 +91,11 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		}
 	}
 
+	/**
+	 * Writes values for all discovered {@link Save} fields.
+	 * <p>
+	 * Cases mirror {@link #load}: non-synchronized fields are skipped in client sync mode.
+	 */
 	protected void save(CompoundTag output, HolderLookup.Provider registries, boolean forClient) {
 		for (Field field : getSaveFields()) {
 			Save annotation = field.getAnnotation(Save.class);
@@ -86,6 +119,11 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		}
 	}
 
+	/**
+	 * Produces the block-entity update tag sent to clients.
+	 * <p>
+	 * Only fields with {@code @Save(synchronize = true)} are written.
+	 */
 	@Override
 	public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registries) {
 		CompoundTag nbt = super.getUpdateTag(registries);
@@ -93,6 +131,11 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		return nbt;
 	}
 
+	/**
+	 * Applies a client update tag.
+	 * <p>
+	 * Only fields with {@code @Save(synchronize = true)} are read.
+	 */
 	@Override
 	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
 		super.handleUpdateTag(tag, lookupProvider);
@@ -104,6 +147,15 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
+	/**
+	 * Exports {@code @Save(itemSaved = true)} fields into item data components.
+	 * <p>
+	 * Cases:
+	 * <ul>
+	 *     <li>Provider returns {@code null}: field is skipped.</li>
+	 *     <li>Provider type/value mismatch: throws with a descriptive error.</li>
+	 * </ul>
+	 */
 	@Override
 	protected void collectImplicitComponents(Builder components) {
 		super.collectImplicitComponents(components);
@@ -134,6 +186,16 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		}
 	}
 
+	/**
+	 * Imports {@code @Save(itemSaved = true)} fields from item data components.
+	 * <p>
+	 * Cases:
+	 * <ul>
+	 *     <li>Provider returns {@code null}: field is skipped.</li>
+	 *     <li>Component has no value: field is set to {@code null}.</li>
+	 *     <li>Component value type mismatch: throws with a descriptive error.</li>
+	 * </ul>
+	 */
 	@Override
 	protected void applyImplicitComponents(DataComponentInput components) {
 		super.applyImplicitComponents(components);
@@ -166,6 +228,9 @@ public abstract class SavedBlockEntity extends BlockEntity {
 		}
 	}
 
+	/**
+	 * Collects every field annotated with {@link Save} from this class and its superclasses up to {@link BlockEntity}.
+	 */
 	private List<Field> getSaveFields() {
 		List<Field> fields = new ArrayList<>();
 		Class<?> cursor = getClass();
@@ -181,6 +246,7 @@ public abstract class SavedBlockEntity extends BlockEntity {
 	}
 
 	@SuppressWarnings("unchecked")
+	/** Localized unchecked cast helper used for data component writes. */
 	private static <T> void setUnchecked(Builder components, DataComponentType<T> type, Object value) {
 		components.set(type, (T) value);
 	}
