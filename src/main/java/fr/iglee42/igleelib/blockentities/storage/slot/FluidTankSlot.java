@@ -4,18 +4,18 @@ import fr.iglee42.igleelib.blockentities.storage.AutomationType;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.IFluidTank;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A single tank of a {@link fr.iglee42.igleelib.blockentities.storage.impl.FluidStorageModule}.
  * Mods can implement it to provide tanks with their own rules.
  */
-public interface FluidTankSlot extends INBTSerializable<CompoundTag> {
-
-    FluidStack getFluid();
+public interface FluidTankSlot extends IFluidTank, INBTSerializable<CompoundTag> {
 
     void setFluid(FluidStack fluid);
-
-    int getCapacity();
 
     default boolean isValid(FluidStack fluid) {
         return true;
@@ -65,4 +65,32 @@ public interface FluidTankSlot extends INBTSerializable<CompoundTag> {
     }
 
     FluidTankSlot copy();
+
+	@Override
+	default int fill(FluidStack fluidStack, FluidAction fluidAction){
+		return fill(fluidStack, fluidAction.simulate(), AutomationType.EXTERNAL);
+	}
+
+	@Override
+	default @NotNull FluidStack drain(int maxDrain, FluidAction action){
+		return drain(maxDrain, action.simulate(), AutomationType.EXTERNAL);
+	}
+
+	@Override
+	default @NotNull FluidStack drain(FluidStack resource, FluidAction action){
+		if (!getFluid().isEmpty() && FluidStack.isSameFluidSameComponents(getFluid(), resource)) {
+			return drain(resource.getAmount(), action.simulate(), AutomationType.EXTERNAL);
+		}
+		return FluidStack.EMPTY;
+	}
+
+	@Override
+	default int getFluidAmount(){
+		return getFluid().getAmount();
+	}
+
+	@Override
+	default boolean isFluidValid(FluidStack stack){
+		return isValid(stack);
+	}
 }
